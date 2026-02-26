@@ -1,13 +1,13 @@
 fileFormatVersion: 2
-guid: 8dc57b02fb62b8d4184728f0c784b54f
+guid: 716725b703f95dd4d81453e255a7256e
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7513867591669684524
-    second: _Connectors_SpSh_0
+      213: 348689814894194515
+    second: Surfaces_Tiny_0
   - first:
-      213: -7791691282107192652
-    second: _Connectors_SpSh_1
+      213: 1733150031301380124
+    second: Surfaces_Tiny_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -40,7 +40,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -51,10 +51,10 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 20
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -75,7 +75,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 512
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -155,45 +155,45 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: _Connectors_SpSh_0
+      name: Surfaces_Tiny_0
       rect:
         serializedVersion: 2
-        x: 15
-        y: 15
-        width: 18
-        height: 18
+        x: 0
+        y: 0
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 8, y: 8, z: 8, w: 8}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c299ac2b3ce964860800000000000000
-      internalID: 7513867591669684524
+      spriteID: 35fa0990a8bc6d400800000000000000
+      internalID: 348689814894194515
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: _Connectors_SpSh_1
+      name: Surfaces_Tiny_1
       rect:
         serializedVersion: 2
-        x: 47
-        y: 15
-        width: 18
-        height: 18
+        x: 32
+        y: 0
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 8, y: 8, z: 8, w: 8}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 4ba2e72af0a5ed390800000000000000
-      internalID: -7791691282107192652
+      spriteID: c180d2655c26d0810800000000000000
+      internalID: 1733150031301380124
       vertices: []
       indices: 
       edges: []
@@ -202,7 +202,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: e0904763a7933df439153586cd3c532a
     internalID: 0
     vertices: []
     indices: 
@@ -210,10 +210,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":2.0,"y":1.0},"gridSpriteSize":{"x":32.0,"y":32.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      _Connectors_SpSh_0: 7513867591669684524
-      _Connectors_SpSh_1: -7791691282107192652
+      Surfaces_Tiny_0: 348689814894194515
+      Surfaces_Tiny_1: 1733150031301380124
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

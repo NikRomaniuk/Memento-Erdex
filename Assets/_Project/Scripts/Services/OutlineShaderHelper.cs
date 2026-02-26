@@ -3,32 +3,35 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class OutlineShaderHelper : MonoBehaviour
 {
-    private SpriteRenderer sr;
-    private MaterialPropertyBlock block;
+    [SerializeField] private float _outlineWidth = 1f;
+    
+    private SpriteRenderer _sr;
+    private MaterialPropertyBlock _block;
 
     void OnEnable()
     {
-        sr = GetComponent<SpriteRenderer>();
-        block = new MaterialPropertyBlock();
+        _sr = GetComponent<SpriteRenderer>();
+        _block = new MaterialPropertyBlock();
     }
 
     void LateUpdate()
     {
-        if (sr == null || sr.sprite == null) return;
+        if (_sr == null || _sr.sprite == null) return;
 
-        Vector4 uv = UnityEngine.Sprites.DataUtility.GetInnerUV(sr.sprite);
+        Vector4 uv = UnityEngine.Sprites.DataUtility.GetInnerUV(_sr.sprite);
         float scaleX = uv.z - uv.x;
         float scaleY = uv.w - uv.y;
 
         Vector3 worldScale = transform.lossyScale;
 
-        float pixelWidth = sr.sprite.rect.width;
-        float pixelHeight = sr.sprite.rect.height;
+        float pixelWidth = _sr.sprite.rect.width;
+        float pixelHeight = _sr.sprite.rect.height;
 
-        sr.GetPropertyBlock(block);
-        block.SetVector("_CustomUVScale", new Vector4(scaleX, scaleY, 0, 0));
-        block.SetVector("_CustomWorldScale", new Vector4(worldScale.x, worldScale.y, 1, 1));
-        block.SetVector("_SpritePixelSize", new Vector2(pixelWidth, pixelHeight));
-        sr.SetPropertyBlock(block);
+        _sr.GetPropertyBlock(_block);
+        _block.SetVector("_CustomUVScale", new Vector4(scaleX, scaleY, 0, 0));
+        _block.SetVector("_CustomWorldScale", new Vector4(worldScale.x, worldScale.y, 1, 1));
+        _block.SetVector("_SpritePixelSize", new Vector2(pixelWidth, pixelHeight));
+        _block.SetFloat("_Outline_Width", _outlineWidth);
+        _sr.SetPropertyBlock(_block);
     }
 }

@@ -1,19 +1,19 @@
 fileFormatVersion: 2
-guid: cad71eb15172cce48b1aff0441415ce8
+guid: d4043a7ef6b98134fabbc4ed0d52c2b0
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6389632604855638421
-    second: _Trunks_SpSh_0
+      213: -560222818419963452
+    second: Trunks_0
   - first:
-      213: -4859324731664523837
-    second: _Trunks_SpSh_1
+      213: 7123607253031402433
+    second: Trunks_1
   - first:
-      213: -3449831963771899343
-    second: _Trunks_SpSh_2
+      213: 1866844968150674122
+    second: Trunks_2
   - first:
-      213: -1430156579049750794
-    second: _Trunks_SpSh_3
+      213: 3502262427758199122
+    second: Trunks_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,7 +46,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -57,10 +57,10 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 20
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -81,7 +81,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 1024
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -161,89 +161,89 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: _Trunks_SpSh_0
+      name: Trunks_0
       rect:
         serializedVersion: 2
-        x: 14
-        y: 15
-        width: 34
-        height: 68
+        x: 0
+        y: 80
+        width: 48
+        height: 80
       alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 8, y: 8, z: 8, w: 8}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 5999ca910098ca850800000000000000
-      internalID: 6389632604855638421
+      spriteID: 4c982099050b938f0800000000000000
+      internalID: -560222818419963452
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: _Trunks_SpSh_1
+      name: Trunks_1
       rect:
         serializedVersion: 2
-        x: 62
-        y: 15
-        width: 33
-        height: 68
+        x: 48
+        y: 80
+        width: 48
+        height: 80
       alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 8, y: 8, z: 8, w: 8}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3cd9dd007e5309cb0800000000000000
-      internalID: -4859324731664523837
+      spriteID: 1cb355cdd032cd260800000000000000
+      internalID: 7123607253031402433
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: _Trunks_SpSh_2
+      name: Trunks_2
       rect:
         serializedVersion: 2
-        x: 110
-        y: 15
-        width: 33
-        height: 68
+        x: 96
+        y: 80
+        width: 48
+        height: 80
       alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 8, y: 8, z: 8, w: 8}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 13276906b1cbf10d0800000000000000
-      internalID: -3449831963771899343
+      spriteID: acaa8598b9d58e910800000000000000
+      internalID: 1866844968150674122
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: _Trunks_SpSh_3
+      name: Trunks_3
       rect:
         serializedVersion: 2
-        x: 158
-        y: 15
-        width: 30
-        height: 68
+        x: 144
+        y: 80
+        width: 48
+        height: 80
       alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 8, y: 8, z: 8, w: 8}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 6fe3d8c2b20172ce0800000000000000
-      internalID: -1430156579049750794
+      spriteID: 25189bc4f198a9030800000000000000
+      internalID: 3502262427758199122
       vertices: []
       indices: 
       edges: []
@@ -252,7 +252,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: c9bea5a30bec6ff4f8bdd47c9876a927
     internalID: 0
     vertices: []
     indices: 
@@ -260,12 +260,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":4.0,"y":2.0},"gridSpriteSize":{"x":48.0,"y":80.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      _Trunks_SpSh_0: 6389632604855638421
-      _Trunks_SpSh_1: -4859324731664523837
-      _Trunks_SpSh_2: -3449831963771899343
-      _Trunks_SpSh_3: -1430156579049750794
+      Trunks_0: -560222818419963452
+      Trunks_1: 7123607253031402433
+      Trunks_2: 1866844968150674122
+      Trunks_3: 3502262427758199122
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
