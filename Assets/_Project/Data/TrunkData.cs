@@ -1,5 +1,12 @@
 using UnityEngine;
 
+public enum AvaliableSide
+{
+    Both,
+    Left,
+    Right
+}
+
 [CreateAssetMenu(fileName = "NewTrunkData", menuName = "Entries/TrunkData")]
 public class TrunkData : ScriptableObject
 {
@@ -13,15 +20,20 @@ public class TrunkData : ScriptableObject
     // Unique identifier (e.g. "stone_sharp_01", "mossy_rounded_02")
     public string id;
     // Collider used for physics interactions
-    // Also its bounds will be used for overlap checks during generation
     public BoxCollider2D collider;
     // Visual representation
     public Sprite sprite;
-    // Can sprite be flipped horizontally
-    public bool canBeFlipped = true;
-    // Inset for the trunk bounds, to avoid the holes between objects
-    // Should be half of the in-game pixel
-    [HideInInspector] public Vector2 boundsInset = new Vector2(0.1f, 0.1f);
+    // On which side this trunk can be on
+    public AvaliableSide avaliableSide = AvaliableSide.Both;
+    // Can sprite be flipped vertically
+    public bool canBeYFlipped = true;
+    
+    [Header("Points Configuration")]
+    [Step(0.05f)] public Vector2 downNearPoint; // heart
+    [Step(0.05f)] public Vector2 downFarPoint;
+    [Step(0.05f)] public Vector2 topNearPoint;
+    [Step(0.05f)] public Vector2 topFarPoint;
+
 
     //[Header("Gameplay Configuration")]
 }
