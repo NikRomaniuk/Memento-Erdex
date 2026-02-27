@@ -164,7 +164,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c085a6d73e00d94bbfd5a93ae2ecdb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OutlineShaderHelper
-  _outlineWidth: 2
 --- !u!212 &50322582
 SpriteRenderer:
   serializedVersion: 2
@@ -356,12 +355,12 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 100
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -560222818419963452, guid: d4043a7ef6b98134fabbc4ed0d52c2b0, type: 3}
+  m_Sprite: {fileID: 5268548805000089639, guid: 4854330c24a4c4b4880eb4cbebe4833b, type: 3}
   m_Color: {r: 0.5828587, g: 0.60381407, b: 0.6981132, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.33, y: 0.66}
+  m_Size: {x: 4, y: 4}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -404,8 +403,8 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0.4, y: 0.4, z: 0.4, w: 0.4}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.4, y: 4}
-    newSize: {x: 0.33, y: 0.66}
+    oldSize: {x: 4, y: 4}
+    newSize: {x: 4, y: 4}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -1050,7 +1049,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c085a6d73e00d94bbfd5a93ae2ecdb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OutlineShaderHelper
-  _outlineWidth: 1.25
 --- !u!212 &927349164
 SpriteRenderer:
   serializedVersion: 2
@@ -1573,7 +1571,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c085a6d73e00d94bbfd5a93ae2ecdb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OutlineShaderHelper
-  _outlineWidth: 1.5
 --- !u!212 &1819906516
 SpriteRenderer:
   serializedVersion: 2
@@ -1623,12 +1620,12 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -100
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -560222818419963452, guid: d4043a7ef6b98134fabbc4ed0d52c2b0, type: 3}
+  m_Sprite: {fileID: 5268548805000089639, guid: 4854330c24a4c4b4880eb4cbebe4833b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.33, y: 0.66}
+  m_Size: {x: 4, y: 4}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -1788,7 +1785,7 @@ GameObject:
   m_Icon: {fileID: 8418204508859773708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2105178947
 Transform:
   m_ObjectHideFlags: 0

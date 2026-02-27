@@ -1,19 +1,19 @@
 fileFormatVersion: 2
-guid: d4043a7ef6b98134fabbc4ed0d52c2b0
+guid: 4854330c24a4c4b4880eb4cbebe4833b
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -560222818419963452
-    second: Trunks_0
+      213: 5268548805000089639
+    second: Trunks_TrueSq_0
   - first:
-      213: 7123607253031402433
-    second: Trunks_1
+      213: -8392786590797957212
+    second: Trunks_TrueSq_1
   - first:
-      213: 1866844968150674122
-    second: Trunks_2
+      213: 1267129427854860414
+    second: Trunks_TrueSq_2
   - first:
-      213: 3502262427758199122
-    second: Trunks_3
+      213: -6612053617529324968
+    second: Trunks_TrueSq_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -81,7 +81,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 1024
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -161,12 +161,12 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Trunks_0
+      name: Trunks_TrueSq_0
       rect:
         serializedVersion: 2
         x: 0
         y: 80
-        width: 48
+        width: 80
         height: 80
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -176,19 +176,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 4c982099050b938f0800000000000000
-      internalID: -560222818419963452
+      spriteID: 720d6d36935ad1940800000000000000
+      internalID: 5268548805000089639
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Trunks_1
+      name: Trunks_TrueSq_1
       rect:
         serializedVersion: 2
-        x: 48
+        x: 80
         y: 80
-        width: 48
+        width: 80
         height: 80
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -198,19 +198,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 1cb355cdd032cd260800000000000000
-      internalID: 7123607253031402433
+      spriteID: 4a773d30015d68b80800000000000000
+      internalID: -8392786590797957212
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Trunks_2
+      name: Trunks_TrueSq_2
       rect:
         serializedVersion: 2
-        x: 96
-        y: 80
-        width: 48
+        x: 0
+        y: 0
+        width: 80
         height: 80
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -220,19 +220,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: acaa8598b9d58e910800000000000000
-      internalID: 1866844968150674122
+      spriteID: e70abb7408fb59110800000000000000
+      internalID: 1267129427854860414
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Trunks_3
+      name: Trunks_TrueSq_3
       rect:
         serializedVersion: 2
-        x: 144
-        y: 80
-        width: 48
+        x: 80
+        y: 0
+        width: 80
         height: 80
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -242,8 +242,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 25189bc4f198a9030800000000000000
-      internalID: 3502262427758199122
+      spriteID: 85af35b54444d34a0800000000000000
+      internalID: -6612053617529324968
       vertices: []
       indices: 
       edges: []
@@ -252,7 +252,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: c9bea5a30bec6ff4f8bdd47c9876a927
+    spriteID: 034d652bba34b2b49bc2749d38e7ac32
     internalID: 0
     vertices: []
     indices: 
@@ -262,12 +262,12 @@ TextureImporter:
     spriteCustomMetadata:
       entries:
       - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":4.0,"y":2.0},"gridSpriteSize":{"x":48.0,"y":80.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":2.0,"y":2.0},"gridSpriteSize":{"x":80.0,"y":80.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      Trunks_0: -560222818419963452
-      Trunks_1: 7123607253031402433
-      Trunks_2: 1866844968150674122
-      Trunks_3: 3502262427758199122
+      Trunks_TrueSq_0: 5268548805000089639
+      Trunks_TrueSq_1: -8392786590797957212
+      Trunks_TrueSq_2: 1267129427854860414
+      Trunks_TrueSq_3: -6612053617529324968
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
