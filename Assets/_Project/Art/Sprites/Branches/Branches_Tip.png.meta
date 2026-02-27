@@ -1,22 +1,13 @@
 fileFormatVersion: 2
-guid: 1f6545f65c129244aa12acca91f3da0b
+guid: ad48169732e3ef64d995814d5829224f
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3105969308339219690
-    second: _Branches_SpSh_0
+      213: 7281492504436516793
+    second: Branches_Tip_0
   - first:
-      213: -5119356652966353080
-    second: _Branches_SpSh_1
-  - first:
-      213: 8330156132885443413
-    second: _Branches_SpSh_2
-  - first:
-      213: 1940826200460371342
-    second: _Branches_SpSh_3
-  - first:
-      213: -8128526512231614199
-    second: _Branches_SpSh_4
+      213: 1866245587752334419
+    second: Branches_Tip_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -164,79 +155,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: _Branches_SpSh_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 48
-        width: 64
-        height: 48
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 8, y: 8, z: 8, w: 8}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 613dc25ce5165e4d0800000000000000
-      internalID: -3105969308339219690
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: _Branches_SpSh_1
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 48
-        width: 64
-        height: 48
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 8, y: 8, z: 8, w: 8}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 84768656f3464f8b0800000000000000
-      internalID: -5119356652966353080
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: _Branches_SpSh_2
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 48
-        width: 64
-        height: 48
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 8, y: 8, z: 8, w: 8}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 553bd282ed8aa9370800000000000000
-      internalID: 8330156132885443413
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: _Branches_SpSh_3
+      name: Branches_Tip_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 64
-        height: 48
+        height: 64
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 8, y: 8, z: 8, w: 8}
@@ -245,20 +170,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e85263975233fea10800000000000000
-      internalID: 1940826200460371342
+      spriteID: 9b7ab919ade0d0560800000000000000
+      internalID: 7281492504436516793
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: _Branches_SpSh_4
+      name: Branches_Tip_1
       rect:
         serializedVersion: 2
         x: 64
         y: 0
         width: 64
-        height: 48
+        height: 64
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 8, y: 8, z: 8, w: 8}
@@ -267,8 +192,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 909f613343ca13f80800000000000000
-      internalID: -8128526512231614199
+      spriteID: 3543e99697c36e910800000000000000
+      internalID: 1866245587752334419
       vertices: []
       indices: 
       edges: []
@@ -277,7 +202,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 3c0b5b979b0685a44aad385981cf93eb
+    spriteID: d07c03248dfb806468fd10688c51bca8
     internalID: 0
     vertices: []
     indices: 
@@ -287,14 +212,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries:
       - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":3.0,"y":2.0},"gridSpriteSize":{"x":64.0,"y":48.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":true,"isAlternate":false}'
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":2.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      _Branches_SpSh_0: -3105969308339219690
-      _Branches_SpSh_1: -5119356652966353080
-      _Branches_SpSh_2: 8330156132885443413
-      _Branches_SpSh_3: 1940826200460371342
-      _Branches_SpSh_4: -8128526512231614199
-      _Branches_SpSh_5: 1767873822
+      Branches_Tip_0: 7281492504436516793
+      Branches_Tip_1: 1866245587752334419
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
