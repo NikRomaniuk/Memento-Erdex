@@ -15,9 +15,9 @@ MonoBehaviour:
   id: 
   collider: {fileID: 0}
   sprite: {fileID: 0}
-  side: 0
+  avaliableSide: 0
   canBeYFlipped: 1
-  topNearPoint: {x: 0, y: 0}
-  topFarPoint: {x: 0, y: 0}
-  downNearPoint: {x: 0, y: 0}
-  downFarPoint: {x: 0, y: 0}
+  downNearPoint: {x: 1.15, y: 0.45000002}
+  downFarPoint: {x: 0.8, y: 0.65000004}
+  topNearPoint: {x: 0.8, y: 1.6}
+  topFarPoint: {x: 0, y: 0.90000004}

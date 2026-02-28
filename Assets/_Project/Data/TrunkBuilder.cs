@@ -1,21 +1,42 @@
 using UnityEngine;
 
-[RequireComponent(typeof(SpriteRenderer), typeof(BoxCollider2D))]
 public class TrunkBuilder : MonoBehaviour
 {
     [Header("Reference Data")]
     [SerializeField] private TrunkData _dataToEdit;
-    
-    [Header("Scene Components")]
-    [SerializeField] private SpriteRenderer _visual;
-    [SerializeField] private BoxCollider2D _physics;
+    private SpriteRenderer _visual;
+    private BoxCollider2D _physics;
+
+    public bool PrepareToBake()
+    {
+        var segment = GetComponent<TrunkSegment>();
+        if (segment == null)
+        {
+            Debug.LogError("TrunkSegment component not found on this GameObject!");
+            return false;
+        }
+
+        _visual = segment._spriteRenderer;
+        _physics = segment._boxCollider;
+
+        Debug.Log("References loaded from TrunkSegment");
+        return true;
+    }
 
     public void BakeToScriptableObject()
     {
-        // Bake visual data
+        // --- Preparations ---
+        // Try to get components from TrunkSegment
+        if (!PrepareToBake())
+        {
+            Debug.LogError("Failed to prepare data for baking. Aborting BakeToScriptableObject");
+            return;
+        }
+
+        // --- Bake visual data ---
         _dataToEdit.sprite = _visual.sprite;
 
-        // Bake collider data
+        // --- Bake collider data ---
         _dataToEdit.collider = _physics;
 
 #if UNITY_EDITOR
