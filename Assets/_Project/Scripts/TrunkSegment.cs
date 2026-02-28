@@ -17,6 +17,7 @@ public class TrunkSegment : MonoBehaviour
 
     // --- General ---
     public Side _side = Side.Right; // On which side is this trunk segment
+    public bool _isYFlipped = false; // Is this trunk segment flipped vertically
 
     // --- Maths ---
     // Points
@@ -34,6 +35,40 @@ public class TrunkSegment : MonoBehaviour
 
         // Get outline
         _outlineRenderer = _spriteRenderer.transform.GetChild(0).GetComponent<SpriteRenderer>();
+
+        Initialize(_trunkData, Side.Right);
+    }
+
+    private void ApplyVisuals(int flipX)
+    {
+        // ==============
+        // --- Sprite ---
+        // ==============
+        _spriteRenderer.sprite = _trunkData.sprite; // Set sprite
+
+        // Flip sprite visually
+        // Horizontal
+        if (_side == Side.Right){ _spriteRenderer.flipX = false; }
+        else {_spriteRenderer.flipX = true; }
+        // Vertical
+        _spriteRenderer.flipY = _isYFlipped;
+
+
+        // Flip sprite X coords
+        var pos = _spriteRenderer.transform.localPosition;
+        _spriteRenderer.transform.localPosition = new Vector3(pos.x * flipX, pos.y, pos.z); 
+        
+        // ===============
+        // --- Outline ---
+        // ===============
+        _outlineRenderer.sprite = _trunkData.sprite; // Set outline sprite
+
+        // Flip sprite visually
+        // Horizontal
+        if (_side == Side.Right){ _outlineRenderer.flipX = false; }
+        else {_outlineRenderer.flipX = true; }
+        // Vertical
+        _outlineRenderer.flipY = _isYFlipped;
     }
 
     private void ApplyData()
@@ -44,17 +79,11 @@ public class TrunkSegment : MonoBehaviour
         var flipX = _side == Side.Left ? -1 : 1; // Flip some values if on the left side
 
         // --- Apply visual data ---
-        _spriteRenderer.sprite = _trunkData.sprite; // Set sprite
-        // Flip sprite visually
-        if (_side == Side.Right){ _spriteRenderer.flipX = false; }
-        else {_spriteRenderer.flipX = true; }
-        // Flip sprite X coords
-        var pos = _spriteRenderer.transform.localPosition;
-        _spriteRenderer.transform.localPosition = new Vector3(pos.x * flipX, pos.y, pos.z); 
+        ApplyVisuals(flipX);
 
         // --- Apply collider data ---
-        _boxCollider.offset = _trunkData.collider.offset;
-        _boxCollider.size = _trunkData.collider.size;
+        //_boxCollider.offset = _trunkData.collider.offset;
+        _boxCollider.size = _trunkData.colliderSize;
 
         // --- Apply points data ---
         // Set up points
@@ -68,7 +97,7 @@ public class TrunkSegment : MonoBehaviour
     }
 
     /// <summary>
-    /// Initialize segment with TrunkData (for Object Pooling)
+    /// Initialize segment with TrunkData
     /// </summary>
     public void Initialize(TrunkData data, Side side)
     {
@@ -82,8 +111,23 @@ public class TrunkSegment : MonoBehaviour
     public float DownWidth => _downWidth;
     public float TopWidth => _topWidth;
 
+    /// <summary>
+    /// Returns the coordinates of all snap points
+    /// </summary>
+    /// <returns>Array containing [downNear, downFar, topNear, topFar] points</returns>
+    public Vector2[] GetPoints()
+    {
+        return new Vector2[] 
+        { 
+            _downNearPoint, 
+            _downFarPoint, 
+            _topNearPoint, 
+            _topFarPoint 
+        };
+    }
+
 #if UNITY_EDITOR
-    // Draw points in editor
+    // Draw points in Editor
     private void OnDrawGizmosSelected()
     {
         // Private constants for gizmos
@@ -91,7 +135,7 @@ public class TrunkSegment : MonoBehaviour
         Color nearColor = new Color(0.7f, 0.45f, 1f); // Purple
         Color farColor = new Color(0.45f, 0.4f, 1f); // Deep Purple-blue
         
-        // Icon paths (place your textures in Resources folder or use direct asset paths)
+        // Icon paths (Path starts from Resources folder)
         const string downNearIconPath = "Gizmos/Icons/DownNearPoint";
         const string downFarIconPath = "Gizmos/Icons/DownFarPoint";
         const string topNearIconPath = "Gizmos/Icons/TopNearPoint";
@@ -112,6 +156,7 @@ public class TrunkSegment : MonoBehaviour
         DrawIcon(transform.TransformPoint(_topFarPoint), topFarIcon, iconWorldSize, farColor);
     }
 
+    // Helper method to draw icons in the scene view
     private void DrawIcon(Vector3 worldPosition, Texture2D icon, float worldSize, Color color)
     {
         if (icon == null) return;

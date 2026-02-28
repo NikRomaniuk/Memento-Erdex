@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20ed360243168d8488af8b59eac39fca, type: 3}
   m_Name: TestTrunkData
   m_EditorClassIdentifier: Assembly-CSharp::TrunkData
-  id: 
-  collider: {fileID: 0}
-  sprite: {fileID: 0}
+  id: test_01
+  colliderSize: {x: 1.5, y: 3.1}
+  sprite: {fileID: 5268548805000089639, guid: 4854330c24a4c4b4880eb4cbebe4833b, type: 3}
   avaliableSide: 0
-  canBeYFlipped: 1
-  downNearPoint: {x: 1.15, y: 0.45000002}
-  downFarPoint: {x: 0.8, y: 0.65000004}
-  topNearPoint: {x: 0.8, y: 1.6}
-  topFarPoint: {x: 0, y: 0.90000004}
+  canBeYFlipped: 0
+  downNearPoint: {x: 0, y: 0}
+  downFarPoint: {x: 1.4, y: 0}
+  topNearPoint: {x: 0, y: 3.1000001}
+  topFarPoint: {x: 1.4, y: 3.1000001}

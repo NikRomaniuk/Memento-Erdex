@@ -20,7 +20,7 @@ public class TrunkData : ScriptableObject
     // Unique identifier (e.g. "stone_sharp_01", "mossy_rounded_02")
     public string id;
     // Collider used for physics interactions
-    public BoxCollider2D collider;
+    public Vector2 colliderSize;
     // Visual representation
     public Sprite sprite;
     // On which side this trunk can be on
