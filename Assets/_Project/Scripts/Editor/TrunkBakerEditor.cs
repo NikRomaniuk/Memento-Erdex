@@ -1,25 +1,25 @@
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(TrunkBuilder))]
-public class TrunkBuilderEditor : Editor
+[CustomEditor(typeof(TrunkBaker))]
+public class TrunkBakerEditor : Editor
 {
     public override void OnInspectorGUI()
     {
         DrawDefaultInspector();
 
-        TrunkBuilder builder = (TrunkBuilder)target;
+        TrunkBaker baker = (TrunkBaker)target;
 
         EditorGUILayout.Space(10);
         
         if (GUILayout.Button("Bake to ScriptableObject", GUILayout.Height(30)))
         {
-            builder.BakeToScriptableObject();
+            baker.BakeToScriptableObject();
         }
 
-        if (builder.DataToEdit != null)
+        if (baker.DataToEdit != null)
         {
-            EditorGUILayout.HelpBox($"Current Target: {builder.DataToEdit.name}", MessageType.Info);
+            EditorGUILayout.HelpBox($"Current Target: {baker.DataToEdit.name}", MessageType.Info);
         }
         else
         {

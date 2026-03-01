@@ -233,7 +233,6 @@ GameObject:
   m_Component:
   - component: {fileID: 348048614}
   - component: {fileID: 348048615}
-  - component: {fileID: 348048616}
   m_Layer: 0
   m_Name: Tree
   m_TagString: Untagged
@@ -272,18 +271,6 @@ SortingGroup:
   m_SortingOrder: 0
   m_SortAtRoot: 0
   m_Sort3DAs2D: 0
---- !u!114 &348048616
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 348048613}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fdcd9e45d70d16e42af3d3a1e74911bb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TreeProperties
 --- !u!1 &440536800
 GameObject:
   m_ObjectHideFlags: 0
@@ -1584,7 +1571,7 @@ MonoBehaviour:
   _spriteRenderer: {fileID: 440536802}
   _boxCollider: {fileID: 440536803}
   _side: 1
-  _isYFlipped: 0
+  _isYFlipped: 1
   _downNearPoint: {x: 0, y: 0}
   _downFarPoint: {x: 0, y: 0}
   _topNearPoint: {x: 0, y: 0}

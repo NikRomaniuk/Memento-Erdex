@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Linq;
 
-public class TrunkBuilder : MonoBehaviour
+public class TrunkBaker : MonoBehaviour
 {
     [Header("Reference Data")]
     [SerializeField] private TrunkData _dataToEdit;
@@ -11,7 +11,7 @@ public class TrunkBuilder : MonoBehaviour
 
     [Header("General Data")]
     [SerializeField] private string _id;
-    [SerializeField] private AvaliableSide _avaliableSide = AvaliableSide.Both;
+    [SerializeField] private TrunkAvaliableSide _avaliableSide = TrunkAvaliableSide.Both;
     [SerializeField] private bool _canBeFlippedVertically = true;
 
     public bool PrepareToBake()
@@ -110,3 +110,4 @@ public class TrunkBuilder : MonoBehaviour
 
     public TrunkData DataToEdit => _dataToEdit;
 }
+
