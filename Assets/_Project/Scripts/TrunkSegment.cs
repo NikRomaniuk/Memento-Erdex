@@ -9,15 +9,11 @@ public enum Side
 public class TrunkSegment : MonoBehaviour
 {
     [Header("Data")]
-    [SerializeField] private TrunkData _trunkData;
     // --- References ---
     public SpriteRenderer _spriteRenderer;
-    private SpriteRenderer _outlineRenderer;
     public BoxCollider2D _boxCollider;
 
     // --- General ---
-    public Side _side = Side.Right; // On which side is this trunk segment
-    public bool _isYFlipped = false; // Is this trunk segment flipped vertically
 
     // --- Maths ---
     // Points
@@ -32,82 +28,24 @@ public class TrunkSegment : MonoBehaviour
     private void Awake()
     {
         // --- Preparations ---
-
-        // Get outline
-        _outlineRenderer = _spriteRenderer.transform.GetChild(0).GetComponent<SpriteRenderer>();
-
-        Initialize(_trunkData, Side.Right);
     }
 
-    private void ApplyVisuals(int flipX)
+    /// <summary>
+    /// Set points data and calculate widths
+    /// </summary>
+    public void SetPoints(Vector2 downNear, Vector2 downFar, Vector2 topNear, Vector2 topFar)
     {
-        // ==============
-        // --- Sprite ---
-        // ==============
-        _spriteRenderer.sprite = _trunkData.sprite; // Set sprite
-
-        // Flip sprite visually
-        // Horizontal
-        if (_side == Side.Right){ _spriteRenderer.flipX = false; }
-        else {_spriteRenderer.flipX = true; }
-        // Vertical
-        _spriteRenderer.flipY = _isYFlipped;
-
-
-        // Flip sprite X coords
-        var pos = _spriteRenderer.transform.localPosition;
-        _spriteRenderer.transform.localPosition = new Vector3(pos.x * flipX, pos.y, pos.z); 
+        _downNearPoint = downNear;
+        _downFarPoint = downFar;
+        _topNearPoint = topNear;
+        _topFarPoint = topFar;
         
-        // ===============
-        // --- Outline ---
-        // ===============
-        _outlineRenderer.sprite = _trunkData.sprite; // Set outline sprite
-
-        // Flip sprite visually
-        // Horizontal
-        if (_side == Side.Right){ _outlineRenderer.flipX = false; }
-        else {_outlineRenderer.flipX = true; }
-        // Vertical
-        _outlineRenderer.flipY = _isYFlipped;
-    }
-
-    private void ApplyData()
-    {
-        if (_trunkData == null) return;
-
-        // --- Helpers ---
-        var flipX = _side == Side.Left ? -1 : 1; // Flip some values if on the left side
-
-        // --- Apply visual data ---
-        ApplyVisuals(flipX);
-
-        // --- Apply collider data ---
-        //_boxCollider.offset = _trunkData.collider.offset;
-        _boxCollider.size = _trunkData.colliderSize;
-
-        // --- Apply points data ---
-        // Set up points
-        _downNearPoint = _trunkData.downNearPoint;
-        _downFarPoint = new Vector2(_trunkData.downFarPoint.x * flipX, _trunkData.downFarPoint.y);
-        _topNearPoint = _trunkData.topNearPoint;
-        _topFarPoint = new Vector2(_trunkData.topFarPoint.x * flipX, _trunkData.topFarPoint.y);
         // Calculate widths
         _downWidth = Vector2.Distance(_downNearPoint, _downFarPoint);
         _topWidth = Vector2.Distance(_topNearPoint, _topFarPoint);
     }
 
-    /// <summary>
-    /// Initialize segment with TrunkData
-    /// </summary>
-    public void Initialize(TrunkData data, Side side)
-    {
-        _trunkData = data;
-        _side = side;
-        ApplyData();
-    }
-
-    // Public accessor in case other systems need the data at runtime
-    public TrunkData Data => _trunkData;
+    // Public accessors
     public float DownWidth => _downWidth;
     public float TopWidth => _topWidth;
 

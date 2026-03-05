@@ -12,5 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 775058f9cea324040a4d91de3bba4525, type: 3}
   m_Name: NewChunkData
   m_EditorClassIdentifier: Assembly-CSharp::ChunkData
-  id: 
-  height: 0
+  id: oooaoa
+  height: 2.25
+  branchSlots:
+  - yPoint: 2.25
+    branchOrientation: 0

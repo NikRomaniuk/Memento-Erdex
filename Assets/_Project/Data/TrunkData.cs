@@ -21,8 +21,11 @@ public class TrunkData : ScriptableObject
     public string id;
     // Collider used for physics interactions
     public Vector2 colliderSize;
+    public Vector2 colliderOffset;
     // Visual representation
     public Sprite sprite;
+    // Sprite offset
+    [Step(0.05f)] public Vector2 spriteOffset;
     // On which side this trunk can be on
     public TrunkAvaliableSide avaliableSide = TrunkAvaliableSide.Both;
     // Can sprite be flipped vertically
@@ -33,6 +36,9 @@ public class TrunkData : ScriptableObject
     [Step(0.05f)] public Vector2 downFarPoint;
     [Step(0.05f)] public Vector2 topNearPoint;
     [Step(0.05f)] public Vector2 topFarPoint;
+
+    // Height calculated as distance from downNearPoint to topNearPoint
+    public float Height => Vector2.Distance(downNearPoint, topNearPoint);
 
 
     //[Header("Gameplay Configuration")]

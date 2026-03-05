@@ -23,12 +23,6 @@ public struct BranchSlot
 [CreateAssetMenu(fileName = "NewChunkData", menuName = "Entries/ChunkData")]
 public class ChunkData : ScriptableObject
 {
-    // NOTE FOR MYSELF:
-    // BAD EXAMPLE -> [Range(0f, 1f)] public float slipperyValue = 0;
-    // Everything here should be static
-    // ====================================
-    // GOOD EXAMPLE -> everything below lol
-
     [Header("Main Configuration")]
     // Unique identifier (e.g. "stone_sharp_01", "mossy_rounded_02")
     public string id;

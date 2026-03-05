@@ -85,9 +85,11 @@ public class TrunkBaker : MonoBehaviour
 
         // --- Bake visual data ---
         _dataToEdit.sprite = _visual.sprite;
+        _dataToEdit.spriteOffset = _visual.transform.localPosition;
 
         // --- Bake collider data ---
         _dataToEdit.colliderSize = _physics.size;
+        _dataToEdit.colliderOffset = _physics.offset;
 
         // --- Bake points data ---
         var segment = GetComponent<TrunkSegment>();

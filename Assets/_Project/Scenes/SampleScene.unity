@@ -367,7 +367,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 100
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 5268548805000089639, guid: 4854330c24a4c4b4880eb4cbebe4833b, type: 3}
   m_Color: {r: 0.5828587, g: 0.60381407, b: 0.6981132, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -375,7 +375,7 @@ SpriteRenderer:
   m_Size: {x: 4, y: 4}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
 --- !u!61 &440536803
 BoxCollider2D:
@@ -421,7 +421,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.0001, y: 0.0001}
+  m_Size: {x: 1.5, y: 3.1}
   m_EdgeRadius: 0
 --- !u!1 &508166963
 GameObject:
@@ -693,6 +693,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 555159125}
+  - component: {fileID: 555159128}
+  - component: {fileID: 555159127}
+  - component: {fileID: 555159126}
   m_Layer: 0
   m_Name: '[Tree Generator]'
   m_TagString: Untagged
@@ -715,6 +718,49 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &555159126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 555159124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32dc635f82cb9354ca99126f2929126a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TrunkGenerator
+  _trunkDataPool:
+  - {fileID: 11400000, guid: 0fcccfac5c7ad0f43a90bf8a25ae0c44, type: 2}
+  - {fileID: 11400000, guid: 24dc067f18d04304d82b0c9a86d934f5, type: 2}
+--- !u!114 &555159127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 555159124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48847138df37b96418f9fe6dcb853a57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ChunkGenerator
+  _chunkDataPool:
+  - {fileID: 11400000, guid: 4742ef1f4d6a35142ad62a1b08390e68, type: 2}
+--- !u!114 &555159128
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 555159124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa4025911dd487f41914bcef9e8749c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TreeGenerator
+  _seed: 888
+  _treeHeight: 10
 --- !u!1 &586060180
 GameObject:
   m_ObjectHideFlags: 0
@@ -1385,7 +1431,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -100
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 5268548805000089639, guid: 4854330c24a4c4b4880eb4cbebe4833b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1393,7 +1439,7 @@ SpriteRenderer:
   m_Size: {x: 4, y: 4}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
 --- !u!1 &1847309055
 GameObject:
@@ -1545,8 +1591,9 @@ GameObject:
   - component: {fileID: 2105178947}
   - component: {fileID: 2105178948}
   - component: {fileID: 2105178949}
+  - component: {fileID: 2105178950}
   m_Layer: 0
-  m_Name: Trunk01
+  m_Name: TrunkBlank01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1580,15 +1627,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 573d008d3c522574aa3a31de96383879, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TrunkSegment
-  _trunkData: {fileID: 11400000, guid: 423012408de50f84080243d9a0589e8e, type: 2}
   _spriteRenderer: {fileID: 440536802}
   _boxCollider: {fileID: 440536803}
-  _side: 1
-  _isYFlipped: 0
   _downNearPoint: {x: 0, y: 0}
-  _downFarPoint: {x: 0, y: 0}
-  _topNearPoint: {x: 0, y: 0}
-  _topFarPoint: {x: 0, y: 0}
+  _downFarPoint: {x: 1.4, y: 0}
+  _topNearPoint: {x: 0, y: 3.1000001}
+  _topFarPoint: {x: 1.4, y: 3.1000001}
 --- !u!114 &2105178949
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1601,10 +1645,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b70e497099ee173439f7a219c693131d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TrunkBaker
-  _dataToEdit: {fileID: 11400000, guid: 423012408de50f84080243d9a0589e8e, type: 2}
-  _id: test_01
+  _dataToEdit: {fileID: 11400000, guid: 6073461d7559ef14982fbfc139766e5b, type: 2}
+  _id: simple_02
   _avaliableSide: 0
-  _canBeFlippedVertically: 0
+  _canBeFlippedVertically: 1
+--- !u!114 &2105178950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2105178946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 792faa74501725647a374f6525a09b5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TrunkBuilder
+  _dataToBuild: {fileID: 11400000, guid: 0fcccfac5c7ad0f43a90bf8a25ae0c44, type: 2}
+  _side: 1
+  _isYFlipped: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
