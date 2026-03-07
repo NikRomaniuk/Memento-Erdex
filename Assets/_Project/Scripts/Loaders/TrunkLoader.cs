@@ -1,0 +1,59 @@
+using UnityEngine;
+
+public static class TrunkLoader
+{
+    public static BlanksLibrary BlanksLibrary = TreeLoader.BlanksLibrary;
+
+    /// <summary>
+    /// Loads a Trunk Part into the scene
+    /// </summary>
+    public static TrunkSegment Load(TrunkGen trunkGen)
+    {
+        // --- Preparations ---
+        // Get a blank from the Library
+        var blank = (TrunkSegment)BlanksLibrary.GetBlank(BlanksLibrary.BlankType.Trunk);
+
+        // --- Components ---
+        TrunkBuilder blankBuilder = blank.GetComponent<TrunkBuilder>();
+        SpriteRenderer spriteRenderer = blank._spriteRenderer;
+
+        // --- Load ---
+        // Initialize blank with data
+        blankBuilder.Initialize(trunkGen.TrunkData, trunkGen.Side, trunkGen.IsYFlipped);
+
+        // Set position
+        blank.transform.position = new Vector3(0, trunkGen.Height, 0);
+        // Set sorting order
+        spriteRenderer.sortingOrder = trunkGen.SpriteOrder;
+
+        // --- Activate ---
+        blank.gameObject.SetActive(true);
+
+        return blank;
+    }
+
+    /// <summary>
+    /// Unloads a Trunk Part from the scene
+    /// </summary>
+    public static void Unload(TrunkSegment trunkPart)
+    {
+        // --- Components ---
+        TrunkBuilder blankBuilder = trunkPart.GetComponent<TrunkBuilder>();
+        SpriteRenderer spriteRenderer = trunkPart._spriteRenderer;
+
+        // --- Unload ---
+        // Clear all loaded data from the blank
+        blankBuilder.Clear();
+
+        // Reset position
+        trunkPart.transform.position = Vector3.zero;
+        // Reset sorting order
+        spriteRenderer.sortingOrder = 0;
+
+        // --- Deactivate ---
+        trunkPart.gameObject.SetActive(false);
+
+        // --- Return to Library ---
+        BlanksLibrary.ReturnBlank(trunkPart, BlanksLibrary.BlankType.Trunk);
+    }
+}

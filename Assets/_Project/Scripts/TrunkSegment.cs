@@ -13,8 +13,7 @@ public class TrunkSegment : MonoBehaviour
     public SpriteRenderer _spriteRenderer;
     public BoxCollider2D _boxCollider;
 
-    // --- General ---
-
+    [Header("Properties")]
     // --- Maths ---
     // Points
     [Step(0.05f)] [SerializeField] private Vector2 _downNearPoint;

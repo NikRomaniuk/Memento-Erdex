@@ -96,7 +96,7 @@ public class TrunkBuilder : MonoBehaviour
         // --- Apply collider data ---
         //_trunkPart._boxCollider.offset = _dataToBuild.collider.offset;
         _collider.size = _dataToBuild.colliderSize;
-        _collider.offset = _dataToBuild.colliderOffset;
+        _collider.offset = new Vector2(_dataToBuild.colliderOffset.x * flipX, _dataToBuild.colliderOffset.y);
 
         // --- Apply points data ---
         // Set up points
@@ -105,20 +105,49 @@ public class TrunkBuilder : MonoBehaviour
         Vector2 topNearPoint = _dataToBuild.topNearPoint;
         Vector2 topFarPoint = new Vector2(_dataToBuild.topFarPoint.x * flipX, _dataToBuild.topFarPoint.y);
         
+        // Swap far points' X coordinates if flipped vertically
+        if (_isYFlipped)
+        {
+            float tmpX = downFarPoint.x;
+            downFarPoint.x = topFarPoint.x;
+            topFarPoint.x = tmpX;
+        }
+        
         _trunkPart.SetPoints(downNearPoint, downFarPoint, topNearPoint, topFarPoint);
     }
 
     /// <summary>
     /// Initialize segment with TrunkData
     /// </summary>
-    private void Initialize(TrunkData data, Side side, bool isYFlipped)
+    public void Initialize(TrunkData data, Side side, bool isYFlipped)
     {
-        if (_trunkPart == null) return;
+        if (_trunkPart == null && !PrepareToBuild()) return;
 
+        // --- Validations  ---
+        // Can be generated on the specified side
+        bool isSideValid = data.avaliableSide == TrunkAvaliableSide.Both ||
+                           (data.avaliableSide == TrunkAvaliableSide.Left && side == Side.Left) ||
+                           (data.avaliableSide == TrunkAvaliableSide.Right && side == Side.Right);
+        
+        if (!isSideValid)
+        {
+            Debug.LogWarning($"Trunk '{data.name}' (ID: {data.id}) cannot be placed on {side} side. Available side: {data.avaliableSide}");
+            return;
+        }
+
+        // Can be generated flipped vertically
+        if (isYFlipped && !data.canBeYFlipped)
+        {
+            Debug.LogWarning($"Trunk '{data.name}' (ID: {data.id}) cannot be flipped vertically");
+            return;
+        }
+
+        // --- Assign data ---
         _dataToBuild = data;
         _side = side;
         _isYFlipped = isYFlipped;
         
+        // --- Apply data ---
         ApplyData();
 
 #if UNITY_EDITOR
@@ -163,6 +192,9 @@ public class TrunkBuilder : MonoBehaviour
         UnityEditor.EditorUtility.SetDirty(_trunkPart);
         UnityEditor.EditorUtility.SetDirty(gameObject);
 #endif
+
+        // Deactivate GameObject
+        _trunkPart.gameObject.SetActive(false);
 
         Debug.Log("TrunkPart cleared to initial state");
     }

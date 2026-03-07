@@ -34,6 +34,13 @@ public class TrunkGenerator : MonoBehaviour
     {
         float currentHeight = 0f;
 
+        // --- Sprite order alternation ---
+        // Right: 111 -> 112 -> 111 -> ...
+        // Left:  101 -> 102 -> 101 -> ...
+        short spriteOrderBase = side == Side.Right ? (short)111 : (short)101;
+        bool spriteOrderToggle = false; // false = base, true = base+1
+
+        // --- Generate Trunk Parts ---
         while (currentHeight < targetHeight)
         {
             // Get random TrunkData from pool that can be on this side
@@ -48,8 +55,12 @@ public class TrunkGenerator : MonoBehaviour
             // Generate random isYFlipped with 50/50 chance
             bool isYFlipped = selectedTrunkData.canBeYFlipped && random.Next(0, 2) == 1;
 
+            // Compute alternating sprite order
+            short spriteOrder = (short)(spriteOrderBase + (spriteOrderToggle ? 1 : 0));
+            spriteOrderToggle = !spriteOrderToggle;
+
             // Create TrunkGen
-            TrunkGen trunkGen = new TrunkGen(selectedTrunkData, side, isYFlipped);
+            TrunkGen trunkGen = new TrunkGen(selectedTrunkData, side, isYFlipped, currentHeight, spriteOrder);
 
             // Find which ChunkGen this TrunkPart belongs to
             ChunkGen targetChunk = FindChunkAtHeight(treeGen, currentHeight);
