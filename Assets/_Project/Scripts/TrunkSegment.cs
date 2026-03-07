@@ -6,7 +6,7 @@ public enum Side
     Right
 }
 
-public class TrunkSegment : MonoBehaviour
+public class TrunkSegment : MonoBehaviour, IBakeable, IBuildable
 {
     [Header("Data")]
     // --- References ---
@@ -47,6 +47,30 @@ public class TrunkSegment : MonoBehaviour
     // Public accessors
     public float DownWidth => _downWidth;
     public float TopWidth => _topWidth;
+
+    // --- IBakeable ---
+    public void GatherData(IData data)
+    {
+        if (data is not TrunkData trunkData) return;
+
+        // --- Bake visual data ---
+        trunkData.sprite = _spriteRenderer.sprite;
+        trunkData.spriteOffset = _spriteRenderer.transform.localPosition;
+
+        // --- Bake collider data ---
+        trunkData.colliderSize = _boxCollider.size;
+        trunkData.colliderOffset = _boxCollider.offset;
+
+        // --- Bake points data ---
+        var points = GetPoints();
+        trunkData.downNearPoint = points[0];
+        trunkData.downFarPoint = points[1];
+        trunkData.topNearPoint = points[2];
+        trunkData.topFarPoint = points[3];
+    }
+
+    // --- IBuildable ---
+    public void SetData() { }
 
     /// <summary>
     /// Returns the coordinates of all snap points

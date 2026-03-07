@@ -233,8 +233,8 @@ GameObject:
   m_Component:
   - component: {fileID: 94264095}
   - component: {fileID: 94264094}
+  - component: {fileID: 94264096}
   - component: {fileID: 94264093}
-  - component: {fileID: 94264092}
   m_Layer: 0
   m_Name: ChunkBlankBakery
   m_TagString: Untagged
@@ -242,20 +242,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
---- !u!114 &94264092
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 94264091}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7085da8612b01b540a8fa0ba0e445b58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ChunkBaker
-  _dataToEdit: {fileID: 11400000, guid: 9d761bfd19fe88e428ec644112657fa9, type: 2}
-  _id: nomnomnom_0202
 --- !u!114 &94264093
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -309,6 +295,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &94264096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 94264091}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7648eb2880b70c341afee9ad1b52d267, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Baker
+  _blankType: 1
+  _id: 
+  _dataToEdit: {fileID: 0}
+  _avaliableSide: 0
+  _canBeFlippedVertically: 1
 --- !u!1 &180594621
 GameObject:
   m_ObjectHideFlags: 0
@@ -886,6 +889,7 @@ MonoBehaviour:
   _trunkDataPool:
   - {fileID: 11400000, guid: 0fcccfac5c7ad0f43a90bf8a25ae0c44, type: 2}
   - {fileID: 11400000, guid: 24dc067f18d04304d82b0c9a86d934f5, type: 2}
+  - {fileID: 11400000, guid: 6073461d7559ef14982fbfc139766e5b, type: 2}
 --- !u!114 &555159127
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1160,7 +1164,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 100
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -8392786590797957212, guid: 4854330c24a4c4b4880eb4cbebe4833b, type: 3}
+  m_Sprite: {fileID: 1267129427854860414, guid: 4854330c24a4c4b4880eb4cbebe4833b, type: 3}
   m_Color: {r: 0.5828587, g: 0.60381407, b: 0.6981132, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1645,7 +1649,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -100
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -8392786590797957212, guid: 4854330c24a4c4b4880eb4cbebe4833b, type: 3}
+  m_Sprite: {fileID: 1267129427854860414, guid: 4854330c24a4c4b4880eb4cbebe4833b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1757,7 +1761,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1359261598}
   - component: {fileID: 1359261597}
-  - component: {fileID: 1359261596}
+  - component: {fileID: 1359261599}
   - component: {fileID: 1359261595}
   m_Layer: 0
   m_Name: TrunkBlankBakery
@@ -1781,22 +1785,6 @@ MonoBehaviour:
   _dataToBuild: {fileID: 11400000, guid: 24dc067f18d04304d82b0c9a86d934f5, type: 2}
   _side: 1
   _isYFlipped: 0
---- !u!114 &1359261596
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1359261594}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b70e497099ee173439f7a219c693131d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TrunkBaker
-  _dataToEdit: {fileID: 11400000, guid: 6073461d7559ef14982fbfc139766e5b, type: 2}
-  _id: simple_02
-  _avaliableSide: 0
-  _canBeFlippedVertically: 1
 --- !u!114 &1359261597
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1812,7 +1800,7 @@ MonoBehaviour:
   _spriteRenderer: {fileID: 685150252}
   _boxCollider: {fileID: 685150250}
   _downNearPoint: {x: 0, y: 0}
-  _downFarPoint: {x: 1.4, y: 0}
+  _downFarPoint: {x: 1.25, y: 0}
   _topNearPoint: {x: 0, y: 3.1000001}
   _topFarPoint: {x: 1.15, y: 3.1000001}
 --- !u!4 &1359261598
@@ -1831,6 +1819,23 @@ Transform:
   - {fileID: 685150251}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1359261599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1359261594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7648eb2880b70c341afee9ad1b52d267, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Baker
+  _blankType: 0
+  _id: newBaker_888
+  _dataToEdit: {fileID: 11400000, guid: 6073461d7559ef14982fbfc139766e5b, type: 2}
+  _avaliableSide: 0
+  _canBeFlippedVertically: 1
 --- !u!1 &1459954391
 GameObject:
   m_ObjectHideFlags: 0
@@ -2360,6 +2365,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TrunkBaker
   _dataToEdit: {fileID: 11400000, guid: 6073461d7559ef14982fbfc139766e5b, type: 2}
+  _visual: {fileID: 0}
+  _physics: {fileID: 0}
   _id: simple_02
   _avaliableSide: 0
   _canBeFlippedVertically: 1

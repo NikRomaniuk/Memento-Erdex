@@ -21,8 +21,10 @@ public struct BranchSlot
 }
 
 [CreateAssetMenu(fileName = "NewChunkData", menuName = "Entries/ChunkData")]
-public class ChunkData : ScriptableObject
+public class ChunkData : ScriptableObject, IData
 {
+    string IData.id => id;
+
     [Header("Main Configuration")]
     // Unique identifier (e.g. "stone_sharp_01", "mossy_rounded_02")
     public string id;

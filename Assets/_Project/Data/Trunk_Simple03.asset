@@ -12,12 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20ed360243168d8488af8b59eac39fca, type: 3}
   m_Name: Trunk_Simple03
   m_EditorClassIdentifier: Assembly-CSharp::TrunkData
-  id: 
-  colliderSize: {x: 0, y: 0}
-  sprite: {fileID: 0}
+  id: newBaker_888
+  colliderSize: {x: 1.45, y: 3.1}
+  colliderOffset: {x: -0.025, y: 0}
+  sprite: {fileID: 1267129427854860414, guid: 4854330c24a4c4b4880eb4cbebe4833b, type: 3}
+  spriteOffset: {x: 0.75, y: 1.5500001}
   avaliableSide: 0
   canBeYFlipped: 1
   downNearPoint: {x: 0, y: 0}
-  downFarPoint: {x: 0, y: 0}
-  topNearPoint: {x: 0, y: 0}
-  topFarPoint: {x: 0, y: 0}
+  downFarPoint: {x: 1.25, y: 0}
+  topNearPoint: {x: 0, y: 3.1000001}
+  topFarPoint: {x: 1.15, y: 3.1000001}

@@ -8,8 +8,10 @@ public enum TrunkAvaliableSide
 }
 
 [CreateAssetMenu(fileName = "NewTrunkData", menuName = "Entries/TrunkData")]
-public class TrunkData : ScriptableObject
+public class TrunkData : ScriptableObject, IData
 {
+    string IData.id => id;
+
     // NOTE FOR MYSELF:
     // BAD EXAMPLE -> [Range(0f, 1f)] public float slipperyValue = 0;
     // Everything here should be static
