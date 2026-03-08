@@ -8,9 +8,10 @@ public enum Side
 
 public class TrunkSegment : MonoBehaviour, IBakeable, IBuildable
 {
-    [Header("Data")]
+    [Header("References")]
     // --- References ---
     public SpriteRenderer _spriteRenderer;
+    public SpriteRenderer _outlineRenderer;
     public BoxCollider2D _boxCollider;
 
     [Header("Properties")]
@@ -70,7 +71,74 @@ public class TrunkSegment : MonoBehaviour, IBakeable, IBuildable
     }
 
     // --- IBuildable ---
-    public void SetData() { }
+    public void SetData(IData data)
+    {
+        if (data is not TrunkData trunkData) return;
+        SetData(trunkData, Side.Right, false);
+    }
+
+    public void SetData(TrunkData data, Side side, bool isYFlipped)
+    {
+        int flipX = side == Side.Left ? -1 : 1;
+
+        // --- Apply visual data ---
+        _spriteRenderer.sprite = data.sprite;
+        _spriteRenderer.flipX = side != Side.Right;
+        _spriteRenderer.flipY = isYFlipped;
+        _spriteRenderer.transform.localPosition = new Vector3(data.spriteOffset.x * flipX, data.spriteOffset.y, 0);
+
+        // --- Apply outline ---
+        _outlineRenderer.sprite = data.sprite;
+        _outlineRenderer.flipX = side != Side.Right;
+        _outlineRenderer.flipY = isYFlipped;
+
+        // --- Apply collider data ---
+        _boxCollider.size = data.colliderSize;
+        _boxCollider.offset = new Vector2(data.colliderOffset.x * flipX, data.colliderOffset.y);
+
+        // --- Apply points data ---
+        Vector2 downNearPoint = data.downNearPoint;
+        Vector2 downFarPoint = new Vector2(data.downFarPoint.x * flipX, data.downFarPoint.y);
+        Vector2 topNearPoint = data.topNearPoint;
+        Vector2 topFarPoint = new Vector2(data.topFarPoint.x * flipX, data.topFarPoint.y);
+
+        if (isYFlipped)
+        {
+            float tmpX = downFarPoint.x;
+            downFarPoint.x = topFarPoint.x;
+            topFarPoint.x = tmpX;
+        }
+
+        SetPoints(downNearPoint, downFarPoint, topNearPoint, topFarPoint);
+    }
+
+    public void Clear()
+    {
+        // --- Reset sprites ---
+        _spriteRenderer.sprite = null;
+        _outlineRenderer.sprite = null;
+
+        // --- Reset transforms ---
+        _spriteRenderer.flipX = false;
+        _spriteRenderer.flipY = false;
+        _outlineRenderer.flipX = false;
+        _outlineRenderer.flipY = false;
+        _spriteRenderer.transform.localPosition = Vector3.zero;
+
+        // --- Reset collider ---
+        _boxCollider.size = Vector2.zero;
+        _boxCollider.offset = Vector2.zero;
+
+        // --- Reset points ---
+        SetPoints(Vector2.zero, Vector2.zero, Vector2.zero, Vector2.zero);
+
+#if UNITY_EDITOR
+        UnityEditor.EditorUtility.SetDirty(this);
+        UnityEditor.EditorUtility.SetDirty(gameObject);
+#endif
+        gameObject.SetActive(false);
+        Debug.Log("TrunkPart cleared to initial state");
+    }
 
     /// <summary>
     /// Returns the coordinates of all snap points

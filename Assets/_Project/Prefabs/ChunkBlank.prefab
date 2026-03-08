@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6259751544555327833}
   - component: {fileID: 4783017518763140724}
-  - component: {fileID: 3350411289192064863}
+  - component: {fileID: 6170182476066748720}
   m_Layer: 0
   m_Name: ChunkBlank
   m_TagString: Untagged
@@ -48,7 +48,7 @@ MonoBehaviour:
   _height: 0
   _branchSlots: []
   LoadedTrunks: []
---- !u!114 &3350411289192064863
+--- !u!114 &6170182476066748720
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -57,7 +57,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 8764034224343152010}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e290cc99fa5dcb94cb1d770c854dc166, type: 3}
+  m_Script: {fileID: 11500000, guid: 61b236510a9a195418b043e15298aad5, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ChunkBuilder
+  m_EditorClassIdentifier: Assembly-CSharp::Builder
+  _blankType: 1
   _dataToBuild: {fileID: 0}
+  _side: 1
+  _isYFlipped: 0

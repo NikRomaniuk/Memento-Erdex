@@ -14,11 +14,11 @@ public static class TrunkLoader
         var blank = (TrunkSegment)BlanksLibrary.GetBlank(BlanksLibrary.BlankType.Trunk);
 
         // --- Components ---
-        TrunkBuilder blankBuilder = blank.GetComponent<TrunkBuilder>();
+        Builder blankBuilder = blank.GetComponent<Builder>();
         SpriteRenderer spriteRenderer = blank._spriteRenderer;
 
         // --- Load ---
-        // Initialize blank with data
+        // Initialize blank with data & extra settings
         blankBuilder.Initialize(trunkGen.TrunkData, trunkGen.Side, trunkGen.IsYFlipped);
 
         // Set position
@@ -38,7 +38,7 @@ public static class TrunkLoader
     public static void Unload(TrunkSegment trunkPart)
     {
         // --- Components ---
-        TrunkBuilder blankBuilder = trunkPart.GetComponent<TrunkBuilder>();
+        Builder blankBuilder = trunkPart.GetComponent<Builder>();
         SpriteRenderer spriteRenderer = trunkPart._spriteRenderer;
 
         // --- Unload ---

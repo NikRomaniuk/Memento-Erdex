@@ -1,4 +1,5 @@
 public interface IBuildable
 {
-    void SetData();
+    void SetData(IData data);
+    void Clear();
 }

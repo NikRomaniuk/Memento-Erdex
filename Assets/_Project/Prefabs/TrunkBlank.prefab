@@ -253,7 +253,7 @@ GameObject:
   m_Component:
   - component: {fileID: 165786825348602873}
   - component: {fileID: 5737968378241493977}
-  - component: {fileID: 2367371967124539315}
+  - component: {fileID: 1995144965517453673}
   m_Layer: 0
   m_Name: TrunkBlank
   m_TagString: Untagged
@@ -290,12 +290,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TrunkSegment
   _spriteRenderer: {fileID: 3109208778259183138}
+  _outlineRenderer: {fileID: 3254301756779904429}
   _boxCollider: {fileID: 4256538611232661183}
   _downNearPoint: {x: 0, y: 0}
   _downFarPoint: {x: 0, y: 0}
   _topNearPoint: {x: 0, y: 0}
   _topFarPoint: {x: 0, y: 0}
---- !u!114 &2367371967124539315
+--- !u!114 &1995144965517453673
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -304,9 +305,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 8412540440102607035}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 792faa74501725647a374f6525a09b5e, type: 3}
+  m_Script: {fileID: 11500000, guid: 61b236510a9a195418b043e15298aad5, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TrunkBuilder
+  m_EditorClassIdentifier: Assembly-CSharp::Builder
+  _blankType: 0
   _dataToBuild: {fileID: 0}
   _side: 1
   _isYFlipped: 0
