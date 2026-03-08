@@ -31,6 +31,11 @@ public class OutlineShaderHelper : MonoBehaviour
         float finalWidth = 160f / (pixelWidth + 48f);
 
         _sr.GetPropertyBlock(_block);
+        // Explicitly bind the sprite's own atlas texture per-instance.
+        // SpriteRenderer.sprite assignment updates sharedMaterial._MainTex globally,
+        // which causes pooled renderers to steal each other's texture. Overriding it
+        // here via MaterialPropertyBlock pins the correct atlas to this instance only
+        _block.SetTexture("_MainTexExplicit", _sr.sprite.texture);
         _block.SetVector("_CustomUVScale", new Vector4(scaleX, scaleY, 0, 0));
         _block.SetVector("_CustomWorldScale", new Vector4(worldScale.x, worldScale.y, 1, 1));
         _block.SetVector("_SpritePixelSize", new Vector2(pixelWidth, pixelHeight));
