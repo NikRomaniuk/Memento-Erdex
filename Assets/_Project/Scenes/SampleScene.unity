@@ -234,28 +234,14 @@ GameObject:
   - component: {fileID: 94264095}
   - component: {fileID: 94264094}
   - component: {fileID: 94264096}
-  - component: {fileID: 94264093}
+  - component: {fileID: 94264097}
   m_Layer: 0
   m_Name: ChunkBlankBakery
   m_TagString: Untagged
   m_Icon: {fileID: 7422848464349959988, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &94264093
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 94264091}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e290cc99fa5dcb94cb1d770c854dc166, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ChunkBuilder
-  _dataToBuild: {fileID: 0}
-  _chunkManager: {fileID: 0}
+  m_IsActive: 1
 --- !u!114 &94264094
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -313,6 +299,23 @@ MonoBehaviour:
   _dataToEdit: {fileID: 0}
   _avaliableSide: 0
   _canBeFlippedVertically: 1
+--- !u!114 &94264097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 94264091}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61b236510a9a195418b043e15298aad5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Builder
+  _blankType: 1
+  _dataToBuild: {fileID: 0}
+  _side: 1
+  _isYFlipped: 0
+  _currentHeight: 0
 --- !u!1 &180594621
 GameObject:
   m_ObjectHideFlags: 0
@@ -803,7 +806,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.6000001, y: 0, z: -10}
+  m_LocalPosition: {x: 4.7000003, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -923,7 +926,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa4025911dd487f41914bcef9e8749c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TreeGenerator
-  _seed: 888
+  _seed: 21444
   _treeHeight: 80
   _blanksLibrary: {fileID: 180594622}
 --- !u!1 &586060180
@@ -1844,6 +1847,7 @@ MonoBehaviour:
   _dataToBuild: {fileID: 11400000, guid: bb7fa6722b55fa347949729072f145ae, type: 2}
   _side: 1
   _isYFlipped: 0
+  _currentHeight: 0
 --- !u!1 &1459954391
 GameObject:
   m_ObjectHideFlags: 0
@@ -1961,7 +1965,7 @@ Transform:
   m_GameObject: {fileID: 1460255974}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.6000001, y: 0, z: 0}
+  m_LocalPosition: {x: 4.7000003, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2282,7 +2286,7 @@ Transform:
   m_GameObject: {fileID: 2097949156}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.6000001, y: 0, z: -10}
+  m_LocalPosition: {x: 4.7000003, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

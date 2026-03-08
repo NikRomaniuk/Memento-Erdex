@@ -12,12 +12,19 @@ public static class ChunkLoader
         // --- Get blank ---
         var blank = (ChunkManager)BlanksLibrary.GetBlank(BlanksLibrary.BlankType.Chunk);
 
+        // --- Components ---
+        Builder blankBuilder = blank.GetComponent<Builder>();
+
         // --- Load Trunk Parts ---
         foreach (TrunkGen trunk in chunk.TrunkParts)
         {
             TrunkSegment loadedTrunk = TrunkLoader.Load(trunk);
             blank.LoadedTrunks.Add(loadedTrunk);
         }
+
+        // --- Load itself ---
+        // Initialize blank with data & extra settings
+        blankBuilder.Initialize(chunk.ChunkData, chunk.CurrentHeight);
 
         // --- Activate ---
         blank.gameObject.SetActive(true);

@@ -10,6 +10,9 @@ public class Builder : MonoBehaviour
     [SerializeField] private Side _side = Side.Right;
     [SerializeField] private bool _isYFlipped = false;
 
+    // --- Chunk Data ---
+    [SerializeField] private float _currentHeight = 0f;
+
     // --- Cached Component ---
     private IBuildable _buildable;
 
@@ -68,7 +71,7 @@ public class Builder : MonoBehaviour
                     return;
                 }
                 // Initialize ChunkManager with data
-                Initialize(chunkData);
+                Initialize(chunkData, _currentHeight);
                 Debug.Log($"Chunk successfully built from <b>{chunkData.name}</b>");
                 break;
 
@@ -112,7 +115,7 @@ public class Builder : MonoBehaviour
     /// <summary>
     /// Initialize ChunkManager with the given data
     /// </summary>
-    public void Initialize(ChunkData data)
+    public void Initialize(ChunkData data, float currentHeight)
     {
         if (!PrepareToBuild()) return;
 
@@ -122,7 +125,7 @@ public class Builder : MonoBehaviour
             return;
         }
 
-        _buildable.SetData(data);
+        ((ChunkManager)_buildable).SetData(data, currentHeight);
 
 #if UNITY_EDITOR
         UnityEditor.EditorUtility.SetDirty(gameObject);
