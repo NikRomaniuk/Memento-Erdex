@@ -1,12 +1,5 @@
 using UnityEngine;
 
-public enum BranchOrientation
-{
-    Left,
-    Right,
-    Middle
-}
-
 [System.Serializable]
 public struct BranchSlot
 {

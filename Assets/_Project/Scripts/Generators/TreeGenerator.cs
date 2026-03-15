@@ -35,7 +35,7 @@ public class TreeGenerator : MonoBehaviour
         if (_trunkGenerator == null) { Debug.LogError("TrunkGenerator component not found!"); return; }
         if (_blanksLibrary == null || !_blanksLibrary.IsReady)
         {
-            Debug.LogError("BlanksLibrary is not ready! Cannot generate tree.");
+            Debug.LogError("BlanksLibrary is not ready! Cannot generate tree");
             return;
         }
 
