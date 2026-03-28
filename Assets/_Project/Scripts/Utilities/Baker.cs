@@ -12,6 +12,9 @@ public class Baker : MonoBehaviour
     [SerializeField] private TrunkAvaliableSide _avaliableSide = TrunkAvaliableSide.Both;
     [SerializeField] private bool _canBeFlippedVertically = true;
 
+    // --- Branch Data ---
+    [SerializeField] private BranchData.AvailableSide _branchAvaliableSide = BranchData.AvailableSide.Both;
+
     // --- Cached Component ---
     private IBakeable _bakeable;
 
@@ -30,6 +33,9 @@ public class Baker : MonoBehaviour
         return true;
     }
 
+    /// <summary>
+    /// Validates the ID field
+    /// </summary>
     private bool ValidateId()
     {
         if (string.IsNullOrWhiteSpace(_id))
@@ -42,41 +48,42 @@ public class Baker : MonoBehaviour
         switch (_blankType)
         {
             case BlanksLibrary.BlankType.Trunk:
-                var trunkData = _dataToEdit as TrunkData;
-                var allTrunkData = UnityEditor.AssetDatabase.FindAssets("t:TrunkData")
-                    .Select(guid => UnityEditor.AssetDatabase.GUIDToAssetPath(guid))
-                    .Select(path => UnityEditor.AssetDatabase.LoadAssetAtPath<TrunkData>(path))
-                    .Where(data => data != null)
-                    .ToList();
-
-                var trunkDuplicates = allTrunkData.Where(data => data != trunkData && data.id == _id).ToList();
-                if (trunkDuplicates.Count > 0)
-                {
-                    Debug.LogError($"ID '{_id}' is already used by another TrunkData asset: {trunkDuplicates[0].name}. Please use a unique ID");
-                    return false;
-                }
-                break;
+                return ValidateUniqueIdForType<TrunkData>(_dataToEdit);
 
             case BlanksLibrary.BlankType.Chunk:
-                var chunkData = _dataToEdit as ChunkData;
-                var allChunkData = UnityEditor.AssetDatabase.FindAssets("t:ChunkData")
-                    .Select(guid => UnityEditor.AssetDatabase.GUIDToAssetPath(guid))
-                    .Select(path => UnityEditor.AssetDatabase.LoadAssetAtPath<ChunkData>(path))
-                    .Where(data => data != null)
-                    .ToList();
+                return ValidateUniqueIdForType<ChunkData>(_dataToEdit);
 
-                var chunkDuplicates = allChunkData.Where(data => data != chunkData && data.id == _id).ToList();
-                if (chunkDuplicates.Count > 0)
-                {
-                    Debug.LogError($"ID '{_id}' is already used by another ChunkData asset: {chunkDuplicates[0].name}. Please use a unique ID");
-                    return false;
-                }
-                break;
+            case BlanksLibrary.BlankType.Branch:
+                return ValidateUniqueIdForType<BranchData>(_dataToEdit);
         }
 #endif
 
         return true;
     }
+
+#if UNITY_EDITOR
+    /// <summary>
+    /// Helper method to validate that the provided ID is Unique
+    /// </summary>
+    private bool ValidateUniqueIdForType<T>(ScriptableObject currentData) where T : ScriptableObject, IData
+    {
+        var typedCurrentData = currentData as T;
+        var allData = UnityEditor.AssetDatabase.FindAssets($"t:{typeof(T).Name}")
+            .Select(guid => UnityEditor.AssetDatabase.GUIDToAssetPath(guid))
+            .Select(path => UnityEditor.AssetDatabase.LoadAssetAtPath<T>(path))
+            .Where(data => data != null)
+            .ToList();
+
+        var duplicate = allData.FirstOrDefault(data => data != typedCurrentData && data.id == _id);
+        if (duplicate != null)
+        {
+            Debug.LogError($"ID '{_id}' is already used by another {typeof(T).Name} asset: {duplicate.name}. Please use a unique ID");
+            return false;
+        }
+
+        return true;
+    }
+#endif
 
     /// <summary>
     /// Bakes current baker field values to the assigned ScriptableObject based on <see cref="_blankType"/>
@@ -141,6 +148,28 @@ public class Baker : MonoBehaviour
                 UnityEditor.AssetDatabase.SaveAssets();
 #endif
                 Debug.Log($"Data successfully baked to <b>{chunkData.name}</b> (ID: {chunkData.id})");
+                break;
+
+            case BlanksLibrary.BlankType.Branch:
+                var branchData = _dataToEdit as BranchData;
+                if (branchData == null)
+                {
+                    Debug.LogError("_dataToEdit is not a BranchData! Please assign a BranchData ScriptableObject");
+                    return;
+                }
+
+                // --- Bake Metadata ---
+                branchData.id = _id;
+                branchData.avaliableSide = _branchAvaliableSide;
+
+                // --- Bake Component Data ---
+                _bakeable.GatherData(branchData);
+
+#if UNITY_EDITOR
+                UnityEditor.EditorUtility.SetDirty(branchData);
+                UnityEditor.AssetDatabase.SaveAssets();
+#endif
+                Debug.Log($"Data successfully baked to <b>{branchData.name}</b> (ID: {branchData.id})");
                 break;
 
             default:

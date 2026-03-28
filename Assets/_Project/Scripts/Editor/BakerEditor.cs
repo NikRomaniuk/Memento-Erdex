@@ -24,6 +24,11 @@ public class BakerEditor : Editor
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("_avaliableSide"));
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("_canBeFlippedVertically"));
                 break;
+
+            case BlanksLibrary.BlankType.Branch:
+                EditorGUILayout.LabelField("Branch Options", EditorStyles.boldLabel);
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("_branchAvaliableSide"));
+                break;
         }
 
         serializedObject.ApplyModifiedProperties();

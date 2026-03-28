@@ -13,10 +13,10 @@ public struct IslandSlot
     public bool isStatic;
     [Step(0.05f)] public float xPoint;
 
-    // Used when isStatic == true.
+    // Used when isStatic == True
     public IslandData staticIslandData;
 
-    // Used when isStatic == false.
+    // Used when isStatic == False
     public bool allowTiny;
     public bool allowSmall;
     public bool allowMedium;
@@ -48,12 +48,16 @@ public class BranchData : ScriptableObject, IData
     [Header("Main Configuration")]
     // Unique identifier
     public string id;
+    public AvailableSide avaliableSide = AvailableSide.Both;
+    public int length;
 
     [Header("Islands Configuration")]
     public IslandSlot[] islandSlots;
 
     private void OnValidate()
     {
+        length = Mathf.Max(0, length);
+
         if (islandSlots == null) return;
 
         for (int i = 0; i < islandSlots.Length; i++)

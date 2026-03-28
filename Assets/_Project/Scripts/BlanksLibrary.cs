@@ -5,17 +5,19 @@ using UnityEngine;
 public class BlanksLibrary : MonoBehaviour
 {
     // Blank types
-    public enum BlankType { Trunk, Chunk }
+    public enum BlankType { Trunk, Chunk, Branch }
 
     [Header("Reference Data")]
     // Prefabs to instantiate blanks from
     [SerializeField] private TrunkSegment _trunkBlankPrefab; // For Trunk Parts
     [SerializeField] private ChunkManager _chunkManagerPrefab; // For Chunks
+    [SerializeField] private BranchManager _branchManagerPrefab; // For Branches
 
     [Header("Properties")]
     // Number of blanks to pre-generate
     [SerializeField] private int _trunkBlanksCount = 70; // For Trunk Parts
     [SerializeField] private int _chunkBlanksCount = 10; // For Chunks
+    [SerializeField] private int _branchBlanksCount = 50; // For Branches
     // Extra blanks generated when pool runs out
     [SerializeField] private int _emergencyBlanksCount = 10;  
 
@@ -28,6 +30,9 @@ public class BlanksLibrary : MonoBehaviour
 
     private ArrayList _chunkBlanks;                           // All instantiated Chunk blanks
     private Stack<ChunkManager> _availableChunkBlanks;        // Chunk blanks available for use
+
+    private ArrayList _branchBlanks;                          // All instantiated Branch blanks
+    private Stack<BranchManager> _availableBranchBlanks;      // Branch blanks available for use
 
     private void Awake()
     {
@@ -54,6 +59,12 @@ public class BlanksLibrary : MonoBehaviour
             return;
         }
 
+        if (_branchManagerPrefab == null)
+        {
+            Debug.LogError("BranchManagerPrefab is not assigned!");
+            return;
+        }
+
         // --- Instantiate blanks ---
         // Trunk Parts
         _trunkBlanks = new ArrayList(_trunkBlanksCount);
@@ -67,10 +78,17 @@ public class BlanksLibrary : MonoBehaviour
         for (int i = 0; i < _chunkBlanksCount; i++)
             CreateChunkBlank();
 
+        // Branches
+        _branchBlanks = new ArrayList(_branchBlanksCount);
+        _availableBranchBlanks = new Stack<BranchManager>(_branchBlanksCount);
+        for (int i = 0; i < _branchBlanksCount; i++)
+            CreateBranchBlank();
+
         // Blanks are ready to use!
         IsReady = true;
         Debug.Log($"Generated Trunks: '{_trunkBlanks.Count}'");
         Debug.Log($"Generated Chunks: '{_chunkBlanks.Count}'");
+        Debug.Log($"Generated Branches: '{_branchBlanks.Count}'");
     }
 
     /// <summary>
@@ -101,6 +119,16 @@ public class BlanksLibrary : MonoBehaviour
                 }
                 return _availableChunkBlanks.Pop();
 
+            case BlankType.Branch:
+                // --- Emergency refill ---
+                if (_availableBranchBlanks.Count == 0)
+                {
+                    Debug.LogWarning($"No available BranchBlanks! Generating {_emergencyBlanksCount} emergency blanks...");
+                    for (int i = 0; i < _emergencyBlanksCount; i++)
+                        CreateBranchBlank();
+                }
+                return _availableBranchBlanks.Pop();
+
             default:
                 Debug.LogWarning($"Unknown BlankType: {type}. Could not get blank from pool");
                 return null;
@@ -119,6 +147,9 @@ public class BlanksLibrary : MonoBehaviour
                 break;
             case BlankType.Chunk:
                 _availableChunkBlanks.Push((ChunkManager)blank);
+                break;
+            case BlankType.Branch:
+                _availableBranchBlanks.Push((BranchManager)blank);
                 break;
             default:
                 Debug.LogWarning($"Unknown BlankType: {type}. Could not return blank to pool");
@@ -146,5 +177,16 @@ public class BlanksLibrary : MonoBehaviour
         blank.gameObject.SetActive(false); // Deactivate until needed
         _chunkBlanks.Add(blank);
         _availableChunkBlanks.Push(blank);
+    }
+
+    /// <summary>
+    /// Instantiates a single Branch blank and pushes it onto <see cref="_availableBranchBlanks"/>
+    /// </summary>
+    private void CreateBranchBlank()
+    {
+        BranchManager blank = Instantiate(_branchManagerPrefab);
+        blank.gameObject.SetActive(false); // Deactivate until needed
+        _branchBlanks.Add(blank);
+        _availableBranchBlanks.Push(blank);
     }
 }
