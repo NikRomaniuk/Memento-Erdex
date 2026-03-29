@@ -4,8 +4,10 @@ public class BranchManager : MonoBehaviour, IBakeable, IBuildable
 {
     [Header("Properties")]
     [SerializeField] private int _length;
-    [SerializeField] private bool _drawRight = true;
     [SerializeField] private IslandSlot[] _islandSlots;
+
+    [Header("Draw Settings")]
+    [SerializeField] private bool _drawRight = true;
 
     // --- IBakeable ---
     public void GatherData(IData data)
@@ -50,74 +52,112 @@ public class BranchManager : MonoBehaviour, IBakeable, IBuildable
     }
 
 #if UNITY_EDITOR
+    private enum IconAnchor
+    {
+        TopLeft,
+        Center
+    }
+
     private void OnDrawGizmosSelected()
     {
-        if (_islandSlots == null || _islandSlots.Length == 0) return;
-
         const float TINY_WIDTH = 0.8f;
-        const float iconWorldSize = 0.2f * 4;
+        const float islandIconWorldSize = 0.2f * 4f;
+        const float branchIconWorldSize = 0.2f;
 
         Texture2D tinyIcon = Resources.Load<Texture2D>("Gizmos/Icons/TinyIslandIcon");
         Texture2D smallIcon = Resources.Load<Texture2D>("Gizmos/Icons/SmallIslandIcon");
         Texture2D mediumIcon = Resources.Load<Texture2D>("Gizmos/Icons/MediumIslandIcon");
+        Texture2D branchStartIcon = Resources.Load<Texture2D>("Gizmos/Icons/StartBranch");
+        Texture2D branchEndIcon = Resources.Load<Texture2D>("Gizmos/Icons/EndBranch");
 
         Color tinyColor = new Color(0.73f, 1f, 0.15f, 0.28f);      // Lime
-        Color smallColor = new Color(0.18f, 0.85f, 0.22f, 0.28f);    // Green
-        Color mediumColor = new Color(0.64f, 0.87f, 0.2f, 0.28f);    // Green-yellow
+        Color smallColor = new Color(0.18f, 0.85f, 0.22f, 0.28f);  // Green
+        Color mediumColor = new Color(0.64f, 0.87f, 0.2f, 0.28f);  // Green-yellow
+        Color branchStartColor = new Color(1f, 0.55f, 0.15f, 0.9f); // Orange
+        Color branchEndColor = new Color(1f, 0.9f, 0.2f, 0.9f);     // Yellow
+
+        DrawBranchIcons(branchIconWorldSize, branchStartColor, branchStartIcon, branchEndColor, branchEndIcon);
+
+        if (_islandSlots == null || _islandSlots.Length == 0) return;
 
         foreach (IslandSlot slot in _islandSlots)
         {
+            if (slot.isStatic)
+            {
+                if (slot.staticIslandData == null)
+                {
+                    continue;
+                }
+
+                switch (slot.staticIslandData.size)
+                {
+                    case IslandData.Size.Tiny:
+                        DrawSlotIcon(slot.xPoint, TINY_WIDTH, islandIconWorldSize, tinyColor, tinyIcon);
+                        break;
+
+                    case IslandData.Size.Small:
+                        DrawSlotIcon(slot.xPoint, TINY_WIDTH * 2f, islandIconWorldSize, smallColor, smallIcon);
+                        break;
+
+                    case IslandData.Size.Medium:
+                        DrawSlotIcon(slot.xPoint, TINY_WIDTH * 3f, islandIconWorldSize, mediumColor, mediumIcon);
+                        break;
+                }
+
+                continue;
+            }
+
             if (slot.allowTiny)
-                DrawSlotIcon(slot.xPoint, TINY_WIDTH, iconWorldSize, tinyColor, tinyIcon);
+                DrawSlotIcon(slot.xPoint, TINY_WIDTH, islandIconWorldSize, tinyColor, tinyIcon);
 
             if (slot.allowSmall)
-                DrawSlotIcon(slot.xPoint, TINY_WIDTH * 2f, iconWorldSize, smallColor, smallIcon);
+                DrawSlotIcon(slot.xPoint, TINY_WIDTH * 2f, islandIconWorldSize, smallColor, smallIcon);
 
             if (slot.allowMedium)
-                DrawSlotIcon(slot.xPoint, TINY_WIDTH * 3f, iconWorldSize, mediumColor, mediumIcon);
+                DrawSlotIcon(slot.xPoint, TINY_WIDTH * 3f, islandIconWorldSize, mediumColor, mediumIcon);
         }
+    }
+
+    private void DrawBranchIcons(float iconWorldSize, Color startColor, Texture2D startIcon, Color endColor, Texture2D endIcon)
+    {
+        // Branch start is at local X=0. Branch end is offset by signed branch length
+        // Branch icons use center anchoring to match branch pivot visualization
+        float startX = 0f;
+        float signedLength = _drawRight ? _length : -_length;
+        float endX = startX + signedLength * 0.8f;
+
+        DrawIcon(startX, iconWorldSize, startColor, startIcon, IconAnchor.Center);
+        DrawIcon(endX, iconWorldSize, endColor, endIcon, IconAnchor.Center);
     }
 
     private void DrawSlotIcon(float xPoint, float width, float iconWorldSize, Color iconColor, Texture2D icon)
     {
-        // At drawRight=true xPoint is left-top corner; at false -xPoint is right-top corner.
+        // At drawRight=true xPoint is left-top corner; at false -xPoint is right-top corner
         float iconLeftX = _drawRight ? xPoint : -xPoint - width;
-        Vector3 iconTopLeftWorld = transform.TransformPoint(new Vector3(iconLeftX, 0f, 0f));
-        DrawIconFromTopLeft(iconTopLeftWorld, icon, iconWorldSize, iconColor);
+        DrawIcon(iconLeftX, iconWorldSize, iconColor, icon, IconAnchor.TopLeft);
     }
 
-    private void DrawIconFromTopLeft(Vector3 worldTopLeft, Texture2D icon, float worldSize, Color color)
+    private void DrawIcon(float localX, float worldSize, Color color, Texture2D icon, IconAnchor anchor)
     {
         if (icon == null) return;
 
+        Vector3 worldPoint = transform.TransformPoint(new Vector3(localX, 0f, 0f));
         Camera cam = UnityEditor.SceneView.lastActiveSceneView?.camera;
         if (cam == null) return;
 
-        float screenSize;
-        if (cam.orthographic)
-        {
-            float screenHeight = cam.pixelHeight;
-            float worldHeight = cam.orthographicSize * 2;
-            float pixelsPerWorldUnit = screenHeight / worldHeight;
-            screenSize = worldSize * pixelsPerWorldUnit;
-        }
-        else
-        {
-            float distance = Vector3.Distance(cam.transform.position, worldTopLeft);
-            float frustumHeight = 2.0f * distance * Mathf.Tan(cam.fieldOfView * 0.5f * Mathf.Deg2Rad);
-            float pixelsPerWorldUnit = cam.pixelHeight / frustumHeight;
-            screenSize = worldSize * pixelsPerWorldUnit;
-        }
+        float screenSize = ComputeScreenSize(cam, worldPoint, worldSize);
 
-        // Keep the sprite's original aspect ratio to avoid squeezing rectangular icons.
+        // Keep the sprite's original aspect ratio to avoid squeezing rectangular icons
         float aspect = icon.height > 0 ? (float)icon.width / icon.height : 1f;
         float screenWidth = screenSize * aspect;
         float rectHeight = screenSize;
 
         UnityEditor.Handles.BeginGUI();
 
-        Vector2 screenPos = UnityEditor.HandleUtility.WorldToGUIPoint(worldTopLeft);
-        Rect rect = new Rect(screenPos.x, screenPos.y, screenWidth, rectHeight);
+        Vector2 screenPos = UnityEditor.HandleUtility.WorldToGUIPoint(worldPoint);
+        float rectX = anchor == IconAnchor.Center ? screenPos.x - screenWidth * 0.5f : screenPos.x;
+        float rectY = anchor == IconAnchor.Center ? screenPos.y - rectHeight * 0.5f : screenPos.y;
+        Rect rect = new Rect(rectX, rectY, screenWidth, rectHeight);
 
         Color oldColor = GUI.color;
         GUI.color = color;
@@ -125,6 +165,22 @@ public class BranchManager : MonoBehaviour, IBakeable, IBuildable
         GUI.color = oldColor;
 
         UnityEditor.Handles.EndGUI();
+    }
+
+    private float ComputeScreenSize(Camera cam, Vector3 worldPoint, float worldSize)
+    {
+        if (cam.orthographic)
+        {
+            float screenHeight = cam.pixelHeight;
+            float worldHeight = cam.orthographicSize * 2;
+            float pixelsPerWorldUnit = screenHeight / worldHeight;
+            return worldSize * pixelsPerWorldUnit;
+        }
+
+        float distance = Vector3.Distance(cam.transform.position, worldPoint);
+        float frustumHeight = 2.0f * distance * Mathf.Tan(cam.fieldOfView * 0.5f * Mathf.Deg2Rad);
+        float pixelsPerWorldUnitPerspective = cam.pixelHeight / frustumHeight;
+        return worldSize * pixelsPerWorldUnitPerspective;
     }
 #endif
 }

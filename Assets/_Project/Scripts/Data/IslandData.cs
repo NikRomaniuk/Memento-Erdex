@@ -22,6 +22,8 @@ public class IslandData : ScriptableObject, IData
     // =======================================
     // Visual representation
     public Sprite sprite;
+    // On which side this trunk can be on
+    public Size size = Size.Tiny;
     // Sprite offset
     [Step(0.05f)] public Vector2 spriteOffset;
 

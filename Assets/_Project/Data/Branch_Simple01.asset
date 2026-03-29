@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0e6337ef1f74d4468588a1f37090d10, type: 3}
+  m_Name: Branch_Simple01
+  m_EditorClassIdentifier: Assembly-CSharp::BranchData
+  id: gitMerge
+  avaliableSide: 0
+  length: 9
+  islandSlots:
+  - isStatic: 0
+    xPoint: 1.4
+    staticIslandData: {fileID: 0}
+    allowTiny: 0
+    allowSmall: 1
+    allowMedium: 1
+  - isStatic: 0
+    xPoint: 4.5
+    staticIslandData: {fileID: 0}
+    allowTiny: 1
+    allowSmall: 1
+    allowMedium: 0
+  - isStatic: 1
+    xPoint: 6.3
+    staticIslandData: {fileID: 11400000, guid: 59cca95787f332c459e4e830480d0353, type: 2}
+    allowTiny: 1
+    allowSmall: 1
+    allowMedium: 0

@@ -8,11 +8,15 @@ using UnityEngine;
 public class BranchDataEditor : Editor
 {
     private SerializedProperty _id;
+    private SerializedProperty _avaliableSide;
+    private SerializedProperty _length;
     private SerializedProperty _islandSlots;
 
     private void OnEnable()
     {
         _id = serializedObject.FindProperty("id");
+        _avaliableSide = serializedObject.FindProperty("avaliableSide");
+        _length = serializedObject.FindProperty("length");
         _islandSlots = serializedObject.FindProperty("islandSlots");
     }
 
@@ -23,11 +27,13 @@ public class BranchDataEditor : Editor
 
         // Draw always-visible BranchData fields
         EditorGUILayout.PropertyField(_id);
+        EditorGUILayout.PropertyField(_avaliableSide);
+        EditorGUILayout.PropertyField(_length);
         EditorGUILayout.Space(6);
 
         if (_islandSlots == null)
         {
-            EditorGUILayout.HelpBox("Property 'islandSlots' not found.", MessageType.Error);
+            EditorGUILayout.HelpBox("Property 'islandSlots' not found", MessageType.Error);
         }
         else
         {
