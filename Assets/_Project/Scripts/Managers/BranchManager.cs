@@ -22,18 +22,50 @@ public class BranchManager : MonoBehaviour, IBakeable, IBuildable
     public void SetData(IData data)
     {
         if (data is not BranchData branchData) return;
-        SetData(branchData);
+        SetData(branchData, BranchOrientation.Right, transform.position.x); // Build with default values
     }
 
-    public void SetData(BranchData data)
+    public void SetData(BranchData data, BranchOrientation orient, float currentHeight)
     {
         _length = Mathf.Max(0, data.length); // Ensure length is non-negative
+
+        float xPos;
+        // Set up xPos based on branch orientation
+        switch (orient)
+        {
+            default:
+            case BranchOrientation.Right:
+                xPos = Constants.BRANCH_SLOT_X_OFFSET;
+                break;
+
+            case BranchOrientation.Left:
+                xPos = -Constants.BRANCH_SLOT_X_OFFSET;
+                break;
+
+            case BranchOrientation.Middle:
+                xPos = 0f;
+                break;
+        }
+
+        // --- Apply Transform ---
+        // Set up Y position based on current height
+        // Set up X position based on branch orientation
+        transform.position = new Vector3(xPos, currentHeight, transform.position.z);
+
+        // --- Apply Slots ---
+        // Copy island slots array
         _islandSlots = data.islandSlots != null ? (IslandSlot[])data.islandSlots.Clone() : new IslandSlot[0];
     }
 
     public void Clear()
     {
+        // --- Reset General ---
         _length = 0;
+
+        // --- Reset Transform ---
+        transform.position = Vector3.zero;
+
+        // --- Reset Slots ---
         _islandSlots = new IslandSlot[0];
 
 #if UNITY_EDITOR

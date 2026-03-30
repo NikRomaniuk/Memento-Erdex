@@ -15,6 +15,10 @@ public static class ChunkLoader
         // --- Components ---
         Builder blankBuilder = blank.GetComponent<Builder>();
 
+        // --- Load itself ---
+        // Initialize blank with data & extra settings
+        blankBuilder.Initialize(chunk.ChunkData, chunk.CurrentHeight);
+
         // --- Load Trunk Parts ---
         foreach (TrunkGen trunk in chunk.TrunkParts)
         {
@@ -22,9 +26,12 @@ public static class ChunkLoader
             blank.LoadedTrunks.Add(loadedTrunk);
         }
 
-        // --- Load itself ---
-        // Initialize blank with data & extra settings
-        blankBuilder.Initialize(chunk.ChunkData, chunk.CurrentHeight);
+        // --- Load Branches ---
+        foreach (BranchGen branch in chunk.Branches)
+        {
+            BranchManager loadedBranches = BranchLoader.Load(branch);
+            blank.LoadedBranches.Add(loadedBranches);
+        }
 
         // --- Activate ---
         blank.gameObject.SetActive(true);
@@ -41,6 +48,11 @@ public static class ChunkLoader
         foreach (TrunkSegment trunk in chunkManager.LoadedTrunks)
             TrunkLoader.Unload(trunk);
         chunkManager.LoadedTrunks.Clear();
+
+        // --- Unload Branches ---
+        foreach (BranchManager branch in chunkManager.LoadedBranches)
+            BranchLoader.Unload(branch);
+        chunkManager.LoadedBranches.Clear();
 
         // --- Unload Itself ---
         // Reset position

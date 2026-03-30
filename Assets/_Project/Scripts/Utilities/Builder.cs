@@ -13,6 +13,9 @@ public class Builder : MonoBehaviour
     // --- Chunk Data ---
     [SerializeField] private float _currentHeight = 0f;
 
+    // --- Branch Data ---
+    [SerializeField] private BranchOrientation _branchOrientation = BranchOrientation.Right;
+
     // --- Cached Component ---
     private IBuildable _buildable;
 
@@ -75,6 +78,18 @@ public class Builder : MonoBehaviour
                 Debug.Log($"Chunk successfully built from <b>{chunkData.name}</b>");
                 break;
 
+            case BlanksLibrary.BlankType.Branch:
+                var branchData = _dataToBuild as BranchData;
+                if (branchData == null)
+                {
+                    Debug.LogError("_dataToBuild is not a BranchData! Please assign a BranchData ScriptableObject");
+                    return;
+                }
+                // Initialize BranchManager with data & extra settings
+                Initialize(branchData, _branchOrientation, _currentHeight);
+                Debug.Log($"Branch successfully built from <b>{branchData.name}</b> (ID: {branchData.id})");
+                break;
+
             default:
                 Debug.LogError($"Unknown BlankType: {_blankType}. Aborting BuildFromScriptableObject");
                 break;
@@ -126,6 +141,44 @@ public class Builder : MonoBehaviour
         }
 
         ((ChunkManager)_buildable).SetData(data, currentHeight);
+
+#if UNITY_EDITOR
+        UnityEditor.EditorUtility.SetDirty(gameObject);
+#endif
+    }
+
+    /// <summary>
+    /// Initialize BranchManager with the given data
+    /// </summary>
+    public void Initialize(BranchData data, BranchOrientation orient, float currentHeight)
+    {
+        if (!PrepareToBuild()) return;
+
+        if (data == null)
+        {
+            Debug.LogWarning("Cannot initialize with null BranchData");
+            return;
+        }
+
+        bool isOrientationValid;
+        if (data.avaliableSide == BranchData.AvailableSide.Both)
+        {
+            isOrientationValid = orient == BranchOrientation.Left || orient == BranchOrientation.Right;
+        }
+        else
+        {
+            isOrientationValid = (data.avaliableSide == BranchData.AvailableSide.Left && orient == BranchOrientation.Left) ||
+                                 (data.avaliableSide == BranchData.AvailableSide.Right && orient == BranchOrientation.Right) ||
+                                 (data.avaliableSide == BranchData.AvailableSide.Middle && orient == BranchOrientation.Middle);
+        }
+
+        if (!isOrientationValid)
+        {
+            Debug.LogWarning($"Branch '{data.name}' (ID: {data.id}) cannot be placed with {orient} orientation. Available side: {data.avaliableSide}");
+            return;
+        }
+
+        ((BranchManager)_buildable).SetData(data, orient, currentHeight);
 
 #if UNITY_EDITOR
         UnityEditor.EditorUtility.SetDirty(gameObject);

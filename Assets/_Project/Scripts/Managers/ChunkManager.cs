@@ -6,10 +6,10 @@ public class ChunkManager : MonoBehaviour, IBakeable, IBuildable
     [Header("Properties")]
     [Step(0.05f)] [SerializeField] private float _height = 0f;
     [SerializeField] private BranchSlot[] _branchSlots;
-    private const float BRANCH_SLOT_X_OFFSET = 0.5f;
 
     // --- Runtime ---
     [HideInInspector] public List<TrunkSegment> LoadedTrunks = new List<TrunkSegment>(); // Active TrunkSegments loaded for this chunk
+    [HideInInspector] public List<BranchManager> LoadedBranches = new List<BranchManager>(); // Active BranchManagers loaded for this chunk
 
     // --- IBakeable ---
     public void GatherData(IData data)
@@ -94,11 +94,11 @@ public class ChunkManager : MonoBehaviour, IBakeable, IBuildable
             switch (slot.branchOrientation)
             {
                 case BranchOrientation.Right:
-                    offsetX = BRANCH_SLOT_X_OFFSET;
+                    offsetX = Constants.BRANCH_SLOT_X_OFFSET;
                     slotColor = branchColorRight;
                     break;
                 case BranchOrientation.Left:
-                    offsetX = -BRANCH_SLOT_X_OFFSET;
+                    offsetX = -Constants.BRANCH_SLOT_X_OFFSET;
                     slotColor = branchColorLeft;
                     break;
                 case BranchOrientation.Middle:

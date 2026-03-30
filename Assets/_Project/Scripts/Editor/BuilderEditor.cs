@@ -23,6 +23,17 @@ public class BuilderEditor : Editor
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("_side"));
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("_isYFlipped"));
                 break;
+
+            case BlanksLibrary.BlankType.Chunk:
+                EditorGUILayout.LabelField("Chunk Options", EditorStyles.boldLabel);
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("_currentHeight"));
+                break;
+
+            case BlanksLibrary.BlankType.Branch:
+                EditorGUILayout.LabelField("Branch Options", EditorStyles.boldLabel);
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("_branchOrientation"));
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("_currentHeight"));
+                break;
         }
 
         serializedObject.ApplyModifiedProperties();
@@ -38,7 +49,12 @@ public class BuilderEditor : Editor
         EditorGUILayout.Space(5);
 
         // --- Clear button ---
-        string clearLabel = builder.BlankType == BlanksLibrary.BlankType.Trunk ? "Clear TrunkPart" : "Clear Chunk";
+        string clearLabel = builder.BlankType switch
+        {
+            BlanksLibrary.BlankType.Trunk => "Clear TrunkPart",
+            BlanksLibrary.BlankType.Branch => "Clear Branch",
+            _ => "Clear Chunk"
+        };
         GUI.backgroundColor = new Color(1f, 0.6f, 0.6f);
         if (GUILayout.Button(clearLabel, GUILayout.Height(25)))
         {

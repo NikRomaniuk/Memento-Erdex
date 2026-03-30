@@ -5,5 +5,5 @@ using UnityEngine;
 
 public static class Constants
 {
-    
+    public const float BRANCH_SLOT_X_OFFSET = 0.5f;
 }
