@@ -5,6 +5,15 @@ public class BranchGenerator : MonoBehaviour
     [Header("Branch Pool")]
     [SerializeField] private BranchData[] _branchDataPool;
 
+    // --- Components ---
+    // Shape generation is chained to branch generation
+    private ShapeGenerator _shapeGenerator;
+
+    private void Awake()
+    {
+        _shapeGenerator = GetComponent<ShapeGenerator>();
+    }
+
     public void GenerateBranches(System.Random random, ChunkGen chunkGen)
     {
         // --- Validations ---
@@ -12,6 +21,12 @@ public class BranchGenerator : MonoBehaviour
         {
             Debug.LogError("BranchData pool is empty! Cannot generate branches"); 
             return; 
+        }
+
+        if (_shapeGenerator == null)
+        {
+            Debug.LogError("ShapeGenerator component not found! Cannot generate shapes for branches");
+            return;
         }
 
         BranchSlot[] branchSlots = chunkGen.ChunkData.branchSlots;
@@ -38,9 +53,13 @@ public class BranchGenerator : MonoBehaviour
                 continue;
             }
 
-            float branchHeight = chunkGen.CurrentHeight + slot.yPoint;
-            BranchGen branchGen = new BranchGen(selectedBranchData, slot.branchOrientation, branchHeight);
+            // Store absolute branch origin; it becomes the origin for shape chain placement
+            Vector2 branchPos = new Vector2(GetBranchXPos(slot.branchOrientation), chunkGen.CurrentHeight + slot.yPoint);
+            BranchGen branchGen = new BranchGen(selectedBranchData, slot.branchOrientation, branchPos);
             chunkGen.Branches.Add(branchGen);
+
+            // Immediately generate Shapes for this branch from the same random stream
+            _shapeGenerator.GenerateShapes(branchGen, random);
             generatedCount++;
         }
 
@@ -89,6 +108,23 @@ public class BranchGenerator : MonoBehaviour
             case BranchOrientation.Middle:
             default:
                 return false;
+        }
+    }
+
+    private float GetBranchXPos(BranchOrientation orientation)
+    {
+        // Absolute X is derived from branch side offset in current world layout
+        switch (orientation)
+        {
+            case BranchOrientation.Left:
+                return -Constants.BRANCH_SLOT_X_OFFSET;
+
+            case BranchOrientation.Right:
+                return Constants.BRANCH_SLOT_X_OFFSET;
+
+            case BranchOrientation.Middle:
+            default:
+                return 0f;
         }
     }
 }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -15,12 +16,25 @@ public class BranchGen
 
 	// --- Settings ---
 	public BranchOrientation Side { get; private set; }
+	// Temporary compatibility mirror of Pos.y, kept for existing loaders
 	public float Height { get; private set; }
+	// Absolute branch origin in world-space coordinates
+	public Vector2 Pos { get; private set; }
+    // Generated shape chain that belongs to this branch
+    public List<ShapeGen> Shapes { get; private set; }
 
-	public BranchGen(BranchData branchData, BranchOrientation side, float height)
+	public BranchGen(BranchData branchData, BranchOrientation side, Vector2 pos)
 	{
 		BranchData = branchData;
 		Side = side;
-		Height = height;
+        Pos = pos;
+        Height = pos.y;
+        Shapes = new List<ShapeGen>();
 	}
+
+    public BranchGen(BranchData branchData, BranchOrientation side, float height)
+		// Backward-compatible constructor while migration to Pos.y is in progress
+        : this(branchData, side, new Vector2(0f, height))
+    {
+    }
 }

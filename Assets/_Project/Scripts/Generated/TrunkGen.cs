@@ -18,13 +18,15 @@ public class TrunkGen
     public bool IsYFlipped { get; private set; }
     public float Height { get; private set; }
     public short SpriteOrder { get; private set; }
+    public Color SpriteColor { get; private set; }
 
-    public TrunkGen(TrunkData trunkData, Side side, bool isYFlipped, float height, short spriteOrder)
+    public TrunkGen(TrunkData trunkData, Side side, bool isYFlipped, float height, short spriteOrder, Color spriteColor)
     {
         TrunkData = trunkData;
         Side = side;
         IsYFlipped = isYFlipped;
         Height = height;
         SpriteOrder = spriteOrder;
+        SpriteColor = spriteColor;
     }
 }

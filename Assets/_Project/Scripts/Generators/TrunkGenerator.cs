@@ -5,6 +5,9 @@ public class TrunkGenerator : MonoBehaviour
     [Header("Trunk Pool")]
     [SerializeField] private TrunkData[] _trunkDataPool;
 
+    [Header("Visual Settings")]
+    [SerializeField] private Color _color = Color.white;
+
     void Start()
     {
         
@@ -60,7 +63,7 @@ public class TrunkGenerator : MonoBehaviour
             spriteOrderToggle = !spriteOrderToggle;
 
             // Create TrunkGen
-            TrunkGen trunkGen = new TrunkGen(selectedTrunkData, side, isYFlipped, currentHeight, spriteOrder);
+            TrunkGen trunkGen = new TrunkGen(selectedTrunkData, side, isYFlipped, currentHeight, spriteOrder, _color);
 
             // Find which ChunkGen this TrunkPart belongs to
             ChunkGen targetChunk = FindChunkAtHeight(treeGen, currentHeight);

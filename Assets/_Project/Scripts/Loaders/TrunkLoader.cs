@@ -25,6 +25,8 @@ public static class TrunkLoader
         blank.transform.position = new Vector3(0, trunkGen.Height, 0);
         // Set sorting order
         spriteRenderer.sortingOrder = trunkGen.SpriteOrder;
+        // Set sprite color
+        spriteRenderer.color = trunkGen.SpriteColor;
 
         // --- Activate ---
         blank.gameObject.SetActive(true);
@@ -49,6 +51,8 @@ public static class TrunkLoader
         trunkPart.transform.position = Vector3.zero;
         // Reset sorting order
         spriteRenderer.sortingOrder = 0;
+        // Reset sprite color
+        spriteRenderer.color = Color.white;
 
         // --- Deactivate ---
         trunkPart.gameObject.SetActive(false);

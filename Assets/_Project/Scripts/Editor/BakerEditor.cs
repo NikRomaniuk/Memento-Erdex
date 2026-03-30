@@ -29,6 +29,24 @@ public class BakerEditor : Editor
                 EditorGUILayout.LabelField("Branch Options", EditorStyles.boldLabel);
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("_branchAvaliableSide"));
                 break;
+
+            case BlanksLibrary.BlankType.Shape:
+                EditorGUILayout.LabelField("Shape Options", EditorStyles.boldLabel);
+                var shapeTypeProp = serializedObject.FindProperty("_shapeType");
+                var canBeFlippedHorizontallyProp = serializedObject.FindProperty("_canBeFlippedHorizontally");
+
+                EditorGUILayout.PropertyField(shapeTypeProp);
+
+                bool isTip = shapeTypeProp.enumValueIndex == (int)ShapeData.Type.Tip;
+                if (isTip)
+                {
+                    canBeFlippedHorizontallyProp.boolValue = false;
+                }
+                else
+                {
+                    EditorGUILayout.PropertyField(canBeFlippedHorizontallyProp);
+                }
+                break;
         }
 
         serializedObject.ApplyModifiedProperties();

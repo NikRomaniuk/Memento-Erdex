@@ -16,17 +16,17 @@ public class ShapeGen
     // --- Settings ---
     public Side Side { get; private set; }
     public bool IsXFlipped { get; private set; }
-    public float Height { get; private set; }
-    public float YPos { get; private set; }
+    public Vector2 Pos { get; private set; }
     public short SpriteOrder { get; private set; }
+    public Color SpriteColor { get; private set; }
 
-    public ShapeGen(ShapeData shapeData, Side side, bool isXFlipped, float height, float yPos, short spriteOrder)
+    public ShapeGen(ShapeData shapeData, Side side, bool isXFlipped, Vector2 pos, short spriteOrder, Color spriteColor)
     {
         ShapeData = shapeData;
         Side = side;
         IsXFlipped = isXFlipped;
-        Height = height;
-        YPos = yPos;
+        Pos = pos;
         SpriteOrder = spriteOrder;
+        SpriteColor = spriteColor;
     }
 }

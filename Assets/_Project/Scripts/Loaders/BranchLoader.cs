@@ -16,9 +16,16 @@ public static class BranchLoader
         // --- Components ---
         Builder blankBuilder = blank.GetComponent<Builder>();
 
-        // --- Load ---
+        // --- Load Itself ---
         // Initialize blank with data & extra settings
         blankBuilder.Initialize(branch.BranchData, branch.Side, branch.Height);
+
+        // --- Load Shapes ---
+        foreach (ShapeGen shape in branch.Shapes)
+        {
+            ShapeManager loadedShape = ShapeLoader.Load(shape);
+            blank.LoadedShapes.Add(loadedShape);
+        }
 
         // --- Activate ---
         blank.gameObject.SetActive(true);
@@ -31,6 +38,11 @@ public static class BranchLoader
     /// </summary>
     public static void Unload(BranchManager branch)
     {
+        // --- Unload Shape Parts ---
+        foreach (ShapeManager shape in branch.LoadedShapes)
+            ShapeLoader.Unload(shape);
+        branch.LoadedShapes.Clear();
+
         // --- Components ---
         Builder blankBuilder = branch.GetComponent<Builder>();
 

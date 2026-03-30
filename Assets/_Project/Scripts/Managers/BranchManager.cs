@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BranchManager : MonoBehaviour, IBakeable, IBuildable
@@ -8,6 +9,8 @@ public class BranchManager : MonoBehaviour, IBakeable, IBuildable
 
     [Header("Draw Settings")]
     [SerializeField] private bool _drawRight = true;
+
+    [HideInInspector] public List<ShapeManager> LoadedShapes = new List<ShapeManager>(); // Active ShapeManagers loaded for this branch
 
     // --- IBakeable ---
     public void GatherData(IData data)

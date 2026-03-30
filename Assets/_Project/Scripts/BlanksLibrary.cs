@@ -5,19 +5,21 @@ using UnityEngine;
 public class BlanksLibrary : MonoBehaviour
 {
     // Blank types
-    public enum BlankType { Trunk, Chunk, Branch }
+    public enum BlankType { Trunk, Chunk, Branch, Shape }
 
     [Header("Reference Data")]
     // Prefabs to instantiate blanks from
     [SerializeField] private TrunkSegment _trunkBlankPrefab; // For Trunk Parts
     [SerializeField] private ChunkManager _chunkManagerPrefab; // For Chunks
     [SerializeField] private BranchManager _branchManagerPrefab; // For Branches
+    [SerializeField] private ShapeManager _shapeManagerPrefab; // For Shapes
 
     [Header("Properties")]
     // Number of blanks to pre-generate
     [SerializeField] private int _trunkBlanksCount = 70; // For Trunk Parts
     [SerializeField] private int _chunkBlanksCount = 10; // For Chunks
     [SerializeField] private int _branchBlanksCount = 50; // For Branches
+    [SerializeField] private int _shapeBlanksCount = 200; // For Shapes
     // Extra blanks generated when pool runs out
     [SerializeField] private int _emergencyBlanksCount = 10;  
 
@@ -33,6 +35,9 @@ public class BlanksLibrary : MonoBehaviour
 
     private ArrayList _branchBlanks;                          // All instantiated Branch blanks
     private Stack<BranchManager> _availableBranchBlanks;      // Branch blanks available for use
+
+    private ArrayList _shapeBlanks;                           // All instantiated Shape blanks
+    private Stack<ShapeManager> _availableShapeBlanks;        // Shape blanks available for use
 
     private void Awake()
     {
@@ -65,6 +70,12 @@ public class BlanksLibrary : MonoBehaviour
             return;
         }
 
+        if (_shapeManagerPrefab == null)
+        {
+            Debug.LogError("ShapeManagerPrefab is not assigned!");
+            return;
+        }
+
         // --- Instantiate blanks ---
         // Trunk Parts
         _trunkBlanks = new ArrayList(_trunkBlanksCount);
@@ -84,11 +95,18 @@ public class BlanksLibrary : MonoBehaviour
         for (int i = 0; i < _branchBlanksCount; i++)
             CreateBranchBlank();
 
+        // Shapes
+        _shapeBlanks = new ArrayList(_shapeBlanksCount);
+        _availableShapeBlanks = new Stack<ShapeManager>(_shapeBlanksCount);
+        for (int i = 0; i < _shapeBlanksCount; i++)
+            CreateShapeBlank();
+
         // Blanks are ready to use!
         IsReady = true;
         Debug.Log($"Generated Trunks: '{_trunkBlanks.Count}'");
         Debug.Log($"Generated Chunks: '{_chunkBlanks.Count}'");
         Debug.Log($"Generated Branches: '{_branchBlanks.Count}'");
+        Debug.Log($"Generated Shapes: '{_shapeBlanks.Count}'");
     }
 
     /// <summary>
@@ -129,6 +147,16 @@ public class BlanksLibrary : MonoBehaviour
                 }
                 return _availableBranchBlanks.Pop();
 
+            case BlankType.Shape:
+                // --- Emergency refill ---
+                if (_availableShapeBlanks.Count == 0)
+                {
+                    Debug.LogWarning($"No available ShapeBlanks! Generating {_emergencyBlanksCount} emergency blanks...");
+                    for (int i = 0; i < _emergencyBlanksCount; i++)
+                        CreateShapeBlank();
+                }
+                return _availableShapeBlanks.Pop();
+
             default:
                 Debug.LogWarning($"Unknown BlankType: {type}. Could not get blank from pool");
                 return null;
@@ -150,6 +178,9 @@ public class BlanksLibrary : MonoBehaviour
                 break;
             case BlankType.Branch:
                 _availableBranchBlanks.Push((BranchManager)blank);
+                break;
+            case BlankType.Shape:
+                _availableShapeBlanks.Push((ShapeManager)blank);
                 break;
             default:
                 Debug.LogWarning($"Unknown BlankType: {type}. Could not return blank to pool");
@@ -188,5 +219,16 @@ public class BlanksLibrary : MonoBehaviour
         blank.gameObject.SetActive(false); // Deactivate until needed
         _branchBlanks.Add(blank);
         _availableBranchBlanks.Push(blank);
+    }
+
+    /// <summary>
+    /// Instantiates a single Shape blank and pushes it onto <see cref="_availableShapeBlanks"/>
+    /// </summary>
+    private void CreateShapeBlank()
+    {
+        ShapeManager blank = Instantiate(_shapeManagerPrefab);
+        blank.gameObject.SetActive(false); // Deactivate until needed
+        _shapeBlanks.Add(blank);
+        _availableShapeBlanks.Push(blank);
     }
 }

@@ -10,27 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f0e6337ef1f74d4468588a1f37090d10, type: 3}
-  m_Name: Branch_Simple02
+  m_Name: Branch_Simple03
   m_EditorClassIdentifier: Assembly-CSharp::BranchData
-  id: short_risky_01
+  id: extrashort_01
   avaliableSide: 0
-  length: 6
+  length: 3
   islandSlots:
   - isStatic: 0
-    xPoint: 0.7
+    xPoint: 0.4
     staticIslandData: {fileID: 0}
-    allowTiny: 1
-    allowSmall: 0
-    allowMedium: 0
-  - isStatic: 0
-    xPoint: 2.05
-    staticIslandData: {fileID: 0}
-    allowTiny: 1
-    allowSmall: 1
-    allowMedium: 0
-  - isStatic: 1
-    xPoint: 3.9
-    staticIslandData: {fileID: 11400000, guid: 59cca95787f332c459e4e830480d0353, type: 2}
     allowTiny: 1
     allowSmall: 1
     allowMedium: 0

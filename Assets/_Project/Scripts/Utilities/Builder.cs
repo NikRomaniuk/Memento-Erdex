@@ -7,7 +7,7 @@ public class Builder : MonoBehaviour
     [SerializeField] private ScriptableObject _dataToBuild;
 
     // --- Trunk Data ---
-    [SerializeField] private Side _side = Side.Right;
+    [SerializeField] private Side _side = Side.Right; // Also used for Shapes
     [SerializeField] private bool _isYFlipped = false;
 
     // --- Chunk Data ---
@@ -15,6 +15,9 @@ public class Builder : MonoBehaviour
 
     // --- Branch Data ---
     [SerializeField] private BranchOrientation _branchOrientation = BranchOrientation.Right;
+
+    // --- Shape Data ---
+    [SerializeField] private bool _isXFlipped = false;
 
     // --- Cached Component ---
     private IBuildable _buildable;
@@ -88,6 +91,18 @@ public class Builder : MonoBehaviour
                 // Initialize BranchManager with data & extra settings
                 Initialize(branchData, _branchOrientation, _currentHeight);
                 Debug.Log($"Branch successfully built from <b>{branchData.name}</b> (ID: {branchData.id})");
+                break;
+
+            case BlanksLibrary.BlankType.Shape:
+                var shapeData = _dataToBuild as ShapeData;
+                if (shapeData == null)
+                {
+                    Debug.LogError("_dataToBuild is not a ShapeData! Please assign a ShapeData ScriptableObject");
+                    return;
+                }
+                // Initialize ShapeManager with data & extra settings
+                Initialize(shapeData, _side, _isXFlipped);
+                Debug.Log($"Shape successfully built from <b>{shapeData.name}</b> (ID: {shapeData.id})");
                 break;
 
             default:
@@ -179,6 +194,32 @@ public class Builder : MonoBehaviour
         }
 
         ((BranchManager)_buildable).SetData(data, orient, currentHeight);
+
+#if UNITY_EDITOR
+        UnityEditor.EditorUtility.SetDirty(gameObject);
+#endif
+    }
+
+    /// <summary>
+    /// Initialize ShapeManager with the given data
+    /// </summary>
+    public void Initialize(ShapeData data, Side side, bool isXFlipped)
+    {
+        if (!PrepareToBuild()) return;
+
+        if (data == null)
+        {
+            Debug.LogWarning("Cannot initialize with null ShapeData");
+            return;
+        }
+
+        if (isXFlipped && !data.canBeXFlipped)
+        {
+            Debug.LogWarning($"Shape '{data.name}' (ID: {data.id}) cannot be flipped horizontally");
+            return;
+        }
+
+        ((ShapeManager)_buildable).SetData(data, side, isXFlipped);
 
 #if UNITY_EDITOR
         UnityEditor.EditorUtility.SetDirty(gameObject);

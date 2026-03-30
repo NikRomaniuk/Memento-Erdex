@@ -15,6 +15,10 @@ public class Baker : MonoBehaviour
     // --- Branch Data ---
     [SerializeField] private BranchData.AvailableSide _branchAvaliableSide = BranchData.AvailableSide.Both;
 
+    // --- Shape Data ---
+    [SerializeField] private ShapeData.Type _shapeType = ShapeData.Type.Base;
+    [SerializeField] private bool _canBeFlippedHorizontally = true;
+
     // --- Cached Component ---
     private IBakeable _bakeable;
 
@@ -55,6 +59,9 @@ public class Baker : MonoBehaviour
 
             case BlanksLibrary.BlankType.Branch:
                 return ValidateUniqueIdForType<BranchData>(_dataToEdit);
+
+            case BlanksLibrary.BlankType.Shape:
+                return ValidateUniqueIdForType<ShapeData>(_dataToEdit);
         }
 #endif
 
@@ -170,6 +177,30 @@ public class Baker : MonoBehaviour
                 UnityEditor.AssetDatabase.SaveAssets();
 #endif
                 Debug.Log($"Data successfully baked to <b>{branchData.name}</b> (ID: {branchData.id})");
+                break;
+
+            case BlanksLibrary.BlankType.Shape:
+                var shapeData = _dataToEdit as ShapeData;
+                if (shapeData == null)
+                {
+                    Debug.LogError("_dataToEdit is not a ShapeData! Please assign a ShapeData ScriptableObject");
+                    return;
+                }
+
+                // --- Bake Metadata ---
+                shapeData.id = _id;
+                shapeData.type = _shapeType;
+                // Tips cannot be flipped horizontally -> canBeXFlipped is false for Tips
+                shapeData.canBeXFlipped = _shapeType != ShapeData.Type.Tip && _canBeFlippedHorizontally;
+
+                // --- Bake Component Data ---
+                _bakeable.GatherData(shapeData);
+
+#if UNITY_EDITOR
+                UnityEditor.EditorUtility.SetDirty(shapeData);
+                UnityEditor.AssetDatabase.SaveAssets();
+#endif
+                Debug.Log($"Data successfully baked to <b>{shapeData.name}</b> (ID: {shapeData.id})");
                 break;
 
             default:
