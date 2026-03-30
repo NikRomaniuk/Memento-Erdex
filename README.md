@@ -15,9 +15,15 @@
 - **Visual Consistency:** Custom shaders that establish and preserve a unique visual identity
 - **Performance Optimization:** Extensive use of object pooling to keep procedural parts streaming smooth and stable
 
+## Technical Stack
+- **Engine:** Unity 6.3 LTS
+- **Language:** C#
+- **Rendering:** Universal Render Pipeline (URP), custom shaders
+- **Core Systems:** Procedural generation, object pooling, Unity Input System
+
 ## Demo
 Try the latest demo build on itch.io:
-- **Download:** [memento-erdex.itch.io/demo](https://memento-erdex.itch.io/demo)
+- **Download:** [Demo from itch.io](https://another-living-worlds.itch.io/memento-erdex)
 
 ## Quick Start
 
@@ -57,6 +63,11 @@ Current status: **Alpha**
 
 ## Documentation
 Detailed architecture documentation is currently in progress and will be added in upcoming updates
+
+## AI Acknowledgment
+- **GitHub Copilot:** Used for code suggestions in scripts and for writing some code comments
+- **Gemini:** Used for information gathering and quick reference research
+- **ChatGPT:** Used to edit and refine README documentation structure and wording
 
 ## Author
 - **Lead Developer:** Nik Romaniuk
