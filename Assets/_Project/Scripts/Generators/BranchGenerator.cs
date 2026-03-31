@@ -66,7 +66,7 @@ public class BranchGenerator : MonoBehaviour
         Debug.Log($"Generated {generatedCount} branches for chunk at height {chunkGen.CurrentHeight}");
     }
 
-    private BranchData GetRandomBranchDataForSide(System.Random random, BranchOrientation side)
+    private BranchData GetRandomBranchDataForSide(System.Random random, Orientation side)
     {
         int maxAttempts = _branchDataPool.Length * 2;
         int attempts = 0;
@@ -83,8 +83,8 @@ public class BranchGenerator : MonoBehaviour
             }
 
             bool canUse = candidate.avaliableSide == BranchData.AvailableSide.Both ||
-                          (candidate.avaliableSide == BranchData.AvailableSide.Left && side == BranchOrientation.Left) ||
-                          (candidate.avaliableSide == BranchData.AvailableSide.Right && side == BranchOrientation.Right);
+                          (candidate.avaliableSide == BranchData.AvailableSide.Left && side == Orientation.Left) ||
+                          (candidate.avaliableSide == BranchData.AvailableSide.Right && side == Orientation.Right);
 
             if (canUse)
             {
@@ -97,32 +97,32 @@ public class BranchGenerator : MonoBehaviour
         return null;
     }
 
-    private bool CanUseOrientation(BranchOrientation orientation)
+    private bool CanUseOrientation(Orientation orientation)
     {
         switch (orientation)
         {
-            case BranchOrientation.Left:
-            case BranchOrientation.Right:
+            case Orientation.Left:
+            case Orientation.Right:
                 return true;
 
-            case BranchOrientation.Middle:
+            case Orientation.Middle:
             default:
                 return false;
         }
     }
 
-    private float GetBranchXPos(BranchOrientation orientation)
+    private float GetBranchXPos(Orientation orientation)
     {
         // Absolute X is derived from branch side offset in current world layout
         switch (orientation)
         {
-            case BranchOrientation.Left:
+            case Orientation.Left:
                 return -Constants.BRANCH_SLOT_X_OFFSET;
 
-            case BranchOrientation.Right:
+            case Orientation.Right:
                 return Constants.BRANCH_SLOT_X_OFFSET;
 
-            case BranchOrientation.Middle:
+            case Orientation.Middle:
             default:
                 return 0f;
         }

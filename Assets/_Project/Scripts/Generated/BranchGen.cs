@@ -15,7 +15,7 @@ public class BranchGen
 	public BranchData BranchData { get; private set; }
 
 	// --- Settings ---
-	public BranchOrientation Side { get; private set; }
+	public Orientation Side { get; private set; }
 	// Temporary compatibility mirror of Pos.y, kept for existing loaders
 	public float Height { get; private set; }
 	// Absolute branch origin in world-space coordinates
@@ -23,7 +23,7 @@ public class BranchGen
     // Generated shape chain that belongs to this branch
     public List<ShapeGen> Shapes { get; private set; }
 
-	public BranchGen(BranchData branchData, BranchOrientation side, Vector2 pos)
+	public BranchGen(BranchData branchData, Orientation side, Vector2 pos)
 	{
 		BranchData = branchData;
 		Side = side;
@@ -32,7 +32,7 @@ public class BranchGen
         Shapes = new List<ShapeGen>();
 	}
 
-    public BranchGen(BranchData branchData, BranchOrientation side, float height)
+    public BranchGen(BranchData branchData, Orientation side, float height)
 		// Backward-compatible constructor while migration to Pos.y is in progress
         : this(branchData, side, new Vector2(0f, height))
     {

@@ -4,9 +4,9 @@ using UnityEngine;
 public struct BranchSlot
 {
     [Step(0.05f)] public float yPoint;
-    public BranchOrientation branchOrientation;
+    public Orientation branchOrientation;
 
-    public BranchSlot(float yPoint, BranchOrientation branchOrientation)
+    public BranchSlot(float yPoint, Orientation branchOrientation)
     {
         this.yPoint = yPoint;
         this.branchOrientation = branchOrientation;

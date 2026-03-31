@@ -93,15 +93,15 @@ public class ChunkManager : MonoBehaviour, IBakeable, IBuildable
             // Set up variables based on branch slot orientation
             switch (slot.branchOrientation)
             {
-                case BranchOrientation.Right:
+                case Orientation.Right:
                     offsetX = Constants.BRANCH_SLOT_X_OFFSET;
                     slotColor = branchColorRight;
                     break;
-                case BranchOrientation.Left:
+                case Orientation.Left:
                     offsetX = -Constants.BRANCH_SLOT_X_OFFSET;
                     slotColor = branchColorLeft;
                     break;
-                case BranchOrientation.Middle:
+                case Orientation.Middle:
                     // Skip
                     break;
                 default:

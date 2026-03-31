@@ -25,10 +25,10 @@ public class BranchManager : MonoBehaviour, IBakeable, IBuildable
     public void SetData(IData data)
     {
         if (data is not BranchData branchData) return;
-        SetData(branchData, BranchOrientation.Right, transform.position.x); // Build with default values
+        SetData(branchData, Orientation.Right, transform.position.x); // Build with default values
     }
 
-    public void SetData(BranchData data, BranchOrientation orient, float currentHeight)
+    public void SetData(BranchData data, Orientation orient, float currentHeight)
     {
         _length = Mathf.Max(0, data.length); // Ensure length is non-negative
 
@@ -37,15 +37,15 @@ public class BranchManager : MonoBehaviour, IBakeable, IBuildable
         switch (orient)
         {
             default:
-            case BranchOrientation.Right:
+            case Orientation.Right:
                 xPos = Constants.BRANCH_SLOT_X_OFFSET;
                 break;
 
-            case BranchOrientation.Left:
+            case Orientation.Left:
                 xPos = -Constants.BRANCH_SLOT_X_OFFSET;
                 break;
 
-            case BranchOrientation.Middle:
+            case Orientation.Middle:
                 xPos = 0f;
                 break;
         }
@@ -95,7 +95,7 @@ public class BranchManager : MonoBehaviour, IBakeable, IBuildable
 
     private void OnDrawGizmosSelected()
     {
-        const float TINY_WIDTH = 0.8f;
+        const float TINY_WIDTH = Constants.UNIT_SIZE;
         const float islandIconWorldSize = 0.2f * 4f;
         const float branchIconWorldSize = 0.2f;
 
@@ -126,15 +126,15 @@ public class BranchManager : MonoBehaviour, IBakeable, IBuildable
 
                 switch (slot.staticIslandData.size)
                 {
-                    case IslandData.Size.Tiny:
+                    case Size.Tiny:
                         DrawSlotIcon(slot.xPoint, TINY_WIDTH, islandIconWorldSize, tinyColor, tinyIcon);
                         break;
 
-                    case IslandData.Size.Small:
+                    case Size.Small:
                         DrawSlotIcon(slot.xPoint, TINY_WIDTH * 2f, islandIconWorldSize, smallColor, smallIcon);
                         break;
 
-                    case IslandData.Size.Medium:
+                    case Size.Medium:
                         DrawSlotIcon(slot.xPoint, TINY_WIDTH * 3f, islandIconWorldSize, mediumColor, mediumIcon);
                         break;
                 }

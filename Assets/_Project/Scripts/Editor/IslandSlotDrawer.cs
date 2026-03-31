@@ -82,7 +82,7 @@ public class IslandSlotDrawer : PropertyDrawer
 
         if (isStatic.boolValue)
         {
-            // Static mode: user must assign a concrete IslandData asset
+            // Static mode: must assign a concrete IslandData asset
             row.y += line + space;
             EditorGUI.PropertyField(row, staticIslandData, new GUIContent("Island Data"));
 
@@ -97,13 +97,13 @@ public class IslandSlotDrawer : PropertyDrawer
         {
             // Dynamic mode: choose allowed IslandData.Size values
             row.y += line + space;
-            EditorGUI.PropertyField(row, allowTiny, new GUIContent(IslandData.Size.Tiny.ToString()));
+            EditorGUI.PropertyField(row, allowTiny, new GUIContent(Size.Tiny.ToString()));
 
             row.y += line + space;
-            EditorGUI.PropertyField(row, allowSmall, new GUIContent(IslandData.Size.Small.ToString()));
+            EditorGUI.PropertyField(row, allowSmall, new GUIContent(Size.Small.ToString()));
 
             row.y += line + space;
-            EditorGUI.PropertyField(row, allowMedium, new GUIContent(IslandData.Size.Medium.ToString()));
+            EditorGUI.PropertyField(row, allowMedium, new GUIContent(Size.Medium.ToString()));
         }
 
         EditorGUI.indentLevel--;

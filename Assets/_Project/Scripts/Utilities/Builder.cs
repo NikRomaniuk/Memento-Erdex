@@ -14,7 +14,7 @@ public class Builder : MonoBehaviour
     [SerializeField] private float _currentHeight = 0f;
 
     // --- Branch Data ---
-    [SerializeField] private BranchOrientation _branchOrientation = BranchOrientation.Right;
+    [SerializeField] private Orientation _branchOrientation = Orientation.Right;
 
     // --- Shape Data ---
     [SerializeField] private bool _isXFlipped = false;
@@ -165,7 +165,7 @@ public class Builder : MonoBehaviour
     /// <summary>
     /// Initialize BranchManager with the given data
     /// </summary>
-    public void Initialize(BranchData data, BranchOrientation orient, float currentHeight)
+    public void Initialize(BranchData data, Orientation orient, float currentHeight)
     {
         if (!PrepareToBuild()) return;
 
@@ -178,13 +178,13 @@ public class Builder : MonoBehaviour
         bool isOrientationValid;
         if (data.avaliableSide == BranchData.AvailableSide.Both)
         {
-            isOrientationValid = orient == BranchOrientation.Left || orient == BranchOrientation.Right;
+            isOrientationValid = orient == Orientation.Left || orient == Orientation.Right;
         }
         else
         {
-            isOrientationValid = (data.avaliableSide == BranchData.AvailableSide.Left && orient == BranchOrientation.Left) ||
-                                 (data.avaliableSide == BranchData.AvailableSide.Right && orient == BranchOrientation.Right) ||
-                                 (data.avaliableSide == BranchData.AvailableSide.Middle && orient == BranchOrientation.Middle);
+            isOrientationValid = (data.avaliableSide == BranchData.AvailableSide.Left && orient == Orientation.Left) ||
+                                 (data.avaliableSide == BranchData.AvailableSide.Right && orient == Orientation.Right) ||
+                                 (data.avaliableSide == BranchData.AvailableSide.Middle && orient == Orientation.Middle);
         }
 
         if (!isOrientationValid)

@@ -1,11 +1,5 @@
 using UnityEngine;
 
-public enum Side
-{
-    Left,
-    Right
-}
-
 public class TrunkSegment : MonoBehaviour, IBakeable, IBuildable
 {
     [Header("References")]

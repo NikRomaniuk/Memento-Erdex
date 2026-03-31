@@ -171,20 +171,20 @@ public class ShapeGenerator : MonoBehaviour
         return feasibleBasePool;
     }
 
-    private bool TryMapBranchOrientationToSide(BranchOrientation branchOrientation, out Side side)
+    private bool TryMapBranchOrientationToSide(Orientation branchOrientation, out Side side)
     {
         // Only left/right branches can host shapes in current generation rules
         switch (branchOrientation)
         {
-            case BranchOrientation.Left:
+            case Orientation.Left:
                 side = Side.Left;
                 return true;
 
-            case BranchOrientation.Right:
+            case Orientation.Right:
                 side = Side.Right;
                 return true;
 
-            case BranchOrientation.Middle:
+            case Orientation.Middle:
             default:
                 side = Side.Right;
                 return false;
