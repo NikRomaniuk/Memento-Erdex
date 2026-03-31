@@ -254,8 +254,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93a4e705dea09bb4c9afd12210321613, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ChunkManager
-  _height: 4
-  _branchSlots: []
+  _height: 5
+  _branchSlots:
+  - yPoint: 1
+    branchOrientation: 0
+  - yPoint: 2.5
+    branchOrientation: 0
+  - yPoint: 4
+    branchOrientation: 0
   LoadedTrunks: []
   LoadedBranches: []
 --- !u!4 &94264095
@@ -286,8 +292,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Baker
   _blankType: 1
-  _id: foot_01
-  _dataToEdit: {fileID: 11400000, guid: 3b35250759ac9a24f9eda3b4404247fc, type: 2}
+  _id: onlyLeft_01
+  _dataToEdit: {fileID: 11400000, guid: b61c51cea62233c47accf466f8ff75f3, type: 2}
   _avaliableSide: 0
   _canBeFlippedVertically: 1
   _branchAvaliableSide: 0
@@ -1010,9 +1016,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9d761bfd19fe88e428ec644112657fa9, type: 2}
   - {fileID: 11400000, guid: 2af6fb04ee0cd134ba322bab6d2dd048, type: 2}
   - {fileID: 11400000, guid: b61c51cea62233c47accf466f8ff75f3, type: 2}
-  _staticChunks:
-  - ChunkData: {fileID: 11400000, guid: 3b35250759ac9a24f9eda3b4404247fc, type: 2}
-    Height: 0
 --- !u!114 &555159128
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1025,8 +1028,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa4025911dd487f41914bcef9e8749c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TreeGenerator
-  _seed: 123456
-  _treeHeight: 100
+  _seed: 21444
+  _treeHeight: 80
   _blanksLibrary: {fileID: 180594622}
 --- !u!114 &555159129
 MonoBehaviour:

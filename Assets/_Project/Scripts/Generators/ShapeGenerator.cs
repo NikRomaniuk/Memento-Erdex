@@ -16,6 +16,38 @@ public class ShapeGenerator : MonoBehaviour
     [Header("Visual Settings")]
     [SerializeField] private Color _color = Color.white;
 
+    private readonly List<ShapeData> _basePool = new List<ShapeData>();
+    private readonly List<ShapeData> _tipPool = new List<ShapeData>();
+
+    private void Awake()
+    {
+        // --- Preparations ---
+        SplitPool();
+    }
+
+    private void SplitPool()
+    {
+        // Clear any existing data
+        _basePool.Clear();
+        _tipPool.Clear();
+
+        // --- Validations ---
+        if (_shapeDataPool == null)
+            return;
+
+        // Split the pool into Base and Tip lists
+        foreach (ShapeData data in _shapeDataPool)
+        {
+            if (data == null)
+                continue;
+
+            if (data.type == ShapeData.Type.Tip)
+                _tipPool.Add(data);
+            else
+                _basePool.Add(data);
+        }
+    }
+
     public void GenerateShapes(BranchGen branchGen, System.Random random)
     {
         // --- Validations ---
@@ -34,21 +66,7 @@ public class ShapeGenerator : MonoBehaviour
         // Regenerate branch shapes from scratch each time
         branchGen.Shapes.Clear();
 
-        // Split source pool into base and tip candidates once per branch generation
-        List<ShapeData> basePool = new List<ShapeData>();
-        List<ShapeData> tipPool = new List<ShapeData>();
-        foreach (ShapeData data in _shapeDataPool)
-        {
-            if (data == null || data.Length <= 0f)
-                continue;
-
-            if (data.type == ShapeData.Type.Tip)
-                tipPool.Add(data);
-            else
-                basePool.Add(data);
-        }
-
-        if (tipPool.Count == 0)
+        if (_tipPool.Count == 0)
         {
             Debug.LogWarning($"No Tip shapes available for branch '{branchGen.BranchData.id}'. Cannot generate a valid chain");
             return;
@@ -61,7 +79,7 @@ public class ShapeGenerator : MonoBehaviour
         // Retry assembling a valid chain; on first success we keep that candidate
         for (int attempt = 0; attempt < MAX_ATTEMPTS; attempt++)
         {
-            if (TryAssembleShapeChain(random, targetLength, maxLength, basePool, tipPool, out assembledShapeData))
+            if (TryAssembleShapeChain(random, targetLength, maxLength, _basePool, _tipPool, out assembledShapeData))
             {
                 break;
             }
