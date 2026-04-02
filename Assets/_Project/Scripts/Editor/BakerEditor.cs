@@ -47,6 +47,14 @@ public class BakerEditor : Editor
                     EditorGUILayout.PropertyField(canBeFlippedHorizontallyProp);
                 }
                 break;
+
+            case BlanksLibrary.BlankType.Island:
+                EditorGUILayout.LabelField("Island Options", EditorStyles.boldLabel);
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("_islandCanBeXFlipped"));
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("_islandAllowLeft"));
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("_islandAllowRight"));
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("_islandAllowMiddle"));
+                break;
         }
 
         serializedObject.ApplyModifiedProperties();

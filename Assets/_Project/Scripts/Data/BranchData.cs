@@ -4,6 +4,7 @@ using UnityEngine;
 public struct IslandSlot
 {
     public bool isStatic;
+    // Local X position of island slot center along branch.
     [Step(0.05f)] public float xPoint;
 
     // Used when isStatic == True

@@ -87,15 +87,8 @@ public class BranchManager : MonoBehaviour, IBakeable, IBuildable
     }
 
 #if UNITY_EDITOR
-    private enum IconAnchor
-    {
-        TopLeft,
-        Center
-    }
-
     private void OnDrawGizmosSelected()
     {
-        const float TINY_WIDTH = Constants.UNIT_SIZE;
         const float islandIconWorldSize = 0.2f * 4f;
         const float branchIconWorldSize = 0.2f;
 
@@ -127,15 +120,15 @@ public class BranchManager : MonoBehaviour, IBakeable, IBuildable
                 switch (slot.staticIslandData.size)
                 {
                     case Size.Tiny:
-                        DrawSlotIcon(slot.xPoint, TINY_WIDTH, islandIconWorldSize, tinyColor, tinyIcon);
+                        DrawSlotIcon(slot.xPoint, islandIconWorldSize, tinyColor, tinyIcon);
                         break;
 
                     case Size.Small:
-                        DrawSlotIcon(slot.xPoint, TINY_WIDTH * 2f, islandIconWorldSize, smallColor, smallIcon);
+                        DrawSlotIcon(slot.xPoint, islandIconWorldSize, smallColor, smallIcon);
                         break;
 
                     case Size.Medium:
-                        DrawSlotIcon(slot.xPoint, TINY_WIDTH * 3f, islandIconWorldSize, mediumColor, mediumIcon);
+                        DrawSlotIcon(slot.xPoint, islandIconWorldSize, mediumColor, mediumIcon);
                         break;
                 }
 
@@ -143,40 +136,44 @@ public class BranchManager : MonoBehaviour, IBakeable, IBuildable
             }
 
             if (slot.allowTiny)
-                DrawSlotIcon(slot.xPoint, TINY_WIDTH, islandIconWorldSize, tinyColor, tinyIcon);
+                DrawSlotIcon(slot.xPoint, islandIconWorldSize, tinyColor, tinyIcon);
 
             if (slot.allowSmall)
-                DrawSlotIcon(slot.xPoint, TINY_WIDTH * 2f, islandIconWorldSize, smallColor, smallIcon);
+                DrawSlotIcon(slot.xPoint, islandIconWorldSize, smallColor, smallIcon);
 
             if (slot.allowMedium)
-                DrawSlotIcon(slot.xPoint, TINY_WIDTH * 3f, islandIconWorldSize, mediumColor, mediumIcon);
+                DrawSlotIcon(slot.xPoint, islandIconWorldSize, mediumColor, mediumIcon);
         }
     }
 
     private void DrawBranchIcons(float iconWorldSize, Color startColor, Texture2D startIcon, Color endColor, Texture2D endIcon)
     {
         // Branch start is at local X=0. Branch end is offset by signed branch length
-        // Branch icons use center anchoring to match branch pivot visualization
         float startX = 0f;
         float signedLength = _drawRight ? _length : -_length;
         float endX = startX + signedLength * 0.8f;
 
-        DrawIcon(startX, iconWorldSize, startColor, startIcon, IconAnchor.Center);
-        DrawIcon(endX, iconWorldSize, endColor, endIcon, IconAnchor.Center);
+        DrawIcon(startX, 0f, iconWorldSize, startColor, startIcon);
+        DrawIcon(endX, 0f, iconWorldSize, endColor, endIcon);
     }
 
-    private void DrawSlotIcon(float xPoint, float width, float iconWorldSize, Color iconColor, Texture2D icon)
+    private void DrawSlotIcon(float xPoint, float iconWorldSize, Color iconColor, Texture2D icon)
     {
-        // At drawRight=true xPoint is left-top corner; at false -xPoint is right-top corner
-        float iconLeftX = _drawRight ? xPoint : -xPoint - width;
-        DrawIcon(iconLeftX, iconWorldSize, iconColor, icon, IconAnchor.TopLeft);
+        // xPoint now represents slot center. Mirror by inverting x only.
+        float iconCenterX = xPoint;
+
+        if (!_drawRight)
+            iconCenterX = -iconCenterX;
+
+        // Shift icon down by half its height so slot point matches top-center anchor
+        DrawIcon(iconCenterX, -Constants.UNIT_SIZE/2f, iconWorldSize, iconColor, icon);
     }
 
-    private void DrawIcon(float localX, float worldSize, Color color, Texture2D icon, IconAnchor anchor)
+    private void DrawIcon(float localX, float localY, float worldSize, Color color, Texture2D icon)
     {
         if (icon == null) return;
 
-        Vector3 worldPoint = transform.TransformPoint(new Vector3(localX, 0f, 0f));
+        Vector3 worldPoint = transform.TransformPoint(new Vector3(localX, localY, 0f));
         Camera cam = UnityEditor.SceneView.lastActiveSceneView?.camera;
         if (cam == null) return;
 
@@ -190,8 +187,8 @@ public class BranchManager : MonoBehaviour, IBakeable, IBuildable
         UnityEditor.Handles.BeginGUI();
 
         Vector2 screenPos = UnityEditor.HandleUtility.WorldToGUIPoint(worldPoint);
-        float rectX = anchor == IconAnchor.Center ? screenPos.x - screenWidth * 0.5f : screenPos.x;
-        float rectY = anchor == IconAnchor.Center ? screenPos.y - rectHeight * 0.5f : screenPos.y;
+        float rectX = screenPos.x - screenWidth * 0.5f;
+        float rectY = screenPos.y - rectHeight * 0.5f;
         Rect rect = new Rect(rectX, rectY, screenWidth, rectHeight);
 
         Color oldColor = GUI.color;

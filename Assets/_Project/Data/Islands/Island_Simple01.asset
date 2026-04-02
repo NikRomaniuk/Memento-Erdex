@@ -22,9 +22,7 @@ MonoBehaviour:
   allowLeft: 0
   allowRight: 0
   allowMiddle: 0
-  interactiveFormations:
-  - interactiveSlots:
-    - isStatic: 0
-      pos: {x: 0, y: 0}
-      staticData: {fileID: 0}
-    randomValue: 0
+  staticPropSlots:
+  - xPos: 0
+    propData: {fileID: 0}
+  propCapacity: 0

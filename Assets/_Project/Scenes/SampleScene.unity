@@ -297,6 +297,10 @@ MonoBehaviour:
   _branchAvaliableSide: 0
   _shapeType: 0
   _canBeFlippedHorizontally: 1
+  _islandCanBeXFlipped: 1
+  _islandAllowLeft: 1
+  _islandAllowRight: 1
+  _islandAllowMiddle: 1
 --- !u!114 &94264097
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -440,10 +444,12 @@ MonoBehaviour:
   _chunkManagerPrefab: {fileID: 4783017518763140724, guid: 38b4763767a63ed42af8ed4fac5e5d4d, type: 3}
   _branchManagerPrefab: {fileID: 3182251217158331218, guid: 518f66240152554488968034903efdd1, type: 3}
   _shapeManagerPrefab: {fileID: 1435418219524379087, guid: c6f2c9aad986c064fb7294c00e9e208b, type: 3}
+  _islandManagerPrefab: {fileID: 7553239452005766863, guid: 7143363492815d14aa4bf2facfffd5ac, type: 3}
   _trunkBlanksCount: 70
   _chunkBlanksCount: 10
   _branchBlanksCount: 50
   _shapeBlanksCount: 200
+  _islandBlanksCount: 100
   _emergencyBlanksCount: 5
 --- !u!4 &180594623
 Transform:
@@ -519,6 +525,10 @@ MonoBehaviour:
   _branchAvaliableSide: 0
   _shapeType: 0
   _canBeFlippedHorizontally: 1
+  _islandCanBeXFlipped: 1
+  _islandAllowLeft: 1
+  _islandAllowRight: 1
+  _islandAllowMiddle: 1
 --- !u!114 &288197812
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -550,6 +560,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83ac83fc5b13c004e82ced2bf52fe864, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IslandManager
+  _spriteRenderer: {fileID: 0}
+  _outlineRenderer: {fileID: 0}
+  _boxCollider: {fileID: 0}
+  _size: 0
+  _staticPropSlots: []
+  _propCapacity: 0
+  LoadedProps: []
 --- !u!4 &288197814
 Transform:
   m_ObjectHideFlags: 0
@@ -1604,7 +1621,7 @@ Transform:
   m_GameObject: {fileID: 746800680}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.4, y: -0.4, z: 0}
+  m_LocalPosition: {x: 0, y: -0.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2412,6 +2429,10 @@ MonoBehaviour:
   _branchAvaliableSide: 0
   _shapeType: 0
   _canBeFlippedHorizontally: 1
+  _islandCanBeXFlipped: 1
+  _islandAllowLeft: 1
+  _islandAllowRight: 1
+  _islandAllowMiddle: 1
 --- !u!114 &1359261600
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3191,7 +3212,7 @@ MonoBehaviour:
   _length: 3
   _islandSlots:
   - isStatic: 0
-    xPoint: 0.4
+    xPoint: 1.25
     staticIslandData: {fileID: 0}
     allowTiny: 1
     allowSmall: 1
@@ -3331,6 +3352,10 @@ MonoBehaviour:
   _branchAvaliableSide: 0
   _shapeType: 1
   _canBeFlippedHorizontally: 0
+  _islandCanBeXFlipped: 1
+  _islandAllowLeft: 1
+  _islandAllowRight: 1
+  _islandAllowMiddle: 1
 --- !u!114 &7830691548186422443
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3351,6 +3376,10 @@ MonoBehaviour:
   _branchAvaliableSide: 0
   _shapeType: 0
   _canBeFlippedHorizontally: 1
+  _islandCanBeXFlipped: 1
+  _islandAllowLeft: 1
+  _islandAllowRight: 1
+  _islandAllowMiddle: 1
 --- !u!1 &8379283212360276595
 GameObject:
   m_ObjectHideFlags: 0
@@ -3445,7 +3474,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

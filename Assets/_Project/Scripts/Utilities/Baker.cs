@@ -19,6 +19,12 @@ public class Baker : MonoBehaviour
     [SerializeField] private ShapeData.Type _shapeType = ShapeData.Type.Base;
     [SerializeField] private bool _canBeFlippedHorizontally = true;
 
+    // --- Island Data ---
+    [SerializeField] private bool _islandCanBeXFlipped = true;
+    [SerializeField] private bool _islandAllowLeft = true;
+    [SerializeField] private bool _islandAllowRight = true;
+    [SerializeField] private bool _islandAllowMiddle = true;
+
     // --- Cached Component ---
     private IBakeable _bakeable;
 
@@ -62,6 +68,9 @@ public class Baker : MonoBehaviour
 
             case BlanksLibrary.BlankType.Shape:
                 return ValidateUniqueIdForType<ShapeData>(_dataToEdit);
+
+            case BlanksLibrary.BlankType.Island:
+                return ValidateUniqueIdForType<IslandData>(_dataToEdit);
         }
 #endif
 
@@ -201,6 +210,31 @@ public class Baker : MonoBehaviour
                 UnityEditor.AssetDatabase.SaveAssets();
 #endif
                 Debug.Log($"Data successfully baked to <b>{shapeData.name}</b> (ID: {shapeData.id})");
+                break;
+
+            case BlanksLibrary.BlankType.Island:
+                var islandData = _dataToEdit as IslandData;
+                if (islandData == null)
+                {
+                    Debug.LogError("_dataToEdit is not an IslandData! Please assign an IslandData ScriptableObject");
+                    return;
+                }
+
+                // --- Bake Metadata ---
+                islandData.id = _id;
+                islandData.canBeXFlipped = _islandCanBeXFlipped;
+                islandData.allowLeft = _islandAllowLeft;
+                islandData.allowRight = _islandAllowRight;
+                islandData.allowMiddle = _islandAllowMiddle;
+
+                // --- Bake Component Data ---
+                _bakeable.GatherData(islandData);
+
+#if UNITY_EDITOR
+                UnityEditor.EditorUtility.SetDirty(islandData);
+                UnityEditor.AssetDatabase.SaveAssets();
+#endif
+                Debug.Log($"Data successfully baked to <b>{islandData.name}</b> (ID: {islandData.id})");
                 break;
 
             default:

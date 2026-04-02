@@ -5,7 +5,7 @@ using UnityEngine;
 public class BlanksLibrary : MonoBehaviour
 {
     // Blank types
-    public enum BlankType { Trunk, Chunk, Branch, Shape }
+    public enum BlankType { Trunk, Chunk, Branch, Shape, Island }
 
     [Header("Reference Data")]
     // Prefabs to instantiate blanks from
@@ -13,6 +13,7 @@ public class BlanksLibrary : MonoBehaviour
     [SerializeField] private ChunkManager _chunkManagerPrefab; // For Chunks
     [SerializeField] private BranchManager _branchManagerPrefab; // For Branches
     [SerializeField] private ShapeManager _shapeManagerPrefab; // For Shapes
+    [SerializeField] private IslandManager _islandManagerPrefab; // For Islands
 
     [Header("Properties")]
     // Number of blanks to pre-generate
@@ -20,6 +21,7 @@ public class BlanksLibrary : MonoBehaviour
     [SerializeField] private int _chunkBlanksCount = 10; // For Chunks
     [SerializeField] private int _branchBlanksCount = 50; // For Branches
     [SerializeField] private int _shapeBlanksCount = 200; // For Shapes
+    [SerializeField] private int _islandBlanksCount = 100; // For Islands
     // Extra blanks generated when pool runs out
     [SerializeField] private int _emergencyBlanksCount = 10;  
 
@@ -38,6 +40,9 @@ public class BlanksLibrary : MonoBehaviour
 
     private ArrayList _shapeBlanks;                           // All instantiated Shape blanks
     private Stack<ShapeManager> _availableShapeBlanks;        // Shape blanks available for use
+
+    private ArrayList _islandBlanks;                          // All instantiated Island blanks
+    private Stack<IslandManager> _availableIslandBlanks;      // Island blanks available for use
 
     private void Awake()
     {
@@ -76,6 +81,12 @@ public class BlanksLibrary : MonoBehaviour
             return;
         }
 
+        if (_islandManagerPrefab == null)
+        {
+            Debug.LogError("IslandManagerPrefab is not assigned!");
+            return;
+        }
+
         // --- Instantiate blanks ---
         // Trunk Parts
         _trunkBlanks = new ArrayList(_trunkBlanksCount);
@@ -101,12 +112,19 @@ public class BlanksLibrary : MonoBehaviour
         for (int i = 0; i < _shapeBlanksCount; i++)
             CreateShapeBlank();
 
+        // Islands
+        _islandBlanks = new ArrayList(_islandBlanksCount);
+        _availableIslandBlanks = new Stack<IslandManager>(_islandBlanksCount);
+        for (int i = 0; i < _islandBlanksCount; i++)
+            CreateIslandBlank();
+
         // Blanks are ready to use!
         IsReady = true;
         Debug.Log($"Generated Trunks: '{_trunkBlanks.Count}'");
         Debug.Log($"Generated Chunks: '{_chunkBlanks.Count}'");
         Debug.Log($"Generated Branches: '{_branchBlanks.Count}'");
         Debug.Log($"Generated Shapes: '{_shapeBlanks.Count}'");
+        Debug.Log($"Generated Islands: '{_islandBlanks.Count}'");
     }
 
     /// <summary>
@@ -157,6 +175,16 @@ public class BlanksLibrary : MonoBehaviour
                 }
                 return _availableShapeBlanks.Pop();
 
+            case BlankType.Island:
+                // --- Emergency refill ---
+                if (_availableIslandBlanks.Count == 0)
+                {
+                    Debug.LogWarning($"No available IslandBlanks! Generating {_emergencyBlanksCount} emergency blanks...");
+                    for (int i = 0; i < _emergencyBlanksCount; i++)
+                        CreateIslandBlank();
+                }
+                return _availableIslandBlanks.Pop();
+
             default:
                 Debug.LogWarning($"Unknown BlankType: {type}. Could not get blank from pool");
                 return null;
@@ -181,6 +209,9 @@ public class BlanksLibrary : MonoBehaviour
                 break;
             case BlankType.Shape:
                 _availableShapeBlanks.Push((ShapeManager)blank);
+                break;
+            case BlankType.Island:
+                _availableIslandBlanks.Push((IslandManager)blank);
                 break;
             default:
                 Debug.LogWarning($"Unknown BlankType: {type}. Could not return blank to pool");
@@ -230,5 +261,16 @@ public class BlanksLibrary : MonoBehaviour
         blank.gameObject.SetActive(false); // Deactivate until needed
         _shapeBlanks.Add(blank);
         _availableShapeBlanks.Push(blank);
+    }
+
+    /// <summary>
+    /// Instantiates a single Island blank and pushes it onto <see cref="_availableIslandBlanks"/>
+    /// </summary>
+    private void CreateIslandBlank()
+    {
+        IslandManager blank = Instantiate(_islandManagerPrefab);
+        blank.gameObject.SetActive(false); // Deactivate until needed
+        _islandBlanks.Add(blank);
+        _availableIslandBlanks.Push(blank);
     }
 }

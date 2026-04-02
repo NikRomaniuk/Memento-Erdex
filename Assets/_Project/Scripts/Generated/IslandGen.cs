@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -10,19 +11,21 @@ using UnityEngine;
 /// </summary>
 public class IslandGen
 {
-    // --- Island Data ---
+    // --- Data ---
     public IslandData IslandData { get; private set; }
 
     // --- Settings ---
-	public Orientation Orientation { get; private set; }
     public Vector2 Pos { get; private set; }
     public bool IsXFlipped { get; private set; }
 
-    public IslandGen(IslandData islandData, Orientation orientation, Vector2 pos, bool isXFlipped)
+    // --- Childs ---
+    public List<PropGen> Props { get; private set; }
+
+    public IslandGen(IslandData islandData, Vector2 pos, bool isXFlipped)
     {
         IslandData = islandData;
-        Orientation = orientation;
         Pos = pos;
         IsXFlipped = isXFlipped;
+        Props = new List<PropGen>();
     }
 }

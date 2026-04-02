@@ -20,7 +20,7 @@ public class IslandSlotDrawer : PropertyDrawer
         SerializedProperty isStatic = property.FindPropertyRelative("isStatic");
         SerializedProperty staticIslandData = property.FindPropertyRelative("staticIslandData");
 
-        // Foldout + isStatic + xPoint
+        // Foldout + isStatic + xPoint (center)
         float height = line + space;
         height += line + space;
         height += line + space;
@@ -75,7 +75,7 @@ public class IslandSlotDrawer : PropertyDrawer
         EditorGUI.PropertyField(row, isStatic, new GUIContent("Is Static"));
 
         row.y += line + space;
-        EditorGUI.PropertyField(row, xPoint, new GUIContent("X Point"));
+        EditorGUI.PropertyField(row, xPoint, new GUIContent("X Center"));
 
         // Safety clamp in UI; data-level clamp also exists in BranchData.OnValidate
         xPoint.floatValue = Mathf.Max(0f, xPoint.floatValue);

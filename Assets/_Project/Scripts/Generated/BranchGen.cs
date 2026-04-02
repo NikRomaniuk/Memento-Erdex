@@ -22,6 +22,8 @@ public class BranchGen
 	public Vector2 Pos { get; private set; }
     // Generated shape chain that belongs to this branch
     public List<ShapeGen> Shapes { get; private set; }
+	// Generated islands that belongs to this branch
+    public List<IslandGen> Islands { get; private set; }
 
 	public BranchGen(BranchData branchData, Orientation side, Vector2 pos)
 	{
@@ -30,6 +32,7 @@ public class BranchGen
         Pos = pos;
         Height = pos.y;
         Shapes = new List<ShapeGen>();
+		Islands = new List<IslandGen>();
 	}
 
     public BranchGen(BranchData branchData, Orientation side, float height)
