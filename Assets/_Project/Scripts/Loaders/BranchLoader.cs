@@ -27,6 +27,13 @@ public static class BranchLoader
             blank.LoadedShapes.Add(loadedShape);
         }
 
+        // --- Load Islands ---
+        foreach (IslandGen island in branch.Islands)
+        {
+            IslandManager loadedIsland = IslandLoader.Load(island);
+            blank.LoadedIslands.Add(loadedIsland);
+        }
+
         // --- Activate ---
         blank.gameObject.SetActive(true);
 
@@ -42,6 +49,11 @@ public static class BranchLoader
         foreach (ShapeManager shape in branch.LoadedShapes)
             ShapeLoader.Unload(shape);
         branch.LoadedShapes.Clear();
+
+        // --- Unload Islands ---
+        foreach (IslandManager island in branch.LoadedIslands)
+            IslandLoader.Unload(island);
+        branch.LoadedIslands.Clear();
 
         // --- Components ---
         Builder blankBuilder = branch.GetComponent<Builder>();

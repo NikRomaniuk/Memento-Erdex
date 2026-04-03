@@ -43,7 +43,7 @@ public class BranchData : ScriptableObject, IData
     // Unique identifier
     public string id;
     public AvailableSide avaliableSide = AvailableSide.Both;
-    public int length;
+    public float length;
 
     [Header("Islands Configuration")]
     public IslandSlot[] islandSlots;

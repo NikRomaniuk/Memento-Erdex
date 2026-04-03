@@ -104,7 +104,7 @@ public class ShapeGenerator : MonoBehaviour
                 isXFlipped = random.Next(0, 2) == 1;
             }
 
-            ShapeGen shapeGen = new ShapeGen(selectedShapeData, shapeSide, isXFlipped, currentPos, 80, _color);
+            ShapeGen shapeGen = new ShapeGen(selectedShapeData, shapeSide, isXFlipped, currentPos, 100, _color);
             branchGen.Shapes.Add(shapeGen);
 
             // Left branches extend towards negative X, right branches towards positive X

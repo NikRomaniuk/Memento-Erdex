@@ -78,7 +78,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: -561473577
+  m_SortingLayerID: -1133800161
   m_SortingLayer: -2
   m_SortingOrder: 0
   m_MaskInteraction: 0
@@ -183,8 +183,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 1204244607
-  m_SortingLayer: -1
+  m_SortingLayerID: -1133800161
+  m_SortingLayer: -2
   m_SortingOrder: 100
   m_MaskInteraction: 0
   m_Sprite: {fileID: 0}
@@ -260,7 +260,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &165786825348602873
 Transform:
   m_ObjectHideFlags: 0
@@ -312,3 +312,6 @@ MonoBehaviour:
   _dataToBuild: {fileID: 0}
   _side: 1
   _isYFlipped: 0
+  _currentHeight: 0
+  _orientation: 1
+  _isXFlipped: 0

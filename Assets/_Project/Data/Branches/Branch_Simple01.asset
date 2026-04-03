@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0e6337ef1f74d4468588a1f37090d10, type: 3}
   m_Name: Branch_Simple01
   m_EditorClassIdentifier: Assembly-CSharp::BranchData
-  id: gitMerge
+  id: long_rewarding01
   avaliableSide: 0
-  length: 9
+  length: 8
   islandSlots:
   - isStatic: 0
     xPoint: 1.4
@@ -23,13 +23,13 @@ MonoBehaviour:
     allowSmall: 1
     allowMedium: 1
   - isStatic: 0
-    xPoint: 4.5
+    xPoint: 3.5
     staticIslandData: {fileID: 0}
     allowTiny: 1
     allowSmall: 1
     allowMedium: 0
   - isStatic: 1
-    xPoint: 6.3
+    xPoint: 5.9
     staticIslandData: {fileID: 11400000, guid: 59cca95787f332c459e4e830480d0353, type: 2}
     allowTiny: 1
     allowSmall: 1

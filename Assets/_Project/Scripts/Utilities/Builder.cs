@@ -14,7 +14,7 @@ public class Builder : MonoBehaviour
     [SerializeField] private float _currentHeight = 0f;
 
     // --- Branch Data ---
-    [SerializeField] private Orientation _branchOrientation = Orientation.Right;
+    [SerializeField] private Orientation _orientation = Orientation.Right; // Also used for Islands
 
     // --- Shape Data ---
     [SerializeField] private bool _isXFlipped = false;
@@ -89,7 +89,7 @@ public class Builder : MonoBehaviour
                     return;
                 }
                 // Initialize BranchManager with data & extra settings
-                Initialize(branchData, _branchOrientation, _currentHeight);
+                Initialize(branchData, _orientation, _currentHeight);
                 Debug.Log($"Branch successfully built from <b>{branchData.name}</b> (ID: {branchData.id})");
                 break;
 
@@ -103,6 +103,18 @@ public class Builder : MonoBehaviour
                 // Initialize ShapeManager with data & extra settings
                 Initialize(shapeData, _side, _isXFlipped);
                 Debug.Log($"Shape successfully built from <b>{shapeData.name}</b> (ID: {shapeData.id})");
+                break;
+
+            case BlanksLibrary.BlankType.Island:
+                var islandData = _dataToBuild as IslandData;
+                if (islandData == null)
+                {
+                    Debug.LogError("_dataToBuild is not an IslandData! Please assign an IslandData ScriptableObject");
+                    return;
+                }
+                // Initialize IslandManager with data & extra settings
+                Initialize(islandData, _isXFlipped);
+                Debug.Log($"Island successfully built from <b>{islandData.name}</b> (ID: {islandData.id})");
                 break;
 
             default:
@@ -220,6 +232,27 @@ public class Builder : MonoBehaviour
         }
 
         ((ShapeManager)_buildable).SetData(data, side, isXFlipped);
+
+#if UNITY_EDITOR
+        UnityEditor.EditorUtility.SetDirty(gameObject);
+#endif
+    }
+
+    /// <summary>
+    /// Initialize IslandManager with the given data
+    /// </summary>
+    public void Initialize(IslandData data, bool isXFlipped)
+    {
+        if (!PrepareToBuild()) return;
+        if (data == null) { Debug.LogWarning("Cannot initialize with null IslandData"); return; }
+
+        if (isXFlipped && !data.canBeXFlipped)
+        {
+            Debug.LogWarning($"Island '{data.name}' (ID: {data.id}) cannot be flipped horizontally");
+            return;
+        }
+
+        ((IslandManager)_buildable).SetData(data, isXFlipped);
 
 #if UNITY_EDITOR
         UnityEditor.EditorUtility.SetDirty(gameObject);

@@ -55,6 +55,7 @@ public class IslandManager : MonoBehaviour, IBakeable, IBuildable
         // - Sprite -
         _spriteRenderer.sprite = data.sprite;
         _spriteRenderer.flipX = shouldFlipX;
+        _spriteRenderer.transform.localPosition = new Vector3(data.spriteOffset.x * (shouldFlipX ? -1 : 1), data.spriteOffset.y, 0);
         // - Outline -
         _outlineRenderer.sprite = data.sprite;
         _outlineRenderer.flipX = shouldFlipX;
@@ -77,6 +78,7 @@ public class IslandManager : MonoBehaviour, IBakeable, IBuildable
         // - Sprite -
         _spriteRenderer.sprite = null;
         _spriteRenderer.flipX = false;
+        _spriteRenderer.transform.localPosition = Vector2.zero;
         // - Outline -
         _outlineRenderer.sprite = null;
         _outlineRenderer.flipX = false;

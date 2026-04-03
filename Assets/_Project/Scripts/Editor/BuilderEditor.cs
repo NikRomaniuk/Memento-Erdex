@@ -31,13 +31,19 @@ public class BuilderEditor : Editor
 
             case BlanksLibrary.BlankType.Branch:
                 EditorGUILayout.LabelField("Branch Options", EditorStyles.boldLabel);
-                EditorGUILayout.PropertyField(serializedObject.FindProperty("_branchOrientation"));
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("_orientation"));
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("_currentHeight"));
                 break;
 
             case BlanksLibrary.BlankType.Shape:
                 EditorGUILayout.LabelField("Shape Options", EditorStyles.boldLabel);
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("_side"));
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("_isXFlipped"));
+                break;
+
+            case BlanksLibrary.BlankType.Island:
+                EditorGUILayout.LabelField("Island Options", EditorStyles.boldLabel);
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("_orientation"));
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("_isXFlipped"));
                 break;
         }
@@ -60,6 +66,7 @@ public class BuilderEditor : Editor
             BlanksLibrary.BlankType.Trunk => "Clear TrunkPart",
             BlanksLibrary.BlankType.Branch => "Clear Branch",
             BlanksLibrary.BlankType.Shape => "Clear Shape",
+            BlanksLibrary.BlankType.Island => "Clear Island",
             _ => "Clear Chunk"
         };
         GUI.backgroundColor = new Color(1f, 0.6f, 0.6f);

@@ -17,15 +17,17 @@ public class IslandGen
     // --- Settings ---
     public Vector2 Pos { get; private set; }
     public bool IsXFlipped { get; private set; }
+    public short SpriteOrder { get; private set; }
 
     // --- Childs ---
     public List<PropGen> Props { get; private set; }
 
-    public IslandGen(IslandData islandData, Vector2 pos, bool isXFlipped)
+    public IslandGen(IslandData islandData, Vector2 pos, bool isXFlipped, short spriteOrder)
     {
         IslandData = islandData;
         Pos = pos;
         IsXFlipped = isXFlipped;
+        SpriteOrder = spriteOrder;
         Props = new List<PropGen>();
     }
 }

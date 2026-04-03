@@ -38,11 +38,17 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: Outline
-    uniqueID: 3733493719
+  - name: Shape
+    uniqueID: 3752679987
     locked: 0
-  - name: Sprite
-    uniqueID: 1204244607
+  - name: Island
+    uniqueID: 3520445711
+    locked: 0
+  - name: Trunk
+    uniqueID: 3161167135
+    locked: 0
+  - name: Character
+    uniqueID: 1145894431
     locked: 0
   - name: Default
     uniqueID: 0

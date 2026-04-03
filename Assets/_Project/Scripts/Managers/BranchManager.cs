@@ -4,13 +4,14 @@ using UnityEngine;
 public class BranchManager : MonoBehaviour, IBakeable, IBuildable
 {
     [Header("Properties")]
-    [SerializeField] private int _length;
+    [SerializeField] private float _length;
     [SerializeField] private IslandSlot[] _islandSlots;
 
     [Header("Draw Settings")]
     [SerializeField] private bool _drawRight = true;
 
     [HideInInspector] public List<ShapeManager> LoadedShapes = new List<ShapeManager>(); // Active ShapeManagers loaded for this branch
+    [HideInInspector] public List<IslandManager> LoadedIslands = new List<IslandManager>(); // Active IslandManagers loaded for this branch
 
     // --- IBakeable ---
     public void GatherData(IData data)

@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BranchData
   id: extrashort_01
   avaliableSide: 0
-  length: 3
+  length: 2.6
   islandSlots:
   - isStatic: 0
-    xPoint: 0.4
+    xPoint: 1.15
     staticIslandData: {fileID: 0}
     allowTiny: 1
     allowSmall: 1

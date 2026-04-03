@@ -8,10 +8,12 @@ public class BranchGenerator : MonoBehaviour
     // --- Components ---
     // Shape generation is chained to branch generation
     private ShapeGenerator _shapeGenerator;
+    private IslandGenerator _islandGenerator;
 
     private void Awake()
     {
         _shapeGenerator = GetComponent<ShapeGenerator>();
+        _islandGenerator = GetComponent<IslandGenerator>();
     }
 
     public void GenerateBranches(System.Random random, ChunkGen chunkGen)
@@ -21,12 +23,6 @@ public class BranchGenerator : MonoBehaviour
         {
             Debug.LogError("BranchData pool is empty! Cannot generate branches"); 
             return; 
-        }
-
-        if (_shapeGenerator == null)
-        {
-            Debug.LogError("ShapeGenerator component not found! Cannot generate shapes for branches");
-            return;
         }
 
         BranchSlot[] branchSlots = chunkGen.ChunkData.branchSlots;
@@ -53,13 +49,18 @@ public class BranchGenerator : MonoBehaviour
                 continue;
             }
 
-            // Store absolute branch origin; it becomes the origin for shape chain placement
+            // Store absolute branch origin -> it becomes the origin for shape chain placement
             Vector2 branchPos = new Vector2(GetBranchXPos(slot.branchOrientation), chunkGen.CurrentHeight + slot.yPoint);
             BranchGen branchGen = new BranchGen(selectedBranchData, slot.branchOrientation, branchPos);
             chunkGen.Branches.Add(branchGen);
 
             // Immediately generate Shapes for this branch from the same random stream
             _shapeGenerator.GenerateShapes(branchGen, random);
+
+            // Immediately generate Islands for this branch from the same random stream
+            if (_islandGenerator != null)
+                _islandGenerator.GenerateIslands(random, branchGen);
+
             generatedCount++;
         }
 
