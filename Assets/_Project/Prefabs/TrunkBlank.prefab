@@ -115,6 +115,7 @@ GameObject:
   - component: {fileID: 4247805989078971768}
   - component: {fileID: 3109208778259183138}
   - component: {fileID: 4256538611232661183}
+  - component: {fileID: 8634033418138454455}
   m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
@@ -164,7 +165,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: -876546973899608171, guid: cd88727931aea8d48b7465e5fea0ec11, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -243,6 +244,18 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.0001, y: 0.0001}
   m_EdgeRadius: 0
+--- !u!114 &8634033418138454455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1880121434771010563}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 217ad6590ed29314fab1c230fb032bce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpriteShaderHelper
 --- !u!1 &8412540440102607035
 GameObject:
   m_ObjectHideFlags: 0

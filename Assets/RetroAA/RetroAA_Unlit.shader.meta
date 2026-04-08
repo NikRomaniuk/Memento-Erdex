@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 6efb8c4da3c604f8c81a082d4739ae64
+timeCreated: 1466448026
+licenseType: Store
+ShaderImporter:
+  defaultTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 65509
+  packageName: Retro AA
+  packageVersion: 1.2
+  assetPath: Assets/RetroAA/RetroAA_Unlit.shader
+  uploadId: 198327

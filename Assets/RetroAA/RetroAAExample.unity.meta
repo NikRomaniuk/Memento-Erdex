@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 319e40331ecc04c499b9a5823878d429
+timeCreated: 1466448786
+licenseType: Store
+DefaultImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 65509
+  packageName: Retro AA
+  packageVersion: 1.2
+  assetPath: Assets/RetroAA/RetroAAExample.unity
+  uploadId: 198327

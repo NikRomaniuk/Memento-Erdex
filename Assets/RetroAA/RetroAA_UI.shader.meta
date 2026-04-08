@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 775430fa6f71ce54592ad7b56cc4bba5
+timeCreated: 1466448026
+licenseType: Store
+ShaderImporter:
+  defaultTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 65509
+  packageName: Retro AA
+  packageVersion: 1.2
+  assetPath: Assets/RetroAA/RetroAA_UI.shader
+  uploadId: 198327

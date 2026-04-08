@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 65a1b2661570b4f0cb40df43b9b55bd3
+timeCreated: 1484074280
+licenseType: Store
+ShaderImporter:
+  defaultTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 65509
+  packageName: Retro AA
+  packageVersion: 1.2
+  assetPath: Assets/RetroAA/RetroAA.cginc
+  uploadId: 198327
