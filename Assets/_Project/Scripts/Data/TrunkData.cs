@@ -28,6 +28,8 @@ public class TrunkData : ScriptableObject, IData
     public Sprite sprite;
     // Sprite offset
     [Step(0.05f)] public Vector2 spriteOffset;
+    // Default outline color
+    public Color defaultOutlineColor = Color.black;
     // On which side this trunk can be on
     public TrunkAvaliableSide avaliableSide = TrunkAvaliableSide.Both;
     // Can sprite be flipped vertically

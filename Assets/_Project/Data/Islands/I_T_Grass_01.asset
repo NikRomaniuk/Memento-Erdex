@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9409e52e9b05684e95a14bdf7bf12c2, type: 3}
+  m_Name: I_T_Grass_01
+  m_EditorClassIdentifier: Assembly-CSharp::IslandData
+  id: S_round_01
+  colliderSize: {x: 1.6, y: 0.8}
+  colliderOffset: {x: 0, y: 0}
+  sprite: {fileID: -7382352470053354809, guid: 8c4babbc9c1b4464b819da982c9c6b7a, type: 3}
+  spriteOffset: {x: 0, y: -0.4}
+  defaultOutlineColor: {r: 0.09803922, g: 0.1882353, b: 0.13725491, a: 1}
+  canBeXFlipped: 1
+  size: 1
+  allowLeft: 1
+  allowRight: 1
+  allowMiddle: 1
+  staticPropSlots: []
+  propCapacity: 2

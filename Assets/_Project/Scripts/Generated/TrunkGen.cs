@@ -19,8 +19,9 @@ public class TrunkGen
     public float Height { get; private set; }
     public short SpriteOrder { get; private set; }
     public Color SpriteColor { get; private set; }
+    public Color OutlineColor { get; private set; }
 
-    public TrunkGen(TrunkData trunkData, Side side, bool isYFlipped, float height, short spriteOrder, Color spriteColor)
+    public TrunkGen(TrunkData trunkData, Side side, bool isYFlipped, float height, short spriteOrder, Color spriteColor, Color outlineColor)
     {
         TrunkData = trunkData;
         Side = side;
@@ -28,5 +29,6 @@ public class TrunkGen
         Height = height;
         SpriteOrder = spriteOrder;
         SpriteColor = spriteColor;
+        OutlineColor = outlineColor;
     }
 }

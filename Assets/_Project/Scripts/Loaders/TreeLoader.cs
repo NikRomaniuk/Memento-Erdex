@@ -26,7 +26,7 @@ public static class TreeLoader
     public static void KeepLoaded(int chunkIndex)
     {
         if (GenData == null || GenData.Chunks.Count == 0) return;
-        Debug.Log($"LoadedChunks: '{LoadedChunks.Count}'");
+        // Debug.Log($"LoadedChunks: '{LoadedChunks.Count}'");
 
         // --- Compute range ---
         int min = System.Math.Max(0, chunkIndex - LoadRadius);                          // Clamp to list start

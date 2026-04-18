@@ -28,6 +28,7 @@ public class IslandData : ScriptableObject, IData
     [Header("Visual Data")]
     public Sprite sprite;
     [Step(0.05f)] public Vector2 spriteOffset;
+    public Color defaultOutlineColor = Color.black;
     public bool canBeXFlipped = true;
 
     [Header("General Data")]

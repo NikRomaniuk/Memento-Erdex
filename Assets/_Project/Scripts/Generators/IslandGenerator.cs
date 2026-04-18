@@ -10,6 +10,13 @@ public class IslandGenerator : MonoBehaviour
     [Header("Island Pool")]
     [SerializeField] private IslandData[] _islandDataPool;
 
+    [Header("Visual Settings")]
+    [SerializeField] private Color _outlineColor = Color.black;
+    [SerializeField] private bool _useDefaultOutlineColor = true;
+
+    public Color OutlineColor => _outlineColor;
+    public bool UseDefaultOutlineColor => _useDefaultOutlineColor;
+
     // --- Components ---
     // Prop generation is chained to Island generation
     private PropGenerator _propGenerator;
@@ -105,7 +112,11 @@ public class IslandGenerator : MonoBehaviour
         Vector2 pos = QuantizePos(new Vector2(worldX, branchGen.Pos.y + Y_OFFSET));
 
         bool isXFlipped = selectedIslandData.canBeXFlipped && random.Next(0, 2) == 1;
-        islandGen = new IslandGen(selectedIslandData, pos, isXFlipped, ISLAND_SPRITE_ORDER);
+        Color resolvedOutlineColor = _useDefaultOutlineColor
+            ? selectedIslandData.defaultOutlineColor
+            : _outlineColor;
+
+        islandGen = new IslandGen(selectedIslandData, pos, isXFlipped, ISLAND_SPRITE_ORDER, resolvedOutlineColor);
         return true;
     }
 

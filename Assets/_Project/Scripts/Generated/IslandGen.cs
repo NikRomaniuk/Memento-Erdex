@@ -18,16 +18,18 @@ public class IslandGen
     public Vector2 Pos { get; private set; }
     public bool IsXFlipped { get; private set; }
     public short SpriteOrder { get; private set; }
+    public Color OutlineColor { get; private set; }
 
     // --- Childs ---
     public List<PropGen> Props { get; private set; }
 
-    public IslandGen(IslandData islandData, Vector2 pos, bool isXFlipped, short spriteOrder)
+    public IslandGen(IslandData islandData, Vector2 pos, bool isXFlipped, short spriteOrder, Color outlineColor)
     {
         IslandData = islandData;
         Pos = pos;
         IsXFlipped = isXFlipped;
         SpriteOrder = spriteOrder;
+        OutlineColor = outlineColor;
         Props = new List<PropGen>();
     }
 }

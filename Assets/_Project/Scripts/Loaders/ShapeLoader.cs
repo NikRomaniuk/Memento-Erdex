@@ -28,6 +28,8 @@ public static class ShapeLoader
         spriteRenderer.sortingOrder = shape.SpriteOrder;
         // Set sprite color
         spriteRenderer.color = shape.SpriteColor;
+        // Set outline color
+        blank.OutlineView?.ApplyColor(shape.OutlineColor);
 
         // --- Activate ---
         blank.gameObject.SetActive(true);
@@ -51,6 +53,7 @@ public static class ShapeLoader
         shape.gameObject.SetActive(false); // Deactivate
         spriteRenderer.sortingOrder = 0; // Reset sorting order
         spriteRenderer.color = Color.white; // Reset sprite color
+        shape.OutlineView?.ResetColor(); // Reset outline color
 
         // --- Return to Library ---
         BlanksLibrary.ReturnBlank(shape, BlanksLibrary.BlankType.Shape);

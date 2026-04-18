@@ -15,6 +15,11 @@ public class ShapeGenerator : MonoBehaviour
 
     [Header("Visual Settings")]
     [SerializeField] private Color _color = Color.white;
+    [SerializeField] private Color _outlineColor = Color.black;
+    [SerializeField] private bool _useDefaultOutlineColor = true;
+
+    public Color OutlineColor => _outlineColor;
+    public bool UseDefaultOutlineColor => _useDefaultOutlineColor;
 
     private readonly List<ShapeData> _basePool = new List<ShapeData>();
     private readonly List<ShapeData> _tipPool = new List<ShapeData>();
@@ -103,8 +108,11 @@ public class ShapeGenerator : MonoBehaviour
             {
                 isXFlipped = random.Next(0, 2) == 1;
             }
+            Color resolvedOutlineColor = _useDefaultOutlineColor
+                ? selectedShapeData.defaultOutlineColor
+                : _outlineColor;
 
-            ShapeGen shapeGen = new ShapeGen(selectedShapeData, shapeSide, isXFlipped, currentPos, 100, _color);
+            ShapeGen shapeGen = new ShapeGen(selectedShapeData, shapeSide, isXFlipped, currentPos, 100, _color, resolvedOutlineColor);
             branchGen.Shapes.Add(shapeGen);
 
             // Left branches extend towards negative X, right branches towards positive X

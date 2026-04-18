@@ -19,8 +19,9 @@ public class ShapeGen
     public Vector2 Pos { get; private set; }
     public short SpriteOrder { get; private set; }
     public Color SpriteColor { get; private set; }
+    public Color OutlineColor { get; private set; }
 
-    public ShapeGen(ShapeData shapeData, Side side, bool isXFlipped, Vector2 pos, short spriteOrder, Color spriteColor)
+    public ShapeGen(ShapeData shapeData, Side side, bool isXFlipped, Vector2 pos, short spriteOrder, Color spriteColor, Color outlineColor)
     {
         ShapeData = shapeData;
         Side = side;
@@ -28,5 +29,6 @@ public class ShapeGen
         Pos = pos;
         SpriteOrder = spriteOrder;
         SpriteColor = spriteColor;
+        OutlineColor = outlineColor;
     }
 }

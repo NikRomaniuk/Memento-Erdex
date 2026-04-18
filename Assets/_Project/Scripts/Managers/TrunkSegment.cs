@@ -18,10 +18,26 @@ public class TrunkSegment : MonoBehaviour, IBakeable, IBuildable
     // Trunk widths
     private float _downWidth;
     private float _topWidth;
+    [SerializeField] private Color _defaultOutlineColor = Color.black;
+
+    private SpriteView _spriteView;
+    private OutlineView _outlineView;
+    private EntityCollider _entityCollider;
+
+    public SpriteView SpriteView => _spriteView;
+    public OutlineView OutlineView => _outlineView;
+    public EntityCollider EntityCollider => _entityCollider;
 
     private void Awake()
     {
-        // --- Preparations ---
+        EnsureViewsInitialized();
+    }
+
+    private void EnsureViewsInitialized()
+    {
+        _spriteView ??= new SpriteView(_spriteRenderer);
+        _outlineView ??= new OutlineView(_outlineRenderer, _defaultOutlineColor);
+        _entityCollider ??= new EntityCollider(_boxCollider);
     }
 
     /// <summary>
@@ -47,16 +63,18 @@ public class TrunkSegment : MonoBehaviour, IBakeable, IBuildable
     public void GatherData(IData data)
     {
         if (data is not TrunkData trunkData) return;
+        EnsureViewsInitialized();
 
-        // --- Bake visual data ---
+        // --- Bake Visual Data ---
         trunkData.sprite = _spriteRenderer.sprite;
         trunkData.spriteOffset = _spriteRenderer.transform.localPosition;
+        trunkData.defaultOutlineColor = _outlineView.DefaultColor;
 
-        // --- Bake collider data ---
+        // --- Bake Collider Data ---
         trunkData.colliderSize = _boxCollider.size;
         trunkData.colliderOffset = _boxCollider.offset;
 
-        // --- Bake points data ---
+        // --- Bake Points Data ---
         var points = GetPoints();
         trunkData.downNearPoint = points[0];
         trunkData.downFarPoint = points[1];
@@ -73,24 +91,17 @@ public class TrunkSegment : MonoBehaviour, IBakeable, IBuildable
 
     public void SetData(TrunkData data, Side side, bool isYFlipped)
     {
+        EnsureViewsInitialized();
         int flipX = side == Side.Left ? -1 : 1;
 
-        // --- Apply visual data ---
-        _spriteRenderer.sprite = data.sprite;
-        _spriteRenderer.flipX = side != Side.Right;
-        _spriteRenderer.flipY = isYFlipped;
-        _spriteRenderer.transform.localPosition = new Vector3(data.spriteOffset.x * flipX, data.spriteOffset.y, 0);
+        // --- Apply Visual Data ---
+        _spriteView.SetData(data, side, isYFlipped);
+        _outlineView.SetData(data, side, isYFlipped);
 
-        // --- Apply outline ---
-        _outlineRenderer.sprite = data.sprite;
-        _outlineRenderer.flipX = side != Side.Right;
-        _outlineRenderer.flipY = isYFlipped;
+        // --- Apply Collider Data ---
+        _entityCollider.SetData(data, side, isYFlipped);
 
-        // --- Apply collider data ---
-        _boxCollider.size = data.colliderSize;
-        _boxCollider.offset = new Vector2(data.colliderOffset.x * flipX, data.colliderOffset.y);
-
-        // --- Apply points data ---
+        // --- Apply Points Data ---
         Vector2 downNearPoint = data.downNearPoint;
         Vector2 downFarPoint = new Vector2(data.downFarPoint.x * flipX, data.downFarPoint.y);
         Vector2 topNearPoint = data.topNearPoint;
@@ -104,27 +115,27 @@ public class TrunkSegment : MonoBehaviour, IBakeable, IBuildable
         }
 
         SetPoints(downNearPoint, downFarPoint, topNearPoint, topFarPoint);
+
+        // --- Apply Misc Data ---
+        _defaultOutlineColor = _outlineView.DefaultColor;
     }
 
     public void Clear()
     {
-        // --- Reset sprites ---
-        _spriteRenderer.sprite = null;
-        _outlineRenderer.sprite = null;
+        EnsureViewsInitialized();
 
-        // --- Reset transforms ---
-        _spriteRenderer.flipX = false;
-        _spriteRenderer.flipY = false;
-        _outlineRenderer.flipX = false;
-        _outlineRenderer.flipY = false;
-        _spriteRenderer.transform.localPosition = Vector3.zero;
+        // --- Reset Visuals ---
+        _spriteView.Clear();
+        _outlineView.Clear();
 
-        // --- Reset collider ---
-        _boxCollider.size = Vector2.zero;
-        _boxCollider.offset = Vector2.zero;
+        // --- Reset Collider ---
+        _entityCollider.Clear();
 
-        // --- Reset points ---
+        // --- Reset Points ---
         SetPoints(Vector2.zero, Vector2.zero, Vector2.zero, Vector2.zero);
+
+        // --- Reset Misc ---
+        _defaultOutlineColor = _outlineView.DefaultColor;
 
 #if UNITY_EDITOR
         UnityEditor.EditorUtility.SetDirty(this);

@@ -18,10 +18,23 @@ public class ShapeManager : MonoBehaviour, IBakeable, IBuildable
     // Heights
     private float _leftHeight;
     private float _rightHeight;
+    [SerializeField] private Color _defaultOutlineColor = Color.black;
+
+    private SpriteView _spriteView;
+    private OutlineView _outlineView;
+
+    public SpriteView SpriteView => _spriteView;
+    public OutlineView OutlineView => _outlineView;
 
     private void Awake()
     {
-        // --- Preparations ---
+        EnsureViewsInitialized();
+    }
+
+    private void EnsureViewsInitialized()
+    {
+        _spriteView ??= new SpriteView(_spriteRenderer);
+        _outlineView ??= new OutlineView(_outlineRenderer, _defaultOutlineColor);
     }
 
     /// <summary>
@@ -62,10 +75,12 @@ public class ShapeManager : MonoBehaviour, IBakeable, IBuildable
     public void GatherData(IData data)
     {
         if (data is not ShapeData shapeData) return;
+        EnsureViewsInitialized();
 
         // --- Bake visual data ---
         shapeData.sprite = _spriteRenderer.sprite;
         shapeData.spriteOffset = _spriteRenderer.transform.localPosition;
+        shapeData.defaultOutlineColor = _outlineView.DefaultColor;
 
         // --- Bake points data ---
         var points = GetPoints();
@@ -84,6 +99,8 @@ public class ShapeManager : MonoBehaviour, IBakeable, IBuildable
 
     public void SetData(ShapeData data, Side side, bool isXFlipped)
     {
+        EnsureViewsInitialized();
+
         // Tip flip is auto-derived from side and overrides incoming flag
         if (data.type == ShapeData.Type.Tip)
         {
@@ -97,16 +114,11 @@ public class ShapeManager : MonoBehaviour, IBakeable, IBuildable
             spriteLocalPosition.x *= -1;
         }
 
-        // --- Apply visual data ---
-        _spriteRenderer.sprite = data.sprite;
-        _spriteRenderer.flipX = shouldFlipX;
-        _spriteRenderer.transform.localPosition = new Vector3(spriteLocalPosition.x, spriteLocalPosition.y, 0);
+        // --- Apply Visual Data ---
+        _spriteView.SetData(data, shouldFlipX, spriteLocalPosition);
+        _outlineView.SetData(data, shouldFlipX);
 
-        // --- Apply outline ---
-        _outlineRenderer.sprite = data.sprite;
-        _outlineRenderer.flipX = shouldFlipX;
-
-        // --- Apply points data ---
+        // --- Apply Points Data ---
         Vector2 topNearPoint = data.topNearPoint;
         Vector2 downNearPoint = data.downNearPoint;
         Vector2 topFarPoint = data.topFarPoint;
@@ -133,21 +145,24 @@ public class ShapeManager : MonoBehaviour, IBakeable, IBuildable
         }
 
         SetPoints(topNearPoint, downNearPoint, topFarPoint, downFarPoint);
+
+        // --- Apply Misc ---
+        _defaultOutlineColor = _outlineView.DefaultColor;
     }
 
     public void Clear()
     {
-        // --- Reset sprites ---
-        _spriteRenderer.sprite = null;
-        _outlineRenderer.sprite = null;
+        EnsureViewsInitialized();
 
-        // --- Reset transforms ---
-        _spriteRenderer.flipX = false;
-        _outlineRenderer.flipX = false;
-        _spriteRenderer.transform.localPosition = Vector3.zero;
+        // --- Reset Visuals ---
+        _spriteView.Clear();
+        _outlineView.Clear();
 
-        // --- Reset points ---
+        // --- Reset Points ---
         SetPoints(Vector2.zero, Vector2.zero, Vector2.zero, Vector2.zero);
+
+        // --- Reset Misc ---
+        _defaultOutlineColor = _outlineView.DefaultColor;
 
 #if UNITY_EDITOR
         UnityEditor.EditorUtility.SetDirty(this);

@@ -25,6 +25,8 @@ public static class IslandLoader
 		blank.transform.position = new Vector3(island.Pos.x, island.Pos.y, blank.transform.position.z);
 		// Set sorting order
 		spriteRenderer.sortingOrder = island.SpriteOrder;
+		// Set outline color
+		blank.OutlineView?.ApplyColor(island.OutlineColor);
 
 		// --- Activate ---
 		blank.gameObject.SetActive(true);
@@ -46,6 +48,7 @@ public static class IslandLoader
 		blankBuilder.Clear();
 		island.transform.position = Vector3.zero; // Reset position
         spriteRenderer.sortingOrder = 0; // Reset sorting order
+		island.OutlineView?.ResetColor(); // Reset outline color
 		island.gameObject.SetActive(false); // Deactivate
 		
 

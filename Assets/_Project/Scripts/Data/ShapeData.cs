@@ -19,6 +19,8 @@ public class ShapeData : ScriptableObject, IData
     public Sprite sprite;
     // Sprite offset
     [Step(0.05f)] public Vector2 spriteOffset;
+    // Default outline color
+    public Color defaultOutlineColor = Color.black;
     // Can sprite be flipped horizontally
     public bool canBeXFlipped = true;
 

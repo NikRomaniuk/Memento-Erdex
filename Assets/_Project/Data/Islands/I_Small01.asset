@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::IslandData
   id: S_round_01
   colliderSize: {x: 1.6, y: 0.8}
-  colliderOffset: {x: 0, y: 0.4}
-  sprite: {fileID: -3070804787738831572, guid: 6ea031258e4b9a84aa80779f2d869d7f, type: 3}
-  spriteOffset: {x: 0, y: -0.8}
+  colliderOffset: {x: 0, y: 0}
+  sprite: {fileID: -7382352470053354809, guid: 8c4babbc9c1b4464b819da982c9c6b7a, type: 3}
+  spriteOffset: {x: 0, y: -0.4}
+  defaultOutlineColor: {r: 0.19607843, g: 0.20784314, b: 0.23529412, a: 1}
   canBeXFlipped: 1
   size: 1
   allowLeft: 1

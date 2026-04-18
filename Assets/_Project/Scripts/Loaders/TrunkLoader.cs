@@ -16,6 +16,7 @@ public static class TrunkLoader
         // --- Components ---
         Builder blankBuilder = blank.GetComponent<Builder>();
         SpriteRenderer spriteRenderer = blank._spriteRenderer;
+        OutlineView outlineView = blank.OutlineView;
 
         // --- Load ---
         // Initialize blank with data & extra settings
@@ -27,6 +28,8 @@ public static class TrunkLoader
         spriteRenderer.sortingOrder = trunkGen.SpriteOrder;
         // Set sprite color
         spriteRenderer.color = trunkGen.SpriteColor;
+        // Set outline color
+        outlineView?.ApplyColor(trunkGen.OutlineColor);
 
         // --- Activate ---
         blank.gameObject.SetActive(true);
@@ -42,6 +45,7 @@ public static class TrunkLoader
         // --- Components ---
         Builder blankBuilder = trunkPart.GetComponent<Builder>();
         SpriteRenderer spriteRenderer = trunkPart._spriteRenderer;
+        OutlineView outlineView = trunkPart.OutlineView;
 
         // --- Unload ---
         // Clear all loaded data from the blank
@@ -53,6 +57,8 @@ public static class TrunkLoader
         spriteRenderer.sortingOrder = 0;
         // Reset sprite color
         spriteRenderer.color = Color.white;
+        // Reset outline color
+        outlineView?.ResetColor();
 
         // --- Deactivate ---
         trunkPart.gameObject.SetActive(false);

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8836952853728356704}
   m_Layer: 0
   m_Name: Sprite
-  m_TagString: Untagged
+  m_TagString: Surface
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -165,7 +165,7 @@ GameObject:
   - component: {fileID: 1906482849259055024}
   m_Layer: 0
   m_Name: IslandBlank
-  m_TagString: Untagged
+  m_TagString: Surface
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -328,3 +328,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c085a6d73e00d94bbfd5a93ae2ecdb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OutlineShaderHelper
+  _outlineWidth: 1
+  _outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  _worldScale: {x: 0, y: 0, z: 0}

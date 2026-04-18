@@ -15,14 +15,36 @@ public class IslandManager : MonoBehaviour, IBakeable, IBuildable
     [Header("Prop Data")]
     [SerializeField] private PropSlot[] _staticPropSlots;
     [SerializeField] private int _propCapacity;
+    [SerializeField] private Color _defaultOutlineColor = Color.black;
 
     // --- Runtime ---
     [HideInInspector] public List<PropManager> LoadedProps = new List<PropManager>(); // Active PropManagers loaded for this Шsland
+
+    private SpriteView _spriteView;
+    private OutlineView _outlineView;
+    private EntityCollider _entityCollider;
+
+    public SpriteView SpriteView => _spriteView;
+    public OutlineView OutlineView => _outlineView;
+    public EntityCollider EntityCollider => _entityCollider;
+
+    private void Awake()
+    {
+        EnsureViewsInitialized();
+    }
+
+    private void EnsureViewsInitialized()
+    {
+        _spriteView ??= new SpriteView(_spriteRenderer);
+        _outlineView ??= new OutlineView(_outlineRenderer, _defaultOutlineColor);
+        _entityCollider ??= new EntityCollider(_boxCollider);
+    }
 
     // --- IBakeable ---
     public void GatherData(IData data)
     {
         if (data is not IslandData islandData) return;
+        EnsureViewsInitialized();
 
         // --- Bake visual data ---
         islandData.sprite = _spriteRenderer.sprite;
@@ -38,6 +60,9 @@ public class IslandManager : MonoBehaviour, IBakeable, IBuildable
         // --- Bake prop data ---
         islandData.staticPropSlots = _staticPropSlots != null ? (PropSlot[])_staticPropSlots.Clone() : new PropSlot[0];
         islandData.propCapacity = Mathf.Max(0, _propCapacity);
+
+        // --- Bake misc data ---
+        islandData.defaultOutlineColor = _outlineView.DefaultColor;
     }
 
     // --- IBuildable ---
@@ -49,20 +74,16 @@ public class IslandManager : MonoBehaviour, IBakeable, IBuildable
 
     public void SetData(IslandData data, bool isXFlipped)
     {
+        EnsureViewsInitialized();
+
         bool shouldFlipX = isXFlipped && data.canBeXFlipped; // Flip only if allowed to!
 
         // --- Apply Visual ---
-        // - Sprite -
-        _spriteRenderer.sprite = data.sprite;
-        _spriteRenderer.flipX = shouldFlipX;
-        _spriteRenderer.transform.localPosition = new Vector3(data.spriteOffset.x * (shouldFlipX ? -1 : 1), data.spriteOffset.y, 0);
-        // - Outline -
-        _outlineRenderer.sprite = data.sprite;
-        _outlineRenderer.flipX = shouldFlipX;
+        _spriteView.SetData(data, shouldFlipX);
+        _outlineView.SetData(data, shouldFlipX);
 
         // --- Apply Collider ---
-        _boxCollider.size = data.colliderSize;
-        _boxCollider.offset = data.colliderOffset;
+        _entityCollider.SetData(data);
 
         // --- Apply General ---
         _size = data.size;
@@ -70,22 +91,21 @@ public class IslandManager : MonoBehaviour, IBakeable, IBuildable
         // --- Apply Prop Data ---
         _staticPropSlots = data.staticPropSlots != null ? (PropSlot[])data.staticPropSlots.Clone() : new PropSlot[0];
         _propCapacity = Mathf.Max(0, data.propCapacity);
+
+        // --- Apply Misc ---
+        _defaultOutlineColor = _outlineView.DefaultColor;
     }
 
     public void Clear()
     {
+        EnsureViewsInitialized();
+
         // --- Reset Visual ---
-        // - Sprite -
-        _spriteRenderer.sprite = null;
-        _spriteRenderer.flipX = false;
-        _spriteRenderer.transform.localPosition = Vector2.zero;
-        // - Outline -
-        _outlineRenderer.sprite = null;
-        _outlineRenderer.flipX = false;
+        _spriteView.Clear();
+        _outlineView.Clear();
 
         // --- Reset Collider ---
-        _boxCollider.size = Vector2.zero;
-        _boxCollider.offset = Vector2.zero;
+        _entityCollider.Clear();
 
         // --- Reset General ---
         _size = Size.Tiny;
@@ -94,6 +114,9 @@ public class IslandManager : MonoBehaviour, IBakeable, IBuildable
         _staticPropSlots = new PropSlot[0];
         _propCapacity = 0;
         LoadedProps.Clear();
+
+        // --- Reset Misc ---
+        _defaultOutlineColor = _outlineView.DefaultColor;
 
 #if UNITY_EDITOR
         UnityEditor.EditorUtility.SetDirty(this);

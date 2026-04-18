@@ -7,6 +7,11 @@ public class TrunkGenerator : MonoBehaviour
 
     [Header("Visual Settings")]
     [SerializeField] private Color _color = Color.white;
+    [SerializeField] private Color _outlineColor = Color.black;
+    [SerializeField] private bool _useDefaultOutlineColor = true;
+
+    public Color OutlineColor => _outlineColor;
+    public bool UseDefaultOutlineColor => _useDefaultOutlineColor;
 
     void Start()
     {
@@ -61,9 +66,12 @@ public class TrunkGenerator : MonoBehaviour
             // Compute alternating sprite order
             short spriteOrder = (short)(spriteOrderBase + (spriteOrderToggle ? 1 : 0));
             spriteOrderToggle = !spriteOrderToggle;
+            Color resolvedOutlineColor = _useDefaultOutlineColor
+                ? selectedTrunkData.defaultOutlineColor
+                : _outlineColor;
 
             // Create TrunkGen
-            TrunkGen trunkGen = new TrunkGen(selectedTrunkData, side, isYFlipped, currentHeight, spriteOrder, _color);
+            TrunkGen trunkGen = new TrunkGen(selectedTrunkData, side, isYFlipped, currentHeight, spriteOrder, _color, resolvedOutlineColor);
 
             // Find which ChunkGen this TrunkPart belongs to
             ChunkGen targetChunk = FindChunkAtHeight(treeGen, currentHeight);
