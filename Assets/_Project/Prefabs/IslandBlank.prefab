@@ -204,6 +204,7 @@ MonoBehaviour:
   _size: 0
   _staticPropSlots: []
   _propCapacity: 0
+  _defaultOutlineColor: {r: 0, g: 0, b: 0, a: 1}
   LoadedProps: []
 --- !u!114 &1906482849259055024
 MonoBehaviour:

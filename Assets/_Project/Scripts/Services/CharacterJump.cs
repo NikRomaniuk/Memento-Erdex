@@ -123,6 +123,7 @@ public class CharacterJump : MonoBehaviour
     {
         //if (_isInputLocked) { return; } It doesn't care about locked input rn
         if (_isJumpInProgress) { return; }
+        if (_characterMovement.CurrentState == CharacterMovement.MovementState.Falling) { return; }
         if (Mouse.current == null) { return; }
         if (!Mouse.current.leftButton.wasPressedThisFrame) { return; }
         if (_jumpTargetManager == null || !_jumpTargetManager.IsTargetValid()) { return; }
@@ -218,6 +219,7 @@ public class CharacterJump : MonoBehaviour
     private void HandleFocusToggleInput()
     {
         if (_isInputLocked) { return; }
+        if (_characterMovement.CurrentState == CharacterMovement.MovementState.Falling) { return; }
         if (Mouse.current == null) { return; }
         if (!Mouse.current.rightButton.wasPressedThisFrame) { return; }
 
@@ -230,6 +232,7 @@ public class CharacterJump : MonoBehaviour
     private void ToggleFocus()
     {
         if (_currentState == State.Jumping) { return;} // Jumping -> Skip
+        if (_characterMovement.CurrentState == CharacterMovement.MovementState.Falling) { return; } // Falling -> Skip
 
         if (_currentState == State.Focus) // Focus -> None
         {
@@ -311,6 +314,8 @@ public class CharacterJump : MonoBehaviour
     /// </summary>
     private bool ShouldBreakFocus()
     {
+        if (_characterMovement.CurrentState == CharacterMovement.MovementState.Falling) { return true; } // Falling -> Break Focus
+
         if (_isInputLocked)
         {
             _focusAnchorPosition = transform.position;

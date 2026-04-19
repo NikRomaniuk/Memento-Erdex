@@ -9,11 +9,14 @@ public class CharacterMovement : MonoBehaviour
     {
         Idle,
         Moving,
-        Jumping
+        Jumping,
+        Falling
     }
 
     [Header("Movement")]
     [SerializeField, Min(0f)] private float _moveSpeed = 5f;
+    [SerializeField, Min(0f)] private float _fallingMoveSpeed = 3f;
+    [SerializeField, Min(0f)] private float _fallingEnterGraceDuration = 0.15f;
     [SerializeField] private Key _moveLeftKey = Key.A;
     [SerializeField] private Key _moveRightKey = Key.D;
 
@@ -22,7 +25,6 @@ public class CharacterMovement : MonoBehaviour
     [SerializeField] private LayerMask _surfaceMask = Physics2D.DefaultRaycastLayers;
     [SerializeField, Min(0.01f)] private float _rayDistance = 0.6f;
     [SerializeField, Min(0f)] private float _rayStartYOffset = 0.05f;
-    [SerializeField, Min(0f)] private float _sideRayOffset = 0.35f;
 
     [Header("Debug")]
     [SerializeField] private bool _drawDebug = true;
@@ -33,7 +35,9 @@ public class CharacterMovement : MonoBehaviour
     private float _moveInput;
     // --- Flags ---
     private bool _isInputLocked;
+    private bool _isFallingEnterPending;
     // --- Cache ---
+    private float _fallingEnterEndTime;
     private string _lastDebug;
     private Rigidbody2D _rigidbody2D;
     private Collider2D _characterCollider;
@@ -84,6 +88,15 @@ public class CharacterMovement : MonoBehaviour
     /// </summary>
     private void Update()
     {
+        bool hasSurfaceBelow = HasSurfaceBelow(GetCenterRayOrigin());
+        HandleFallingLifecycle(hasSurfaceBelow);
+
+        if (_currentState == MovementState.Falling)
+        {
+            _moveInput = _isInputLocked ? 0f : ReadHorizontalInput();
+            return;
+        }
+
         if (_isInputLocked)
         {
             _moveInput = 0f;
@@ -126,21 +139,26 @@ public class CharacterMovement : MonoBehaviour
             return;
         }
 
+        if (_currentState == MovementState.Falling)
+        {
+            SetHorizontalSpeed(_moveInput * _fallingMoveSpeed);
+            return;
+        }
+
         if (_currentState != MovementState.Moving)
         {
             StopHorizontalMovement();
             return;
         }
 
-        float direction = Mathf.Sign(_moveInput);
-        if (!CanMoveInDirection(direction))
+        if (!CanMoveInDirection())
         {
             SetState(MovementState.Idle);
             StopHorizontalMovement();
             return;
         }
 
-        SetHorizontalSpeed(direction * _moveSpeed);
+        SetHorizontalSpeed(Mathf.Sign(_moveInput) * _moveSpeed);
     }
 
     /// <summary>
@@ -182,6 +200,7 @@ public class CharacterMovement : MonoBehaviour
     /// </summary>
     public void ForceIdleState()
     {
+        _isFallingEnterPending = false;
         _moveInput = 0f;
         SetState(MovementState.Idle);
         StopHorizontalMovement();
@@ -199,15 +218,13 @@ public class CharacterMovement : MonoBehaviour
             return;
         }
 
-        float direction = Mathf.Sign(_moveInput);
-        SetState(CanMoveInDirection(direction) ? MovementState.Moving : MovementState.Idle);
+        SetState(CanMoveInDirection() ? MovementState.Moving : MovementState.Idle);
     }
 
     /// <summary>
-    /// Validates that current and forward raycasts hit Surface-tagged colliders
+    /// Validates that center raycast hits a Surface-tagged collider
     /// </summary>
-    /// <param name="direction">Horizontal direction: -1 left, +1 right</param>
-    private bool CanMoveInDirection(float direction)
+    private bool CanMoveInDirection()
     {
         if (!HasSurfaceBelow(GetCenterRayOrigin()))
         {
@@ -215,21 +232,7 @@ public class CharacterMovement : MonoBehaviour
             return false;
         }
 
-        if (direction > 0f)
-        {
-            bool ok = HasSurfaceBelow(GetRightRayOrigin());
-            if (!ok) { D("Blocked: right ray miss"); }
-            return ok;
-        }
-
-        if (direction < 0f)
-        {
-            bool ok = HasSurfaceBelow(GetLeftRayOrigin());
-            if (!ok) { D("Blocked: left ray miss"); }
-            return ok;
-        }
-
-        return false;
+        return true;
     }
 
     /// <summary>
@@ -275,19 +278,49 @@ public class CharacterMovement : MonoBehaviour
     }
 
     /// <summary>
-    /// Returns origin for left down ray
+    /// Handles transitions into and out of Falling state
     /// </summary>
-    private Vector2 GetLeftRayOrigin()
+    private void HandleFallingLifecycle(bool hasSurfaceBelow)
     {
-        return GetCenterRayOrigin() + Vector2.left * _sideRayOffset;
-    }
+        if (_currentState == MovementState.Jumping)
+        {
+            _isFallingEnterPending = false;
+            return;
+        }
 
-    /// <summary>
-    /// Returns origin for right down ray
-    /// </summary>
-    private Vector2 GetRightRayOrigin()
-    {
-        return GetCenterRayOrigin() + Vector2.right * _sideRayOffset;
+        if (hasSurfaceBelow)
+        {
+            _isFallingEnterPending = false;
+            if (_currentState == MovementState.Falling)
+            {
+                SetState(MovementState.Idle);
+            }
+            return;
+        }
+
+        if (_currentState == MovementState.Falling)
+        {
+            return;
+        }
+
+        if (!_isFallingEnterPending)
+        {
+            if (_fallingEnterGraceDuration <= 0f)
+            {
+                SetState(MovementState.Falling);
+                return;
+            }
+
+            _isFallingEnterPending = true;
+            _fallingEnterEndTime = Time.time + _fallingEnterGraceDuration;
+            return;
+        }
+
+        if (Time.time >= _fallingEnterEndTime)
+        {
+            _isFallingEnterPending = false;
+            SetState(MovementState.Falling);
+        }
     }
 
     /// <summary>
@@ -315,9 +348,29 @@ public class CharacterMovement : MonoBehaviour
     {
         if (_currentState == newState) { return; }
 
+        if (newState == MovementState.Falling)
+        {
+            SetColliderTrigger(true);
+        }
+        else if (_currentState == MovementState.Falling)
+        {
+            SetColliderTrigger(false);
+        }
+
         D($"State: {_currentState} -> {newState}");
 
         _currentState = newState;
+    }
+
+    /// <summary>
+    /// Switches character collider trigger mode if needed
+    /// </summary>
+    private void SetColliderTrigger(bool isTrigger)
+    {
+        if (_characterCollider == null) { return; }
+        if (_characterCollider.isTrigger == isTrigger) { return; }
+
+        _characterCollider.isTrigger = isTrigger;
     }
 
     /// <summary>
@@ -340,16 +393,8 @@ public class CharacterMovement : MonoBehaviour
         if (!_drawDebug) { return; }
 
         Vector2 center = GetCenterRayOrigin();
-        Vector2 left = GetLeftRayOrigin();
-        Vector2 right = GetRightRayOrigin();
 
         Gizmos.color = Color.yellow;
         Gizmos.DrawLine(center, center + Vector2.down * _rayDistance);
-
-        Gizmos.color = Color.cyan;
-        Gizmos.DrawLine(left, left + Vector2.down * _rayDistance);
-
-        Gizmos.color = Color.green;
-        Gizmos.DrawLine(right, right + Vector2.down * _rayDistance);
     }
 }
