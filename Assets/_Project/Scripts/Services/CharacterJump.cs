@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -22,6 +23,9 @@ public class CharacterJump : MonoBehaviour
     [SerializeField] private LayerMask _surfaceMask = Physics2D.DefaultRaycastLayers;
     [SerializeField, Min(0f)] private float _cursorRayStartYOffset = 0.1f;
     [SerializeField, Min(0.01f)] private float _cursorRayDistance = 1.5f;
+    [SerializeField, Min(0.01f)] private float _cursorBoxWidth = 0.9f;
+    [SerializeField, Min(0.01f)] private float _cursorBoxHeight = 0.2f;
+    [SerializeField, Min(0f)] private float _surfaceCoverageEpsilon = 0.01f;
 
     [Header("Focus")]
     [SerializeField, Min(0f)] private float _focusEnterWhileMovingWindow = 0.5f;
@@ -48,6 +52,7 @@ public class CharacterJump : MonoBehaviour
     private bool _isJumpInProgress;
     private bool _hasLastValidPoint;
     // --- Cache ---
+    private readonly List<Vector2> _coverageIntervals = new();
     private Vector2 _lastValidTargetPosition;
     private string _lastDebug;
 
@@ -340,10 +345,7 @@ public class CharacterJump : MonoBehaviour
     /// </summary>
     private void UpdateFocusTarget()
     {
-        if (_jumpTargetManager == null)
-        {
-            return;
-        }
+        if (_jumpTargetManager == null) { return; }
 
         Camera targetCamera = _worldCamera != null ? _worldCamera : Camera.main;
         if (targetCamera == null || Mouse.current == null)
@@ -352,12 +354,12 @@ public class CharacterJump : MonoBehaviour
             return;
         }
 
-        Vector2 cursorWorld = ScreenToWorldPoint(targetCamera, Mouse.current.position.ReadValue());
-        Vector2 focusCenter = (Vector2)transform.position + Vector2.up * _focusCenterOffsetY;
+        Vector2 cursorWorld = ScreenToWorldPoint(targetCamera, Mouse.current.position.ReadValue()); // Cursor World pos
+        Vector2 focusCenter = (Vector2)transform.position + Vector2.up * _focusCenterOffsetY; // Focus area center pos
 
-        if (Vector2.Distance(cursorWorld, focusCenter) > _focusRadius)
+        if (Vector2.Distance(cursorWorld, focusCenter) > _focusRadius) // Cursor out of Focus area
         {
-            HandleNoValidHit(cursorWorld);
+            HandleNoValidHit(cursorWorld); // Enable "Sticky" Target or hide
             return;
         }
 
@@ -373,42 +375,114 @@ public class CharacterJump : MonoBehaviour
             return;
         }
 
-        HandleNoValidHit(cursorWorld);
+        HandleNoValidHit(cursorWorld); // Enable "Sticky" Target or hide
     }
 
     /// <summary>
-    /// Finds first valid Surface hit under cursor ray
+    /// Finds valid Surface hit under cursor BoxCast (validates full-width coverage)
     /// </summary>
     private bool TryGetSurfaceHit(Vector2 cursorWorld, out RaycastHit2D validHit)
     {
-        Vector2 rayOrigin = cursorWorld + Vector2.up * _cursorRayStartYOffset;
-        RaycastHit2D[] hits = Physics2D.RaycastAll(rayOrigin, Vector2.down, _cursorRayDistance, _surfaceMask);
+        validHit = default;
+
+        Vector2 boxOrigin = cursorWorld + Vector2.up * _cursorRayStartYOffset; // Box World pos
+        Vector2 boxSize = new Vector2(_cursorBoxWidth, _cursorBoxHeight);
+        RaycastHit2D[] hits = Physics2D.BoxCastAll(boxOrigin, boxSize, 0f, Vector2.down, _cursorRayDistance, _surfaceMask);
+
+        if (hits.Length == 0) // No hits -> Return False
+        {
+            validHit = default;
+            D("No BoxCast hits");
+            return false;
+        }
+
+        // Get coverage edges
+        float requiredLeft = cursorWorld.x - _cursorBoxWidth * 0.5f;
+        float requiredRight = cursorWorld.x + _cursorBoxWidth * 0.5f;
+
+        _coverageIntervals.Clear();
+        bool hasValidSurfaceHit = false;
 
         for (int i = 0; i < hits.Length; i++)
         {
             Collider2D hitCollider = hits[i].collider;
-            if (hitCollider == null)
-            {
-                continue;
-            }
+            if (hitCollider == null) { continue; }
 
             Transform hitTransform = hitCollider.transform;
-            if (hitTransform == transform || hitTransform.IsChildOf(transform))
+            if (hitTransform == transform || hitTransform.IsChildOf(transform)) { continue; } // Character Collider -> Skip
+            if (!hitCollider.CompareTag(_surfaceTag)) { continue; } // Not Surface -> Skip
+
+            if (!hasValidSurfaceHit) // First valid hit -> Cache it
             {
-                continue;
+                hasValidSurfaceHit = true;
+                validHit = hits[i];
             }
 
-            if (!hitCollider.CompareTag(_surfaceTag))
-            {
-                continue;
-            }
+            float intervalStart = Mathf.Max(requiredLeft, hitCollider.bounds.min.x);
+            float intervalEnd = Mathf.Min(requiredRight, hitCollider.bounds.max.x);
 
-            validHit = hits[i];
-            return true;
+            if (intervalEnd - intervalStart <= _surfaceCoverageEpsilon) { continue; } // No meaningful coverage -> Skip
+
+            _coverageIntervals.Add(new Vector2(intervalStart, intervalEnd)); // Add coverage interval
         }
 
-        validHit = default;
-        return false;
+        if (!hasValidSurfaceHit) // No valid Surface hits -> Return False
+        {
+            validHit = default;
+            D("No valid Surface in BoxCast");
+            return false;
+        }
+
+        if (!HasFullSurfaceCoverage(requiredLeft, requiredRight)) // No full-width coverage -> Return False
+        {
+            validHit = default;
+            D("Surface coverage gap");
+            return false;
+        }
+
+        D("Full-width BoxCast");
+        return true;
+    }
+
+    /// <summary>
+    /// Validates that Surface intervals merged cover the required range
+    /// </summary>
+    private bool HasFullSurfaceCoverage(float requiredLeft, float requiredRight)
+    {
+        if (_coverageIntervals.Count == 0) { return false; } // No intervals -> Return False
+
+        _coverageIntervals.Sort((a, b) => a.x.CompareTo(b.x)); // Sort intervals by start (left) edge
+
+        float mergedEnd = _coverageIntervals[0].y;
+        if (_coverageIntervals[0].x > requiredLeft + _surfaceCoverageEpsilon)
+        {
+            return false; // Leftmost interval starts after left edge -> Return False
+        } 
+        if (mergedEnd >= requiredRight - _surfaceCoverageEpsilon)
+        {
+            return true; // First interval alone covers -> Return True
+        }
+
+        for (int i = 1; i < _coverageIntervals.Count; i++)
+        {
+            Vector2 interval = _coverageIntervals[i];
+            if (interval.x > mergedEnd + _surfaceCoverageEpsilon)
+            {
+                return false;
+            }
+
+            if (interval.y > mergedEnd)
+            {
+                mergedEnd = interval.y;
+            }
+
+            if (mergedEnd >= requiredRight - _surfaceCoverageEpsilon)
+            {
+                return true;
+            }
+        }
+
+        return mergedEnd >= requiredRight - _surfaceCoverageEpsilon;
     }
 
     /// <summary>

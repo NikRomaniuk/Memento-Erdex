@@ -2745,6 +2745,9 @@ MonoBehaviour:
     m_Bits: 51
   _cursorRayStartYOffset: 0.1
   _cursorRayDistance: 1.5
+  _cursorBoxWidth: 0.5
+  _cursorBoxHeight: 0.2
+  _surfaceCoverageEpsilon: 0.01
   _focusEnterWhileMovingWindow: 0.5
   _focusInputLockDuration: 0.5
   _focusBreakDistance: 0.05
