@@ -16,6 +16,7 @@ public class CharacterMovement : MonoBehaviour
     [Header("Movement")]
     [SerializeField, Min(0f)] private float _moveSpeed = 5f;
     [SerializeField, Min(0f)] private float _fallingMoveSpeed = 3f;
+    [SerializeField, Min(0f)] private float _maxFallingSpeed = 12f;
     [SerializeField, Min(0f)] private float _fallingEnterGraceDuration = 0.15f;
     [SerializeField] private Key _moveLeftKey = Key.A;
     [SerializeField] private Key _moveRightKey = Key.D;
@@ -133,6 +134,8 @@ public class CharacterMovement : MonoBehaviour
     /// </summary>
     private void FixedUpdate()
     {
+        ClampFallingSpeed();
+
         if (_currentState == MovementState.Jumping)
         {
             StopHorizontalMovement();
@@ -339,6 +342,21 @@ public class CharacterMovement : MonoBehaviour
     private void StopHorizontalMovement()
     {
         SetHorizontalSpeed(0f);
+    }
+
+    /// <summary>
+    /// Clamps maximum downward velocity (Falling speed)
+    /// </summary>
+    private void ClampFallingSpeed()
+    {
+        if (_maxFallingSpeed <= 0f) { return; }
+
+        Vector2 velocity = _rigidbody2D.linearVelocity;
+        float clampedY = Mathf.Max(velocity.y, -_maxFallingSpeed);
+        if (Mathf.Approximately(clampedY, velocity.y)) { return; }
+
+        velocity.y = clampedY;
+        _rigidbody2D.linearVelocity = velocity;
     }
 
     /// <summary>

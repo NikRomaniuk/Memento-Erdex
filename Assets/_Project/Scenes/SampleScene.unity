@@ -2715,6 +2715,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CharacterMovement
   _moveSpeed: 3
   _fallingMoveSpeed: 3
+  _maxFallingSpeed: 12
   _fallingEnterGraceDuration: 0.15
   _moveLeftKey: 15
   _moveRightKey: 18
@@ -3228,6 +3229,7 @@ GameObject:
   - component: {fileID: 2097949157}
   - component: {fileID: 2097949159}
   - component: {fileID: 2097949160}
+  - component: {fileID: 2097949161}
   m_Layer: 0
   m_Name: CinemachineCamera
   m_TagString: Untagged
@@ -3330,6 +3332,25 @@ MonoBehaviour:
   _useFallbackWhenTreeMissing: 1
   _fallbackMinY: -3
   _fallbackMaxY: 100
+--- !u!114 &2097949161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2097949156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf4666de37e1a124c97c06df65f94bbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CameraManager
+  _characterMovement: {fileID: 1460255979}
+  _cinemachineFollow: {fileID: 2097949159}
+  _followDampingConfigs:
+  - FollowType: 0
+    Damping: 1
+  - FollowType: 1
+    Damping: 0.3
 --- !u!1 &2105178946
 GameObject:
   m_ObjectHideFlags: 0
