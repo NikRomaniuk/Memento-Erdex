@@ -9,14 +9,14 @@ public class BranchDataEditor : Editor
 {
     private SerializedProperty _id;
     private SerializedProperty _avaliableSide;
-    private SerializedProperty _length;
+    private SerializedProperty _lengthInUnits;
     private SerializedProperty _islandSlots;
 
     private void OnEnable()
     {
         _id = serializedObject.FindProperty("id");
         _avaliableSide = serializedObject.FindProperty("avaliableSide");
-        _length = serializedObject.FindProperty("length");
+        _lengthInUnits = serializedObject.FindProperty("lengthInUnits");
         _islandSlots = serializedObject.FindProperty("islandSlots");
     }
 
@@ -28,7 +28,10 @@ public class BranchDataEditor : Editor
         // Draw always-visible BranchData fields
         EditorGUILayout.PropertyField(_id);
         EditorGUILayout.PropertyField(_avaliableSide);
-        EditorGUILayout.PropertyField(_length);
+        EditorGUILayout.PropertyField(_lengthInUnits);
+
+        BranchData branchData = (BranchData)target;
+        EditorGUILayout.LabelField("Real Length", branchData.length.ToString("0.00"));
         EditorGUILayout.Space(6);
 
         if (_islandSlots == null)

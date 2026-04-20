@@ -131,15 +131,16 @@ public class ShapeGenerator : MonoBehaviour
         List<ShapeData> tipPool,
         out List<ShapeData> assembledShapeData)
     {
-        assembledShapeData = new List<ShapeData>();
+        assembledShapeData = new List<ShapeData>(); // Constructed Shape
         float currentLength = 0f;
 
         for (int index = 0; index < MAX_SHAPES_PER_BRANCH; index++)
         {
-            // Last piece must always be Tip, so we test if branch can be closed now
+            // Tip is mandatory -> Get it first
             ShapeData randomTip = tipPool[random.Next(0, tipPool.Count)];
             float lengthWithTip = currentLength + randomTip.Length;
 
+            // If tip alone covers the target length -> Return True
             if (lengthWithTip >= targetLength && lengthWithTip <= maxLength)
             {
                 assembledShapeData.Add(randomTip);

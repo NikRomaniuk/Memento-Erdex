@@ -31,6 +31,8 @@ public class BranchData : ScriptableObject, IData
 {
     string IData.id => id;
 
+    public const float ShapeUnit = 0.7f;
+
     public enum AvailableSide
     {
         Both,
@@ -43,14 +45,17 @@ public class BranchData : ScriptableObject, IData
     // Unique identifier
     public string id;
     public AvailableSide avaliableSide = AvailableSide.Both;
-    public float length;
+    public int lengthInUnits;
+
+    // Output real length 
+    public float length => lengthInUnits * ShapeUnit;
 
     [Header("Islands Configuration")]
     public IslandSlot[] islandSlots;
 
     private void OnValidate()
     {
-        length = Mathf.Max(0, length);
+        lengthInUnits = Mathf.Max(0, lengthInUnits);
 
         if (islandSlots == null) return;
 

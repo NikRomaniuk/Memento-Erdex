@@ -14,23 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BranchData
   id: short_risky01
   avaliableSide: 0
-  length: 5.5
+  lengthInUnits: 6
   islandSlots:
   - isStatic: 0
-    xPoint: 0.95
-    staticIslandData: {fileID: 0}
-    allowTiny: 1
-    allowSmall: 0
-    allowMedium: 0
-  - isStatic: 0
-    xPoint: 2.45
+    xPoint: 1.5500001
     staticIslandData: {fileID: 0}
     allowTiny: 1
     allowSmall: 1
     allowMedium: 0
-  - isStatic: 1
-    xPoint: 3.9
-    staticIslandData: {fileID: 11400000, guid: 476c2eab66a5df346abaaff235f4541e, type: 2}
+  - isStatic: 0
+    xPoint: 3.3500001
+    staticIslandData: {fileID: 0}
     allowTiny: 1
     allowSmall: 1
     allowMedium: 0

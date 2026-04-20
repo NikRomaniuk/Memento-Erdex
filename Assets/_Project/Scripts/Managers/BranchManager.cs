@@ -4,7 +4,7 @@ using UnityEngine;
 public class BranchManager : MonoBehaviour, IBakeable, IBuildable
 {
     [Header("Properties")]
-    [SerializeField] private float _length;
+    [SerializeField] private int _lengthInUnits;
     [SerializeField] private IslandSlot[] _islandSlots;
 
     [Header("Draw Settings")]
@@ -18,7 +18,7 @@ public class BranchManager : MonoBehaviour, IBakeable, IBuildable
     {
         if (data is not BranchData branchData) return;
 
-        branchData.length = Mathf.Max(0, _length); // Ensure length is non-negative
+        branchData.lengthInUnits = Mathf.Max(0, _lengthInUnits); // Ensure length is non-negative
         branchData.islandSlots = _islandSlots != null ? (IslandSlot[])_islandSlots.Clone() : new IslandSlot[0];
     }
 
@@ -31,7 +31,7 @@ public class BranchManager : MonoBehaviour, IBakeable, IBuildable
 
     public void SetData(BranchData data, Orientation orient, float currentHeight)
     {
-        _length = Mathf.Max(0, data.length); // Ensure length is non-negative
+        _lengthInUnits = Mathf.Max(0, data.lengthInUnits); // Ensure length is non-negative
 
         float xPos;
         // Set up xPos based on branch orientation
@@ -64,7 +64,7 @@ public class BranchManager : MonoBehaviour, IBakeable, IBuildable
     public void Clear()
     {
         // --- Reset General ---
-        _length = 0;
+        _lengthInUnits = 0;
 
         // --- Reset Transform ---
         transform.position = Vector3.zero;
@@ -84,7 +84,7 @@ public class BranchManager : MonoBehaviour, IBakeable, IBuildable
 
     private void OnValidate()
     {
-        _length = Mathf.Max(0, _length);
+        _lengthInUnits = Mathf.Max(0, _lengthInUnits);
     }
 
 #if UNITY_EDITOR
@@ -103,9 +103,10 @@ public class BranchManager : MonoBehaviour, IBakeable, IBuildable
         Color smallColor = new Color(0.18f, 0.85f, 0.22f, 0.28f);  // Green
         Color mediumColor = new Color(0.64f, 0.87f, 0.2f, 0.28f);  // Green-yellow
         Color branchStartColor = new Color(1f, 0.55f, 0.15f, 0.9f); // Orange
+        Color islandStartColor = new Color(0.2f, 1f, 0.25f, 0.9f); // Green
         Color branchEndColor = new Color(1f, 0.9f, 0.2f, 0.9f);     // Yellow
 
-        DrawBranchIcons(branchIconWorldSize, branchStartColor, branchStartIcon, branchEndColor, branchEndIcon);
+        DrawBranchIcons(branchIconWorldSize, branchStartColor, islandStartColor, branchStartIcon, branchEndColor, branchEndIcon);
 
         if (_islandSlots == null || _islandSlots.Length == 0) return;
 
@@ -147,14 +148,17 @@ public class BranchManager : MonoBehaviour, IBakeable, IBuildable
         }
     }
 
-    private void DrawBranchIcons(float iconWorldSize, Color startColor, Texture2D startIcon, Color endColor, Texture2D endIcon)
+    private void DrawBranchIcons(float iconWorldSize, Color startColor, Color islandStartColor, Texture2D startIcon, Color endColor, Texture2D endIcon)
     {
         // Branch start is at local X=0. Branch end is offset by signed branch length
         float startX = 0f;
-        float signedLength = _drawRight ? _length : -_length;
-        float endX = startX + signedLength * 0.8f;
+        float direction = _drawRight ? 1f : -1f;
+        float signedLength = direction * (_lengthInUnits * BranchData.ShapeUnit);
+        float endX = startX + signedLength;
+        float islandStartX = startX + direction * BranchData.ShapeUnit;
 
         DrawIcon(startX, 0f, iconWorldSize, startColor, startIcon);
+        DrawIcon(islandStartX, 0f, iconWorldSize, islandStartColor, startIcon);
         DrawIcon(endX, 0f, iconWorldSize, endColor, endIcon);
     }
 
@@ -215,5 +219,5 @@ public class BranchManager : MonoBehaviour, IBakeable, IBuildable
         float pixelsPerWorldUnitPerspective = cam.pixelHeight / frustumHeight;
         return worldSize * pixelsPerWorldUnitPerspective;
     }
-#endif
+    #endif
 }

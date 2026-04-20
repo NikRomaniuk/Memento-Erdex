@@ -14,23 +14,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BranchData
   id: long_rewarding01
   avaliableSide: 0
-  length: 8
+  lengthInUnits: 9
   islandSlots:
   - isStatic: 0
-    xPoint: 1.4
+    xPoint: 1.3000001
+    staticIslandData: {fileID: 0}
+    allowTiny: 1
+    allowSmall: 0
+    allowMedium: 0
+  - isStatic: 0
+    xPoint: 3.15
     staticIslandData: {fileID: 0}
     allowTiny: 0
     allowSmall: 1
     allowMedium: 1
-  - isStatic: 0
-    xPoint: 3.5
-    staticIslandData: {fileID: 0}
-    allowTiny: 1
-    allowSmall: 1
-    allowMedium: 0
   - isStatic: 1
-    xPoint: 5.9
-    staticIslandData: {fileID: 11400000, guid: 59cca95787f332c459e4e830480d0353, type: 2}
+    xPoint: 5.8
+    staticIslandData: {fileID: 11400000, guid: 476c2eab66a5df346abaaff235f4541e, type: 2}
     allowTiny: 1
     allowSmall: 1
     allowMedium: 0

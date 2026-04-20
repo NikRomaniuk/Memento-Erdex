@@ -1341,6 +1341,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0d665027d37584340a5273628d6c3f35, type: 2}
   - {fileID: 11400000, guid: da4dc4ba27052fa44aa1f2c049d8ce8e, type: 2}
   - {fileID: 11400000, guid: 1a119dd68509f92428fb266e0aa074c3, type: 2}
+  - {fileID: 11400000, guid: 0c4b8407f2672af468ad26f93f944f14, type: 2}
+  - {fileID: 11400000, guid: a67ae69573e7111459412c854d254394, type: 2}
 --- !u!114 &555159130
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3474,7 +3476,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Builder
   _blankType: 2
-  _dataToBuild: {fileID: 11400000, guid: da4dc4ba27052fa44aa1f2c049d8ce8e, type: 2}
+  _dataToBuild: {fileID: 11400000, guid: 0d665027d37584340a5273628d6c3f35, type: 2}
   _side: 1
   _isYFlipped: 0
   _currentHeight: 0
@@ -3559,23 +3561,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1819fc24b098b9743ab99b51fec98671, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BranchManager
-  _length: 5.5
+  _lengthInUnits: 12
   _islandSlots:
   - isStatic: 0
-    xPoint: 0.95
-    staticIslandData: {fileID: 0}
-    allowTiny: 1
-    allowSmall: 0
-    allowMedium: 0
-  - isStatic: 0
-    xPoint: 2.45
+    xPoint: 1.75
     staticIslandData: {fileID: 0}
     allowTiny: 1
     allowSmall: 1
     allowMedium: 0
-  - isStatic: 1
-    xPoint: 3.9
-    staticIslandData: {fileID: 11400000, guid: 476c2eab66a5df346abaaff235f4541e, type: 2}
+  - isStatic: 0
+    xPoint: 4.5
+    staticIslandData: {fileID: 0}
+    allowTiny: 0
+    allowSmall: 0
+    allowMedium: 1
+  - isStatic: 0
+    xPoint: 7.4
+    staticIslandData: {fileID: 0}
     allowTiny: 1
     allowSmall: 1
     allowMedium: 0
@@ -3732,8 +3734,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Baker
   _blankType: 2
-  _id: short_risky01
-  _dataToEdit: {fileID: 11400000, guid: da4dc4ba27052fa44aa1f2c049d8ce8e, type: 2}
+  _id: superlong_center_wide_01
+  _dataToEdit: {fileID: 11400000, guid: a67ae69573e7111459412c854d254394, type: 2}
   _avaliableSide: 0
   _canBeFlippedVertically: 1
   _branchAvaliableSide: 0
