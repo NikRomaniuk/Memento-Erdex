@@ -11,6 +11,7 @@ public class TreeGenerator : MonoBehaviour
 
     // --- Getters ---
     public int Seed => _seed;
+    public float TreeHeight => _treeHeight;
 
     // --- Components ---
     private TrunkGenerator _trunkGenerator;
@@ -42,7 +43,7 @@ public class TreeGenerator : MonoBehaviour
         // --- Generate ---
         _treeGen = new TreeGen();
         _chunkGenerator.GenerateChunks(random, _treeGen, _treeHeight);
-        _trunkGenerator.GenerateTrunk(random, _treeGen, _treeHeight);
+        _trunkGenerator.GenerateTrunk(random, _treeGen, _chunkGenerator.GeneratedTreeHeight);
 
         // --- Publish data (signals TreeManager that generation is complete) ---
         TreeLoader.GenData = _treeGen;

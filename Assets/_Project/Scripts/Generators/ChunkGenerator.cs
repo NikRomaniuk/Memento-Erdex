@@ -18,6 +18,7 @@ public class ChunkGenerator : MonoBehaviour
 
     public int StaticChunksSpawned { get; private set; }
     public int StaticChunksAmount { get; private set; }
+    public float GeneratedTreeHeight { get; private set; }
 
     // --- Components ---
     private BranchGenerator _branchGenerator;
@@ -29,6 +30,8 @@ public class ChunkGenerator : MonoBehaviour
 
     public void GenerateChunks(System.Random random, TreeGen treeGen, float maxHeight)
     {
+        GeneratedTreeHeight = 0f;
+
         // --- Validations ---
         if (_chunkDataPool == null || _chunkDataPool.Length == 0)
         {
@@ -50,8 +53,13 @@ public class ChunkGenerator : MonoBehaviour
         StaticChunksSpawned = 0;
         StaticChunksAmount = pendingStaticChunks.Count;
 
-        while (currentHeight < maxHeight)
+        const int staticOnlyAttemptsLimit = 2;
+        int staticOnlyAttemptsLeft = staticOnlyAttemptsLimit;
+
+        while (currentHeight < maxHeight || pendingStaticChunks.Count > 0)
         {
+            bool isBelowMaxHeight = currentHeight < maxHeight;
+
             // First prioritize spawning any static Chunks
             ChunkData selectedChunkData = TryGetStaticChunkData(currentHeight, pendingStaticChunks);
 
@@ -59,8 +67,14 @@ public class ChunkGenerator : MonoBehaviour
             if (selectedChunkData != null)
             {
                 StaticChunksSpawned++;
+
+                // Above maxHeight -> Restore attempts
+                if (!isBelowMaxHeight)
+                {
+                    staticOnlyAttemptsLeft = staticOnlyAttemptsLimit;
+                }
             }
-            else // No static ChunkData available -> Get random ChunkData from pool
+            else if (isBelowMaxHeight) // No static ChunkData available -> Get random ChunkData from pool
             {
                 // Get random ChunkData from pool
                 int randomIndex = random.Next(0, _chunkDataPool.Length);
@@ -71,6 +85,12 @@ public class ChunkGenerator : MonoBehaviour
                     Debug.LogWarning($"ChunkData at index {randomIndex} is null. Skipping");
                     continue;
                 }
+            }
+            else // No static ChunkData available and above maxHeight -> Skip
+            {
+                staticOnlyAttemptsLeft--;
+                if (staticOnlyAttemptsLeft <= 0) { break; } // No more attempts -> Stop generation loop
+                continue;
             }
 
             // Create ChunkGen with selected ChunkData and current height
@@ -83,6 +103,8 @@ public class ChunkGenerator : MonoBehaviour
             // Increment height
             currentHeight += selectedChunkData.height;
         }
+
+        GeneratedTreeHeight = currentHeight;
 
         Debug.Log($"Static chunks spawned: {StaticChunksSpawned}/{StaticChunksAmount}");
         Debug.Log($"Generated {treeGen.Chunks.Count} chunks with total height: {currentHeight}");

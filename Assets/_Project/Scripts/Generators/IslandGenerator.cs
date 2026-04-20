@@ -5,7 +5,7 @@ public class IslandGenerator : MonoBehaviour
 {
     private const float POS_STEP = 0.05f;
     private const float Y_OFFSET = 0.05f;
-    private const short ISLAND_SPRITE_ORDER = 100;
+    private const short ISLAND_SPRITE_ORDER = 120;
 
     [Header("Island Pool")]
     [SerializeField] private IslandData[] _islandDataPool;
