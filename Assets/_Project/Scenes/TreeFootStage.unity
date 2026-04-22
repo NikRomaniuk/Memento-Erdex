@@ -2614,6 +2614,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 839fbcbd1a25c7147a4dfc258ed0a930, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterManager
+  _characterFellEvent: {fileID: 11400000, guid: e2a1ae4f5f15c1247ae8259eb1b7434c, type: 2}
+  _fallBelowYThreshold: -25
+  _debug: 1
 --- !u!4 &1460255976
 Transform:
   m_ObjectHideFlags: 0

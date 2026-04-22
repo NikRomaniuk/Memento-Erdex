@@ -392,7 +392,7 @@ public class CharacterMovement : MonoBehaviour
     }
 
     /// <summary>
-    /// Prints debug messages
+    /// Prints Debug messages
     /// </summary>
     private void D(string message)
     {
