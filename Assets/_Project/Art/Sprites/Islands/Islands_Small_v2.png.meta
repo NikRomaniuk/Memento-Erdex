@@ -1,17 +1,23 @@
 fileFormatVersion: 2
-guid: 716725b703f95dd4d81453e255a7256e
+guid: d8632e8f65e58d545b884673fa9880b0
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 348689814894194515
-    second: Surfaces_Tiny_0
+      213: 256693163605426444
+    second: Islands_Small_v2_0
   - first:
-      213: 1733150031301380124
-    second: Surfaces_Tiny_1
+      213: 6350633411510592154
+    second: Islands_Small_v2_1
+  - first:
+      213: -1071303005615441778
+    second: Islands_Small_v2_2
+  - first:
+      213: -7269586496474912835
+    second: Islands_Small_v2_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
-    mipMapMode: 1
+    mipMapMode: 0
     enableMipMap: 0
     sRGBTexture: 1
     linearTexture: 0
@@ -31,7 +37,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
-  ignoreMipmapLimit: 1
+  ignoreMipmapLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -40,8 +46,8 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 2
-    aniso: 16
+    filterMode: 1
+    aniso: 1
     mipBias: 0
     wrapU: 1
     wrapV: 1
@@ -155,12 +161,12 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Surfaces_Tiny_0
+      name: Islands_Small_v2_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 32
+        y: 32
+        width: 48
         height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -170,19 +176,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 35fa0990a8bc6d400800000000000000
-      internalID: 348689814894194515
+      spriteID: c0109f08215ff8300800000000000000
+      internalID: 256693163605426444
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Surfaces_Tiny_1
+      name: Islands_Small_v2_1
       rect:
         serializedVersion: 2
-        x: 32
-        y: 0
-        width: 32
+        x: 48
+        y: 32
+        width: 48
         height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -192,8 +198,52 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c180d2655c26d0810800000000000000
-      internalID: 1733150031301380124
+      spriteID: a92e0dfc07bf12850800000000000000
+      internalID: 6350633411510592154
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Islands_Small_v2_2
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 32
+        width: 48
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 8, y: 8, z: 8, w: 8}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e88bb77a797f121f0800000000000000
+      internalID: -1071303005615441778
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Islands_Small_v2_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 48
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 8, y: 8, z: 8, w: 8}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db7e2ade89d3d1b90800000000000000
+      internalID: -7269586496474912835
       vertices: []
       indices: 
       edges: []
@@ -202,7 +252,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 585e3d06726a9a3488d05e561a107cf0
+    spriteID: 5c0cb7e27cf203e4abf27b2fb8dfec96
     internalID: 0
     vertices: []
     indices: 
@@ -212,10 +262,12 @@ TextureImporter:
     spriteCustomMetadata:
       entries:
       - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":2.0,"y":1.0},"gridSpriteSize":{"x":32.0,"y":32.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":3.0,"y":2.0},"gridSpriteSize":{"x":48.0,"y":32.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      Surfaces_Tiny_0: 348689814894194515
-      Surfaces_Tiny_1: 1733150031301380124
+      Islands_Small_v2_0: 256693163605426444
+      Islands_Small_v2_1: 6350633411510592154
+      Islands_Small_v2_2: -1071303005615441778
+      Islands_Small_v2_3: -7269586496474912835
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -1,20 +1,23 @@
 fileFormatVersion: 2
-guid: 6ea031258e4b9a84aa80779f2d869d7f
+guid: 20d8f6e54f0fb1a46bc7d58fb5661788
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3070804787738831572
-    second: Surfaces_Small_0
+      213: -6409580842335376845
+    second: Islands_Medium_v2_0
   - first:
-      213: -5228489745061029076
-    second: Surfaces_Small_1
+      213: 4708342825816889084
+    second: Islands_Medium_v2_1
   - first:
-      213: 5172431113006410056
-    second: Surfaces_Small_2
+      213: -4467771950202273571
+    second: Islands_Medium_v2_2
+  - first:
+      213: 5540840790202450994
+    second: Islands_Medium_v2_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
-    mipMapMode: 1
+    mipMapMode: 0
     enableMipMap: 0
     sRGBTexture: 1
     linearTexture: 0
@@ -34,7 +37,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
-  ignoreMipmapLimit: 1
+  ignoreMipmapLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -43,8 +46,8 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 2
-    aniso: 16
+    filterMode: 1
+    aniso: 1
     mipBias: 0
     wrapU: 1
     wrapV: 1
@@ -158,13 +161,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Surfaces_Small_0
+      name: Islands_Medium_v2_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 48
-        height: 48
+        y: 64
+        width: 64
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 8, y: 8, z: 8, w: 8}
@@ -173,20 +176,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c25124cb05f4265d0800000000000000
-      internalID: -3070804787738831572
+      spriteID: 33a637dee289c07a0800000000000000
+      internalID: -6409580842335376845
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Surfaces_Small_1
+      name: Islands_Medium_v2_1
       rect:
         serializedVersion: 2
-        x: 48
-        y: 0
-        width: 48
-        height: 48
+        x: 64
+        y: 64
+        width: 64
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 8, y: 8, z: 8, w: 8}
@@ -195,20 +198,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c2b5dd1574ca077b0800000000000000
-      internalID: -5228489745061029076
+      spriteID: cf6139daad4675140800000000000000
+      internalID: 4708342825816889084
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Surfaces_Small_2
+      name: Islands_Medium_v2_2
       rect:
         serializedVersion: 2
-        x: 96
-        y: 0
-        width: 48
-        height: 48
+        x: 0
+        y: 32
+        width: 64
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 8, y: 8, z: 8, w: 8}
@@ -217,8 +220,30 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 849eceb41ba28c740800000000000000
-      internalID: 5172431113006410056
+      spriteID: dd04db225194ff1c0800000000000000
+      internalID: -4467771950202273571
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Islands_Medium_v2_3
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 32
+        width: 64
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 8, y: 8, z: 8, w: 8}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2340301975505ec40800000000000000
+      internalID: 5540840790202450994
       vertices: []
       indices: 
       edges: []
@@ -227,7 +252,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: c03ce4543f5fd4044a6f1cf7742f3b80
+    spriteID: 80e60dcc4ac41314fb1cf4970a6b2039
     internalID: 0
     vertices: []
     indices: 
@@ -237,11 +262,12 @@ TextureImporter:
     spriteCustomMetadata:
       entries:
       - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":3.0,"y":1.0},"gridSpriteSize":{"x":48.0,"y":48.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":2.0,"y":3.0},"gridSpriteSize":{"x":64.0,"y":32.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      Surfaces_Small_0: -3070804787738831572
-      Surfaces_Small_1: -5228489745061029076
-      Surfaces_Small_2: 5172431113006410056
+      Islands_Medium_v2_0: -6409580842335376845
+      Islands_Medium_v2_1: 4708342825816889084
+      Islands_Medium_v2_2: -4467771950202273571
+      Islands_Medium_v2_3: 5540840790202450994
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -15,9 +15,9 @@ MonoBehaviour:
   id: S_slabby_01
   colliderSize: {x: 1.6, y: 0.8}
   colliderOffset: {x: 0, y: 0}
-  sprite: {fileID: -3164779861051717495, guid: 8c4babbc9c1b4464b819da982c9c6b7a, type: 3}
+  sprite: {fileID: -1071303005615441778, guid: d8632e8f65e58d545b884673fa9880b0, type: 3}
   spriteOffset: {x: 0, y: -0.4}
-  defaultOutlineColor: {r: 0.19607843, g: 0.20784314, b: 0.23529412, a: 1}
+  defaultOutlineColor: {r: 0.3882353, g: 0.47058824, b: 0.5529412, a: 1}
   canBeXFlipped: 1
   size: 1
   allowLeft: 1

@@ -15,9 +15,9 @@ MonoBehaviour:
   id: T_round_01
   colliderSize: {x: 0.8, y: 0.8}
   colliderOffset: {x: 0, y: 0}
-  sprite: {fileID: 4587616333546711366, guid: b2bdf8f06a9bb1b458a6e99c79c62e71, type: 3}
+  sprite: {fileID: -7789176290902265964, guid: 8852f9f441d15b74aa5ddcb9c21e83ea, type: 3}
   spriteOffset: {x: 0, y: -0.4}
-  defaultOutlineColor: {r: 0.19607843, g: 0.20784314, b: 0.23529412, a: 1}
+  defaultOutlineColor: {r: 0.3882353, g: 0.47058824, b: 0.5529412, a: 1}
   canBeXFlipped: 1
   size: 0
   allowLeft: 1

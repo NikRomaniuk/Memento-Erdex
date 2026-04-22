@@ -25,7 +25,7 @@ public class GameFlowActions : MonoBehaviour
         GameFlowController.Instance.StartGameplay();
     }
 
-    public void StartConfiguredGameplay()
+    public void StartConfiguredGameplay() 
     {
         if (GameFlowController.Instance == null) { return; }
 

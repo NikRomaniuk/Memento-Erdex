@@ -359,7 +359,7 @@ public class CharacterJump : MonoBehaviour
             return;
         }
 
-        Vector2 cursorWorld = ScreenToWorldPoint(targetCamera, Mouse.current.position.ReadValue()); // Cursor World pos
+        Vector2 cursorWorld = ScreenToWorldPoint(targetCamera, Mouse.current.position.ReadValue(), transform.position.z); // Cursor World pos
         Vector2 focusCenter = (Vector2)transform.position + Vector2.up * _focusCenterOffsetY; // Focus area center pos
 
         if (Vector2.Distance(cursorWorld, focusCenter) > _focusRadius) // Cursor out of Focus area
@@ -532,10 +532,21 @@ public class CharacterJump : MonoBehaviour
     /// <summary>
     /// Converts cursor Screen coordinates to World coordinates
     /// </summary>
-    private static Vector2 ScreenToWorldPoint(Camera cam, Vector2 screenPosition)
+    private static Vector2 ScreenToWorldPoint(Camera cam, Vector2 screenPosition, float worldPlaneZ)
     {
-        Vector3 world = cam.ScreenToWorldPoint(new Vector3(screenPosition.x, screenPosition.y, cam.nearClipPlane));
-        return new Vector2(world.x, world.y);
+        Ray mouseRay = cam.ScreenPointToRay(screenPosition);
+        Plane gameplayPlane = new Plane(Vector3.forward, new Vector3(0f, 0f, worldPlaneZ));
+
+        if (gameplayPlane.Raycast(mouseRay, out float enter))
+        {
+            Vector3 worldHit = mouseRay.GetPoint(enter);
+            return new Vector2(worldHit.x, worldHit.y);
+        }
+
+        // Fallback for edge cases where the ray is parallel to the XY gameplay plane
+        float fallbackDepth = Mathf.Abs(worldPlaneZ - cam.transform.position.z);
+        Vector3 fallback = cam.ScreenToWorldPoint(new Vector3(screenPosition.x, screenPosition.y, fallbackDepth));
+        return new Vector2(fallback.x, fallback.y);
     }
 
     /// <summary>
