@@ -10,6 +10,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f791b602228d4854ea74e0a5cfb453fa, type: 3}
-  m_Name: GE_CharacterDied
+  m_Name: GE_OnGameStarted
   m_EditorClassIdentifier: Assembly-CSharp::GameEvent
   _debug: 0
