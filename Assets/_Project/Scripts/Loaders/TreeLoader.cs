@@ -20,12 +20,37 @@ public static class TreeLoader
     public static Dictionary<int, ChunkManager> LoadedChunkObjects = new Dictionary<int, ChunkManager>();
 
     /// <summary>
+    /// Binds the active <see cref="BlanksLibrary"/> for all Loaders
+    /// </summary>
+    public static void SetBlanksLibrary(BlanksLibrary library)
+    {
+        BlanksLibrary = library;
+
+        // Keep Loaders in sync with the Blank Library
+        ChunkLoader.BlanksLibrary = library;
+        TrunkLoader.BlanksLibrary = library;
+        BranchLoader.BlanksLibrary = library;
+        ShapeLoader.BlanksLibrary = library;
+        IslandLoader.BlanksLibrary = library;
+    }
+
+    /// <summary>
+    /// Clears runtime static data between Scene loads
+    /// </summary>
+    public static void ResetRuntimeState()
+    {
+        GenData = null;
+        LoadedChunks.Clear();
+        LoadedChunkObjects.Clear();
+    }
+
+    /// <summary>
     /// Ensures the given Chunk and its neighbors within <see cref="LoadRadius"/> are loaded
     /// Unloads chunks that are no longer in range
     /// </summary>
     public static void KeepLoaded(int chunkIndex)
     {
-        if (GenData == null || GenData.Chunks.Count == 0) return;
+        if (BlanksLibrary == null || GenData == null || GenData.Chunks.Count == 0) return;
         // Debug.Log($"LoadedChunks: '{LoadedChunks.Count}'");
 
         // --- Compute range ---

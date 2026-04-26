@@ -157,7 +157,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 427205423}
           m_TargetAssemblyTypeName: GameFlowActions, Assembly-CSharp
-          m_MethodName: EnterGameOver
+          m_MethodName: RestartCurrentGameplay
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}

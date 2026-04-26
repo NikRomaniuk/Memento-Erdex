@@ -48,8 +48,9 @@ public class BlanksLibrary : MonoBehaviour
     {
         GenerateBlanks();
 
-        // Give TreeLoader access to the BlanksLibrary
-        TreeLoader.BlanksLibrary = this;
+        // Ensure all Loaders point to the same Blank Library
+        TreeLoader.SetBlanksLibrary(this);
+        TreeLoader.ResetRuntimeState();
     }
 
     /// <summary>

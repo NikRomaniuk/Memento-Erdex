@@ -205,8 +205,8 @@ public class GameFlowController : MonoBehaviour
             return;
         }
 
-        //GoToMainMenu();
-        StartGameplay();
+        GoToMainMenu();
+        //StartGameplay();
     }
 
     private void RequestSceneTransition(string sceneName, GameState targetState)
@@ -285,10 +285,7 @@ public class GameFlowController : MonoBehaviour
 
     private void SetState(GameState nextState)
     {
-        if (_currentState == nextState)
-        {
-            return;
-        }
+        if (_currentState == nextState) { return; }
 
         D($"State: {_currentState} -> {nextState}");
         _currentState = nextState;
