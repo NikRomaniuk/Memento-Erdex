@@ -986,6 +986,34 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4360235140624464709, guid: 6c18d68f8f9a1eb4e9c83a0b4a6873fe, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: f32070c94dca5cf4ea99f8d6aefa9008, type: 2}
+    - target: {fileID: 4360235140624464709, guid: 6c18d68f8f9a1eb4e9c83a0b4a6873fe, type: 3}
+      propertyPath: m_fontStyle
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4360235140624464709, guid: 6c18d68f8f9a1eb4e9c83a0b4a6873fe, type: 3}
+      propertyPath: m_fontColor.b
+      value: 0.93333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 4360235140624464709, guid: 6c18d68f8f9a1eb4e9c83a0b4a6873fe, type: 3}
+      propertyPath: m_fontColor.g
+      value: 0.8862745
+      objectReference: {fileID: 0}
+    - target: {fileID: 4360235140624464709, guid: 6c18d68f8f9a1eb4e9c83a0b4a6873fe, type: 3}
+      propertyPath: m_fontColor.r
+      value: 0.90588236
+      objectReference: {fileID: 0}
+    - target: {fileID: 4360235140624464709, guid: 6c18d68f8f9a1eb4e9c83a0b4a6873fe, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -287801036915439855, guid: f32070c94dca5cf4ea99f8d6aefa9008, type: 2}
+    - target: {fileID: 4360235140624464709, guid: 6c18d68f8f9a1eb4e9c83a0b4a6873fe, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4293845735
+      objectReference: {fileID: 0}
     - target: {fileID: 8663880792603953020, guid: 6c18d68f8f9a1eb4e9c83a0b4a6873fe, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1072,7 +1100,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9186637531646620230, guid: 6c18d68f8f9a1eb4e9c83a0b4a6873fe, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 80
+      value: 285.41
       objectReference: {fileID: 0}
     - target: {fileID: 9186637531646620230, guid: 6c18d68f8f9a1eb4e9c83a0b4a6873fe, type: 3}
       propertyPath: m_AnchoredPosition.y
