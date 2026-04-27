@@ -1,0 +1,61 @@
+OVDF v1.1
+OptionBtnManager, Assembly-CSharp
+MetaGuid:1cf427b78ab7d4d4cb11233c9ce776d6
+
+# $CTsGi17141w98RBXTTYMN8
+Position: $root:0
++ [Sirenix.OdinInspector.TitleGroupAttribute]
+	GroupName = "References"
+
+# $7hErmFaKLvhLGiWcNwFwuu
+Position: $AJ3ZKS1TCoFkGqgv8FmYPk:0
++ [Sirenix.OdinInspector.TitleGroupAttribute]
+	GroupName = "Settings"
+
+# $EfHEf9mxLYg5EcAwZm8dmb
+Position: $MpGtC7JdZ8BrTiRG2f8yRK:0
++ [Sirenix.OdinInspector.TitleGroupAttribute]
+	GroupName = "Colors"
+
+# $8eXaiENMVYw7MxnSWgGNqD
+Position: $MsnWed1x48YNr9NBVrp7ea:0
++ [Sirenix.OdinInspector.TitleGroupAttribute]
+	GroupName = "Animation"
+
+# $8DMMM2eZEjaifoX4AfxABK
+Position: $7hErmFaKLvhLGiWcNwFwuu:0
++ [Sirenix.OdinInspector.ColumnGroupAttribute]
+
+# $MpGtC7JdZ8BrTiRG2f8yRK
+Position: $8DMMM2eZEjaifoX4AfxABK:0
++ [Sirenix.OdinInspector.ColumnGroupAttribute+ColumnSubGroupAttribute]
+
+# $MsnWed1x48YNr9NBVrp7ea
+Position: $8DMMM2eZEjaifoX4AfxABK:1
++ [Sirenix.OdinInspector.ColumnGroupAttribute+ColumnSubGroupAttribute]
+
+# _leftArrow
+Position: $CTsGi17141w98RBXTTYMN8:0
+
+# _rightArrow
+Position: $CTsGi17141w98RBXTTYMN8:1
+
+# _label
+Position: $CTsGi17141w98RBXTTYMN8:2
+
+# _activeTextColor
+Position: $EfHEf9mxLYg5EcAwZm8dmb:1
++ [Sirenix.OdinInspector.LabelTextAttribute]
+	Text = "Active"
+
+# _passiveTextColor
+Position: $EfHEf9mxLYg5EcAwZm8dmb:0
++ [Sirenix.OdinInspector.LabelTextAttribute]
+	Text = "Passive"
+
+# _transitionDuration
+Position: $8eXaiENMVYw7MxnSWgGNqD:0
++ [Sirenix.OdinInspector.MinValueAttribute]
++ [Sirenix.OdinInspector.UnitAttribute]
+	Base = Second
+	Display = Second
