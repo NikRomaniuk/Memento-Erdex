@@ -1,0 +1,35 @@
+OVDF v1.1
+GameEventListener+Binding, Assembly-CSharp
+
+# $La5rZQLk65LNkbenrUxnBh
+Position: $12qDo4XowpNSGG2YaGKBWy:0
++ [Sirenix.OdinInspector.TabGroupAttribute]
+	GroupName = "Game Event"
+
+# $12qDo4XowpNSGG2YaGKBWy
+Position: $root:4
++ [Sirenix.OdinInspector.FoldoutGroupAttribute]
+
+# $v2tEvSeDRNMszGBouG3hA
+Position: $La5rZQLk65LNkbenrUxnBh:0
++ [Sirenix.OdinInspector.TabGroupAttribute+TabSubGroupAttribute]
+	GroupName = "Game Event"
+
+# $9Su9apEkaihshR2weEsoVt
+Position: $La5rZQLk65LNkbenrUxnBh:1
++ [Sirenix.OdinInspector.TabGroupAttribute+TabSubGroupAttribute]
+	GroupName = "Responce"
+
+# _responses
+Position: $9Su9apEkaihshR2weEsoVt:0
+
+# _event
+Position: $v2tEvSeDRNMszGBouG3hA:0
++ [Sirenix.OdinInspector.LabelTextAttribute]
+	Text = "Game Event"
+
+# _responce
+Position: $9Su9apEkaihshR2weEsoVt:0
++ [Sirenix.OdinInspector.LabelTextAttribute]
+	Text = "Unity Event"
+	NicifyText = False

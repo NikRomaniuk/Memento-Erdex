@@ -9,10 +9,10 @@ public class GameEventListener : MonoBehaviour
     public class Binding // Binding is one-to-many relationship between GameEvent and UnityEvents
     {
         [SerializeField] private GameEvent _event;
-        [SerializeField] private UnityEvent[] _responses = Array.Empty<UnityEvent>();
+        [SerializeField] private UnityEvent _responce;
 
         public GameEvent Event => _event;
-        public UnityEvent[] Responses => _responses;
+        public UnityEvent Responce => _responce;
     }
 
     [Header("Properties")]
@@ -54,20 +54,14 @@ public class GameEventListener : MonoBehaviour
 
             hasMatchingBinding = true;
 
-            UnityEvent[] responses = binding.Responses;
-            if (responses == null || responses.Length == 0) // No Responses -> Skip
+            UnityEvent response = binding.Responce;
+            if (response == null) // No Response -> Skip
             {
                 continue;
             }
 
-            for (int responseIndex = 0; responseIndex < responses.Length; responseIndex++)
-            {
-                UnityEvent response = responses[responseIndex];
-                if (response == null) { continue; } // Null Response -> Skip
-
-                response.Invoke();
-                hasAnyInvokedResponse = true;
-            }
+            response.Invoke();
+            hasAnyInvokedResponse = true;
         }
 
         if (hasMatchingBinding && !hasAnyInvokedResponse)

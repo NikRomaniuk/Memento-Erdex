@@ -152,8 +152,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameEventListener
   _bindings:
   - _event: {fileID: 11400000, guid: e2a1ae4f5f15c1247ae8259eb1b7434c, type: 2}
-    _responses:
-    - m_PersistentCalls:
+    _responce:
+      m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 427205423}
           m_TargetAssemblyTypeName: GameFlowActions, Assembly-CSharp
@@ -168,12 +168,28 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
   - _event: {fileID: 11400000, guid: 335761a39f568634fb5a58bfd4cb3406, type: 2}
-    _responses:
-    - m_PersistentCalls:
+    _responce:
+      m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 427205423}
           m_TargetAssemblyTypeName: GameFlowActions, Assembly-CSharp
           m_MethodName: StartDefaultGameplay
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - _event: {fileID: 11400000, guid: 86fe2342cfe26334dada67551f93d569, type: 2}
+    _responce:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 427205423}
+          m_TargetAssemblyTypeName: GameFlowActions, Assembly-CSharp
+          m_MethodName: QuitApplication
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
