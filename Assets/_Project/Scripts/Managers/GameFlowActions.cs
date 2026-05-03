@@ -3,47 +3,36 @@ using UnityEngine;
 public class GameFlowActions : MonoBehaviour
 {
     [SerializeField] private string _gameplaySceneName = "TreeFootStage";
+    [SerializeField] private GameFlowController _gameFlowController;
 
     public void GoToBootstrap()
     {
-        if (GameFlowController.Instance == null) { return; }
-
-        GameFlowController.Instance.GoToBootstrap();
+        _gameFlowController.GoToBootstrap();
     }
 
     public void GoToMainMenu()
     {
-        if (GameFlowController.Instance == null) { return; }
-
-        GameFlowController.Instance.GoToMainMenu();
+        _gameFlowController.GoToMainMenu();
     }
 
     public void StartDefaultGameplay()
     {
-        if (GameFlowController.Instance == null) { return; }
-
-        GameFlowController.Instance.StartGameplay();
+        _gameFlowController.StartGameplay();
     }
 
     public void StartConfiguredGameplay() 
     {
-        if (GameFlowController.Instance == null) { return; }
-
-        GameFlowController.Instance.StartGameplay(_gameplaySceneName);
+        _gameFlowController.StartGameplay(_gameplaySceneName);
     }
 
     public void EnterGameOver()
     {
-        if (GameFlowController.Instance == null) { return; }
-
-        GameFlowController.Instance.EnterGameOver();
+        _gameFlowController.EnterGameOver();
     }
 
     public void RestartCurrentGameplay()
     {
-        if (GameFlowController.Instance == null) { return; }
-
-        GameFlowController.Instance.RestartCurrentGameplay();
+        _gameFlowController.RestartCurrentGameplay();
     }
 
     public void QuitApplication()

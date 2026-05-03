@@ -4,7 +4,7 @@ GameEventListener+Binding, Assembly-CSharp
 # $La5rZQLk65LNkbenrUxnBh
 Position: $12qDo4XowpNSGG2YaGKBWy:0
 + [Sirenix.OdinInspector.TabGroupAttribute]
-	GroupName = "Game Event"
+	GroupName = "Binding"
 
 # $12qDo4XowpNSGG2YaGKBWy
 Position: $root:4

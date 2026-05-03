@@ -2,7 +2,8 @@ using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-[DefaultExecutionOrder(-1000)]
+//[DefaultExecutionOrder(-1000)]
+[DisallowMultipleComponent]
 public class GameFlowController : MonoBehaviour
 {
     public enum GameState
@@ -19,78 +20,57 @@ public class GameFlowController : MonoBehaviour
     [SerializeField] private string _mainMenuSceneName = "MainMenu";
     [SerializeField] private string _defaultGameplaySceneName = "TreeFootStage";
 
+    [Header("Bootstrap")]
+    [SerializeField, Min(0f)] private float _bootstrapRetryIntervalSeconds = 0.5f;
+
+    // --- Events ---
+    [SerializeField] private GameEvent _onGameBootstrap;
+
     [Header("Debug")]
     [SerializeField] private bool _debug = false;
     private string _lastDebug;
 
-    private static GameFlowController _instance;
-    private static bool _isInstanceAutoCreated;
-
     private GameState _currentState = GameState.Bootstrap;
     private string _currentGameplaySceneName = string.Empty;
 
+    private bool _isSavesLoaded = false;
     private bool _isSceneTransitionInProgress;
     private GameState? _stateAfterSceneLoad;
+    private float _bootstrapRetryTimer;
 
-    public static GameFlowController Instance => _instance;
     public GameState CurrentState => _currentState;
     public string CurrentGameplaySceneName => _currentGameplaySceneName;
 
-    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-    private static void EnsureInstance()
-    {
-        if (_instance != null)
-        {
-            return;
-        }
-
-        var root = new GameObject(nameof(GameFlowController));
-        _instance = root.AddComponent<GameFlowController>();
-        _isInstanceAutoCreated = true;
-        DontDestroyOnLoad(root);
-    }
-
     private void Awake()
     {
-        if (_instance != null && _instance != this)
-        {
-            if (_isInstanceAutoCreated)
-            {
-                Destroy(_instance.gameObject);
-                _instance = this;
-                _isInstanceAutoCreated = false;
-            }
-            else
-            {
-                Destroy(gameObject);
-                return;
-            }
-        }
-
-        if (_instance != null && _instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
-        _instance = this;
-        _isInstanceAutoCreated = false;
         DontDestroyOnLoad(gameObject);
 
-        BootstrapStateFromActiveScene();
+        // Reset Flags
+        _isSavesLoaded = false;
+
+        SetState(GameState.Bootstrap); // Set inital State
+
+        _onGameBootstrap?.Invoke(); // Invoke Bootstrap Event
     }
 
     private void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
+
+        if (_currentState == GameState.Bootstrap)
+        {
+            HandleBootstrapEntered();
+        }
     }
 
     private void OnDisable()
     {
-        if (_instance == this)
-        {
-            SceneManager.sceneLoaded -= OnSceneLoaded;
-        }
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void Update()
+    {
+        TickBootstrapRetry();
     }
 
     public void GoToBootstrap()
@@ -156,6 +136,12 @@ public class GameFlowController : MonoBehaviour
         RequestSceneTransition(sceneName, GameState.Gameplay);
     }
 
+    public void FlagSavesLoaded(bool loaded)
+    {
+        _isSavesLoaded = loaded;
+        D($"Saves Loaded: {loaded}");
+    }
+
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         _isSceneTransitionInProgress = false;
@@ -168,8 +154,6 @@ public class GameFlowController : MonoBehaviour
             FinalizeTransitionAfterSceneLoad(loadedTargetState, scene.name);
             return;
         }
-
-        BootstrapStateFromSceneName(scene.name);
     }
 
     private void FinalizeTransitionAfterSceneLoad(GameState targetState, string loadedSceneName)
@@ -198,7 +182,13 @@ public class GameFlowController : MonoBehaviour
 
     private void HandleBootstrapEntered()
     {
-        // Reserved for bootstrap service initialization.
+        if (!_isSavesLoaded)
+        {
+            D("Bootstrap waiting for Saves to load...");
+            _bootstrapRetryTimer = _bootstrapRetryIntervalSeconds;
+            return;
+        }
+
         if (string.IsNullOrWhiteSpace(_mainMenuSceneName))
         {
             Debug.LogError("[GameFlowController] MainMenu scene name is empty. Cannot continue from Bootstrap.");
@@ -206,7 +196,29 @@ public class GameFlowController : MonoBehaviour
         }
 
         GoToMainMenu();
-        //StartGameplay();
+    }
+
+    private void TickBootstrapRetry()
+    {
+        if (_currentState != GameState.Bootstrap || _isSceneTransitionInProgress)
+        {
+            return;
+        }
+
+        if (_bootstrapRetryIntervalSeconds <= 0f)
+        {
+            HandleBootstrapEntered();
+            return;
+        }
+
+        _bootstrapRetryTimer -= Time.unscaledDeltaTime;
+        if (_bootstrapRetryTimer > 0f)
+        {
+            return;
+        }
+
+        _bootstrapRetryTimer = _bootstrapRetryIntervalSeconds;
+        HandleBootstrapEntered();
     }
 
     private void RequestSceneTransition(string sceneName, GameState targetState)
@@ -238,49 +250,17 @@ public class GameFlowController : MonoBehaviour
     {
         if (_isSceneTransitionInProgress)
         {
-            D($"Transition to {targetState} rejected. Scene transition is already in progress.");
+            D($"Transition to {targetState} rejected. Scene transition is already in progress");
             return false;
         }
 
         if (string.IsNullOrWhiteSpace(sceneName))
         {
-            Debug.LogError($"[GameFlowController] Transition to {targetState} rejected. Scene name is empty.");
+            Debug.LogError($"[GameFlowController] Transition to {targetState} rejected. Scene name is empty");
             return false;
         }
 
         return true;
-    }
-
-    private void BootstrapStateFromActiveScene()
-    {
-        BootstrapStateFromSceneName(SceneManager.GetActiveScene().name);
-    }
-
-    private void BootstrapStateFromSceneName(string sceneName)
-    {
-        if (IsScene(sceneName, _bootstrapSceneName))
-        {
-            SetState(GameState.Bootstrap);
-            HandleBootstrapEntered();
-            return;
-        }
-
-        if (IsScene(sceneName, _mainMenuSceneName))
-        {
-            SetState(GameState.MainMenu);
-            return;
-        }
-
-        if (!string.IsNullOrWhiteSpace(sceneName))
-        {
-            _currentGameplaySceneName = sceneName;
-            SetState(GameState.Gameplay);
-        }
-    }
-
-    private bool IsScene(string left, string right)
-    {
-        return string.Equals(left, right, StringComparison.OrdinalIgnoreCase);
     }
 
     private void SetState(GameState nextState)
