@@ -1028,9 +1028,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa4025911dd487f41914bcef9e8749c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TreeGenerator
-  _seed: 123456
   _treeHeight: 100
   _blanksLibrary: {fileID: 180594622}
+  _activeGameplay: {fileID: 11400000, guid: f9c087e337b28a0448f2b4efb10af2f5, type: 2}
 --- !u!114 &555159129
 MonoBehaviour:
   m_ObjectHideFlags: 0

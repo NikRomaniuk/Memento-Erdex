@@ -521,6 +521,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InputFieldManager
   _type: 1
   _activeSettings: {fileID: 11400000, guid: 1722960263ba3ec4bb8cc273a846549b, type: 2}
+  _activeGameplay: {fileID: 11400000, guid: f9c087e337b28a0448f2b4efb10af2f5, type: 2}
 --- !u!1 &273217790
 GameObject:
   m_ObjectHideFlags: 0

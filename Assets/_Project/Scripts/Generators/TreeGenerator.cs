@@ -3,11 +3,14 @@ using UnityEngine;
 public class TreeGenerator : MonoBehaviour
 {
     // --- Settings ---
-    [SerializeField] private int _seed = 0;
     [SerializeField] private float _treeHeight = 10f;
 
     // --- References ---
     [SerializeField] private BlanksLibrary _blanksLibrary; // Must complete GenerateBlanks before tree can generate
+    [SerializeField] private GameplayData _activeGameplay;
+
+    // --- Data ---
+    private int _seed = 0;
 
     // --- Getters ---
     public int Seed => _seed;
@@ -26,6 +29,7 @@ public class TreeGenerator : MonoBehaviour
 
     private void Start()
     {
+        _seed = _activeGameplay.GetSeed();
         GenerateTree(new System.Random(_seed));
     }
 

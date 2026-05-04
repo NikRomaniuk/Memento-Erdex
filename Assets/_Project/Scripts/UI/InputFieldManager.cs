@@ -15,6 +15,8 @@ public class InputFieldManager : MonoBehaviour
 
     [ShowIf(nameof(_type), Type.Seed)]
     [SerializeField] private SettingsData _activeSettings;
+    [ShowIf(nameof(_type), Type.Seed)]
+    [SerializeField] private GameplayData _activeGameplay;
 
     private TMP_InputField _inputField;
 
@@ -38,13 +40,15 @@ public class InputFieldManager : MonoBehaviour
     {
         if (_type == Type.None) { return; }
 
-        if (_type == Type.Seed && _activeSettings != null)
+        // Set Seed value in Settings & Gameplay based on Input
+        if (_type == Type.Seed && _activeSettings != null && _activeGameplay != null)
         {
             int seedValue = string.IsNullOrWhiteSpace(input)
                 ? Random.Range(0, 1_000_000_000)
                 : int.TryParse(input, out int parsedValue) ? parsedValue : Random.Range(0, 1_000_000_000);
 
             _activeSettings.SetSeed(seedValue);
+            _activeGameplay.SetSeed(seedValue);
             return;
         }
     }
@@ -53,6 +57,7 @@ public class InputFieldManager : MonoBehaviour
 	{
 		if (_type == Type.None) { return; }
 
+        // Sync Label Text with Seed value from Settings
 		if (_type == Type.Seed && _activeSettings != null)
         {
             _inputField.text = _activeSettings.GetSeed().ToString();

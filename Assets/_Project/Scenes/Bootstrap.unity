@@ -174,7 +174,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 427205423}
           m_TargetAssemblyTypeName: GameFlowActions, Assembly-CSharp
-          m_MethodName: RestartCurrentGameplay
+          m_MethodName: RestartGameplay
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -190,7 +190,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 427205423}
           m_TargetAssemblyTypeName: GameFlowActions, Assembly-CSharp
-          m_MethodName: StartDefaultGameplay
+          m_MethodName: StartGameplay
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -229,8 +229,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 362c412f5bec03d46970efca545afbac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameFlowActions
-  _gameplaySceneName: TreeFootStage
-  _gameFlowController: {fileID: 0}
+  _gameFlowController: {fileID: 427205424}
 --- !u!114 &427205424
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -461,6 +460,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SaveController
   _activeSettings: {fileID: 11400000, guid: 1722960263ba3ec4bb8cc273a846549b, type: 2}
   _defaultSettings: {fileID: 11400000, guid: d33bb4a5c5090d84c924a00f185f2579, type: 2}
+  _activeGameplay: {fileID: 11400000, guid: f9c087e337b28a0448f2b4efb10af2f5, type: 2}
+  _defaultGameplay: {fileID: 11400000, guid: dd22e1ed51a94de4aab91ebf3e16f46a, type: 2}
   _saveDelaySeconds: 2
   _autosaveEnabled: 0
   _autosaveIntervalSeconds: 180

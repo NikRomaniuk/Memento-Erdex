@@ -7,6 +7,8 @@ public class SaveController : MonoBehaviour
     // --- Data References ---
     [SerializeField] private SettingsData _activeSettings;
     [SerializeField] private SettingsData _defaultSettings;
+    [SerializeField] private GameplayData _activeGameplay;
+    [SerializeField] private GameplayData _defaultGameplay;
 
     // --- Config ---
     [SerializeField, Min(0f)] private float _saveDelaySeconds = 2f;
@@ -42,21 +44,52 @@ public class SaveController : MonoBehaviour
     // TODO: Make Generic
     public void Load()
     {
-        if (!HasActiveSettings()) { return; }
+        bool hasLoadedAnySave = false;
 
         if (SaveSystem.TryLoadSettings(out SettingsSave loadedSettings))
         {
-            _activeSettings.CopyFrom(loadedSettings, false);
-            ClearDirtyState();
+            if (HasActiveSettings())
+            {
+                _activeSettings.CopyFrom(loadedSettings, false);
+                hasLoadedAnySave = true;
+            }
+
             D("Settings loaded");
-            _onSavesLoaded?.Invoke();
-            return;
+        }
+        else if (HasDefaultSettings())
+        {
+            if (HasActiveSettings())
+            {
+                _activeSettings.CopyFrom(_defaultSettings.GetSettingsSave(), false);
+                hasLoadedAnySave = true;
+            }
+
+            D("Settings fallback loaded");
         }
 
-        if (!HasDefaultSettings()) { return; }
+        if (SaveSystem.TryLoadGameplay(out GameplaySave loadedGameplay))
+        {
+            if (HasActiveGameplay())
+            {
+                _activeGameplay.CopyFrom(loadedGameplay, false);
+                hasLoadedAnySave = true;
+            }
 
-        _activeSettings.CopyFrom(_defaultSettings.GetSettingsSave(), false);
-        D("Settings fallback loaded");
+            D("Gameplay loaded");
+        }
+        else if (HasDefaultGameplay())
+        {
+            if (HasActiveGameplay())
+            {
+                _activeGameplay.CopyFrom(_defaultGameplay.GetGameplaySave(), false);
+                hasLoadedAnySave = true;
+            }
+
+            D("Gameplay fallback loaded");
+        }
+
+        if (!hasLoadedAnySave) { return; }
+
         SaveNow();
         _onSavesLoaded?.Invoke();
     }
@@ -69,11 +102,25 @@ public class SaveController : MonoBehaviour
 
     public void SaveNow()
     {
-        if (!HasActiveSettings()) { return; }
+        bool hasSavedAny = false;
 
-        SaveSystem.SaveSettings(_activeSettings.GetSettingsSave());
+        if (HasActiveSettings())
+        {
+            SaveSystem.SaveSettings(_activeSettings.GetSettingsSave());
+            hasSavedAny = true;
+            D("Settings saved");
+        }
+
+        if (HasActiveGameplay())
+        {
+            SaveSystem.SaveGameplay(_activeGameplay.GetGameplaySave());
+            hasSavedAny = true;
+            D("Gameplay saved");
+        }
+
+        if (!hasSavedAny) { return; }
+
         ClearDirtyState();
-        D("Settings saved");
     }
 
     // ================
@@ -141,6 +188,22 @@ public class SaveController : MonoBehaviour
         if (_defaultSettings != null) { return true; }
 
         D("Default Settings Profile is missing");
+        return false;
+    }
+
+    private bool HasActiveGameplay()
+    {
+        if (_activeGameplay != null) { return true; }
+
+        D("Active Gameplay is missing");
+        return false;
+    }
+
+    private bool HasDefaultGameplay()
+    {
+        if (_defaultGameplay != null) { return true; }
+
+        D("Default Gameplay Profile is missing");
         return false;
     }
 

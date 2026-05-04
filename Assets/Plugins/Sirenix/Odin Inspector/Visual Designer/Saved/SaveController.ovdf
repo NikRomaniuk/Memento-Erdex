@@ -40,7 +40,7 @@ Position: $root:2
 	GroupName = "Events"
 
 # $7wf5ppKEztmoS4sGvtRbtc
-Position: $root:4
+Position: $root:3
 + [Sirenix.OdinInspector.TitleGroupAttribute]
 	GroupName = "Debug"
 
@@ -85,3 +85,9 @@ Position: $7wf5ppKEztmoS4sGvtRbtc:0
 	Icon = BugFill
 	IconColor = "RGBA(0.970, 0.550, 0.020, 1.000)"
 	NicifyText = False
+
+# _activeGameplay
+Position: $MQ3eRjeYpjdMBE3LV55Lm7:0
+
+# _defaultGameplay
+Position: $MQ3eRjeYpjdMBE3LV55Lm7:1

@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class GameFlowActions : MonoBehaviour
 {
-    [SerializeField] private string _gameplaySceneName = "TreeFootStage";
     [SerializeField] private GameFlowController _gameFlowController;
 
     public void GoToBootstrap()
@@ -15,14 +14,9 @@ public class GameFlowActions : MonoBehaviour
         _gameFlowController.GoToMainMenu();
     }
 
-    public void StartDefaultGameplay()
+    public void StartGameplay() 
     {
         _gameFlowController.StartGameplay();
-    }
-
-    public void StartConfiguredGameplay() 
-    {
-        _gameFlowController.StartGameplay(_gameplaySceneName);
     }
 
     public void EnterGameOver()
@@ -30,9 +24,9 @@ public class GameFlowActions : MonoBehaviour
         _gameFlowController.EnterGameOver();
     }
 
-    public void RestartCurrentGameplay()
+    public void RestartGameplay()
     {
-        _gameFlowController.RestartCurrentGameplay();
+        _gameFlowController.RestartGameplay();
     }
 
     public void QuitApplication()

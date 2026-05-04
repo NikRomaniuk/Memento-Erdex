@@ -32,7 +32,6 @@ public class GameFlowController : MonoBehaviour
     private string _lastDebug;
 
     private GameState _currentState = GameState.Bootstrap;
-    private string _currentGameplaySceneName = string.Empty;
 
     private bool _isSavesLoaded = false;
     private bool _isSceneTransitionInProgress;
@@ -40,7 +39,6 @@ public class GameFlowController : MonoBehaviour
     private float _bootstrapRetryTimer;
 
     public GameState CurrentState => _currentState;
-    public string CurrentGameplaySceneName => _currentGameplaySceneName;
 
     private void Awake()
     {
@@ -81,39 +79,23 @@ public class GameFlowController : MonoBehaviour
 
     public void GoToBootstrap()
     {
-        if (!CanLoadSceneForTargetState(GameState.Bootstrap, _bootstrapSceneName))
-        {
-            return;
-        }
+        if (!CanLoadScene(GameState.Bootstrap, _bootstrapSceneName)) { return; }
 
         RequestSceneTransition(_bootstrapSceneName, GameState.Bootstrap);
     }
 
     public void GoToMainMenu()
     {
-        if (!CanLoadSceneForTargetState(GameState.MainMenu, _mainMenuSceneName))
-        {
-            return;
-        }
+        if (!CanLoadScene(GameState.MainMenu, _mainMenuSceneName)) { return; }
 
         RequestSceneTransition(_mainMenuSceneName, GameState.MainMenu);
     }
 
     public void StartGameplay()
     {
-        StartGameplay(_defaultGameplaySceneName);
-    }
+        if (!CanLoadScene(GameState.Gameplay, _defaultGameplaySceneName)) { return; }
 
-    public void StartGameplay(string sceneName)
-    {
-        string targetSceneName = string.IsNullOrWhiteSpace(sceneName) ? _defaultGameplaySceneName : sceneName;
-        if (!CanLoadSceneForTargetState(GameState.Gameplay, targetSceneName))
-        {
-            return;
-        }
-
-        _currentGameplaySceneName = targetSceneName;
-        RequestSceneTransition(targetSceneName, GameState.Gameplay);
+        RequestSceneTransition(_defaultGameplaySceneName, GameState.Gameplay);
     }
 
     public void EnterGameOver()
@@ -127,19 +109,11 @@ public class GameFlowController : MonoBehaviour
         SetState(GameState.GameOver);
     }
 
-    public void RestartCurrentGameplay()
+    public void RestartGameplay()
     {
-        string sceneName = string.IsNullOrWhiteSpace(_currentGameplaySceneName)
-            ? _defaultGameplaySceneName
-            : _currentGameplaySceneName;
-
-        if (!CanLoadSceneForTargetState(GameState.Gameplay, sceneName))
-        {
-            return;
-        }
-
-        _currentGameplaySceneName = sceneName;
-        RequestSceneTransition(sceneName, GameState.Gameplay);
+        if (!CanLoadScene(GameState.Gameplay, _defaultGameplaySceneName)) { return; }
+        
+        RequestSceneTransition(_defaultGameplaySceneName, GameState.Gameplay);
     }
 
     public void FlagSavesLoaded(bool loaded)
@@ -178,7 +152,6 @@ public class GameFlowController : MonoBehaviour
                 return;
 
             case GameState.Gameplay:
-                _currentGameplaySceneName = loadedSceneName;
                 SetState(GameState.Gameplay);
                 return;
 
@@ -254,7 +227,7 @@ public class GameFlowController : MonoBehaviour
         }
     }
 
-    private bool CanLoadSceneForTargetState(GameState targetState, string sceneName)
+    private bool CanLoadScene(GameState targetState, string sceneName)
     {
         if (_isSceneTransitionInProgress)
         {
