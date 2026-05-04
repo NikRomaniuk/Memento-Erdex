@@ -25,6 +25,7 @@ public class GameFlowController : MonoBehaviour
 
     // --- Events ---
     [SerializeField] private GameEvent _onGameBootstrap;
+    [SerializeField] private GameEvent _onMenuEntered;
 
     [Header("Debug")]
     [SerializeField] private bool _debug = false;
@@ -50,6 +51,11 @@ public class GameFlowController : MonoBehaviour
 
         SetState(GameState.Bootstrap); // Set inital State
 
+        //_onGameBootstrap?.Invoke(); // Invoke Bootstrap Event
+    }
+
+    private void Start()
+    {
         _onGameBootstrap?.Invoke(); // Invoke Bootstrap Event
     }
 
@@ -167,6 +173,8 @@ public class GameFlowController : MonoBehaviour
 
             case GameState.MainMenu:
                 SetState(GameState.MainMenu);
+                _onMenuEntered?.Invoke();
+                D("Menu Entered");
                 return;
 
             case GameState.Gameplay:

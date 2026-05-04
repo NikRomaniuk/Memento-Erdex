@@ -336,6 +336,7 @@ GameObject:
   - component: {fileID: 227192823}
   - component: {fileID: 227192826}
   - component: {fileID: 227192827}
+  - component: {fileID: 227192828}
   m_Layer: 5
   m_Name: InputField (TMP)
   m_TagString: Untagged
@@ -506,6 +507,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InputIntegerValidator
   _signMode: 1
   _maximumValue: 999999999
+--- !u!114 &227192828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 227192821}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ca8fa6e3dc603b4eb943ff2319d7241, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InputFieldManager
+  _type: 1
+  _activeSettings: {fileID: 11400000, guid: 1722960263ba3ec4bb8cc273a846549b, type: 2}
 --- !u!1 &273217790
 GameObject:
   m_ObjectHideFlags: 0

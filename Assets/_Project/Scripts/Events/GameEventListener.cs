@@ -22,14 +22,9 @@ public class GameEventListener : MonoBehaviour
     [SerializeField] private bool _debug = false;
     private string _lastDebug;
 
-    private void OnEnable()
+    private void Awake()
     {
         RegisterAllBindings();
-    }
-
-    private void OnDisable()
-    {
-        UnregisterAllBindings();
     }
 
     private void OnDestroy()

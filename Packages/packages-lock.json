@@ -1,11 +1,11 @@
 {
   "dependencies": {
-    "com.mackysoft.serializereference-extensions": {
-      "version": "https://github.com/mackysoft/Unity-SerializeReferenceExtensions.git?path=Assets/MackySoft/MackySoft.SerializeReferenceExtensions",
+    "com.hangekinobaka.sleepy-scene-tool": {
+      "version": "https://github.com/hangekinobaka/sleepy-scene-tool.git?path=SleepyScene_Unity/Assets/Plugins/SleepySceneTool",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "5fadcb6564f0c6e988641e2e4a4aba4b6b1caafe"
+      "hash": "da6ce47fc7807d21b9a4eecaa05f5d9509b280a4"
     },
     "com.unity.2d.animation": {
       "version": "13.0.4",
@@ -117,7 +117,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.cinemachine": {
-      "version": "3.1.5",
+      "version": "3.1.6",
       "depth": 0,
       "source": "registry",
       "dependencies": {

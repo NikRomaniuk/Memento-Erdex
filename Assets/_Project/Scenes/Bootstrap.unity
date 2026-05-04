@@ -248,6 +248,7 @@ MonoBehaviour:
   _defaultGameplaySceneName: TreeFootStage
   _bootstrapRetryIntervalSeconds: 0.5
   _onGameBootstrap: {fileID: 11400000, guid: 9b18c4ece1e6a844a99a09d049b8121c, type: 2}
+  _onMenuEntered: {fileID: 11400000, guid: 561b7ac105e7dc141b4b0ba20415f466, type: 2}
   _debug: 1
 --- !u!4 &427205425
 Transform:
