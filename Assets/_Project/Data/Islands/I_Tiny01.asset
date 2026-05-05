@@ -17,7 +17,7 @@ MonoBehaviour:
   colliderOffset: {x: 0, y: 0}
   sprite: {fileID: -7789176290902265964, guid: 8852f9f441d15b74aa5ddcb9c21e83ea, type: 3}
   spriteOffset: {x: 0, y: -0.4}
-  defaultOutlineColor: {r: 0.3882353, g: 0.47058824, b: 0.5529412, a: 1}
+  defaultOutlineColor: {r: 0.7607844, g: 0.78823537, b: 0.8470589, a: 1}
   canBeXFlipped: 1
   size: 0
   allowLeft: 1

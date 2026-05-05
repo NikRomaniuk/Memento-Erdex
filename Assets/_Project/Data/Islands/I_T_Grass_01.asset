@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: I_T_Grass_01
   m_EditorClassIdentifier: Assembly-CSharp::IslandData
   id: S_round_01
-  colliderSize: {x: 1.6, y: 0.8}
+  colliderSize: {x: 0.8, y: 0.8}
   colliderOffset: {x: 0, y: 0}
   sprite: {fileID: -5346085886122119367, guid: 8852f9f441d15b74aa5ddcb9c21e83ea, type: 3}
   spriteOffset: {x: 0, y: -0.4}
