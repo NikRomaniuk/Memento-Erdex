@@ -15,8 +15,9 @@ MonoBehaviour:
   id: newBaker_888
   colliderSize: {x: 1.45, y: 3.1}
   colliderOffset: {x: -0.025, y: 0}
-  sprite: {fileID: 1267129427854860414, guid: 4854330c24a4c4b4880eb4cbebe4833b, type: 3}
+  sprite: {fileID: 6868077908192688774, guid: 973b6e54cdd2d84459517ca1d7ca33fa, type: 3}
   spriteOffset: {x: 0.75, y: 1.5500001}
+  defaultOutlineColor: {r: 0, g: 0, b: 0, a: 1}
   avaliableSide: 0
   canBeYFlipped: 1
   downNearPoint: {x: 0, y: 0}

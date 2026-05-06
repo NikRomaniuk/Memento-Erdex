@@ -15,8 +15,9 @@ MonoBehaviour:
   id: small_sharp_001
   colliderSize: {x: 1.4, y: 1.5}
   colliderOffset: {x: -0.05, y: 0}
-  sprite: {fileID: -5779241328057595777, guid: 9b9cf5dd7d7fe0b4faf65dc09ec0fb90, type: 3}
+  sprite: {fileID: 3793615393399481780, guid: d280426f0cecc5544a8550341c6a6b47, type: 3}
   spriteOffset: {x: 0.75, y: 0.7499999}
+  defaultOutlineColor: {r: 0, g: 0, b: 0, a: 1}
   avaliableSide: 0
   canBeYFlipped: 1
   downNearPoint: {x: 0, y: 0}

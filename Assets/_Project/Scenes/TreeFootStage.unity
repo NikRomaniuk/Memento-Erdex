@@ -2413,7 +2413,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 50867d3785144d4488f4a51acda12b4f, type: 2}
   - {fileID: 11400000, guid: 00f3cb83d63c5cb45abcaea16983ef4b, type: 2}
   - {fileID: 11400000, guid: 9ada48a6ed988c845aa3394e14a92abe, type: 2}
-  _color: {r: 0.5921569, g: 0.6117647, b: 0.654902, a: 1}
+  _color: {r: 1, g: 1, b: 1, a: 1}
   _outlineColor: {r: 0.3647059, g: 0.38039216, b: 0.41568628, a: 1}
   _useDefaultOutlineColor: 0
 --- !u!114 &555159127
@@ -2489,7 +2489,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c741790465dc3d84984ef226b309ca35, type: 2}
   - {fileID: 11400000, guid: 345f6e75e2be75e43a79de676a5e9b8e, type: 2}
   - {fileID: 11400000, guid: e71ff859a5f1f8345b4bdbe0ac858b1e, type: 2}
-  _color: {r: 0.5921569, g: 0.6117647, b: 0.654902, a: 1}
+  _color: {r: 1, g: 1, b: 1, a: 1}
   _outlineColor: {r: 0.3647059, g: 0.38039216, b: 0.41568628, a: 1}
   _useDefaultOutlineColor: 0
 --- !u!114 &555159131
@@ -2614,7 +2614,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
-  m_ApplyToSortingLayers: 000000000fbdd5d11f956bbc1ff64c44
+  m_ApplyToSortingLayers: 000000000fbdd5d11ff64c44
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -5971,6 +5971,90 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 217ad6590ed29314fab1c230fb032bce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpriteShaderHelper
+--- !u!1 &1999989258
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1999989260}
+  - component: {fileID: 1999989259}
+  m_Layer: 0
+  m_Name: Global Light 2D (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1999989259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1999989258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ComponentVersion: 2
+  m_LightType: 4
+  m_BlendStyleIndex: 0
+  m_FalloffIntensity: 0.5
+  m_Color: {r: 0.8, g: 0.8666667, b: 0.8980392, a: 1}
+  m_Intensity: 0.8
+  m_LightVolumeIntensity: 1
+  m_LightVolumeEnabled: 0
+  m_ApplyToSortingLayers: 1f956bbc
+  m_LightCookieSprite: {fileID: 0}
+  m_DeprecatedPointLightCookieSprite: {fileID: 0}
+  m_LightOrder: 0
+  m_AlphaBlendOnOverlap: 0
+  m_OverlapOperation: 0
+  m_NormalMapDistance: 3
+  m_NormalMapQuality: 2
+  m_UseNormalMap: 0
+  m_ShadowsEnabled: 0
+  m_ShadowIntensity: 0.75
+  m_ShadowSoftness: 0
+  m_ShadowSoftnessFalloffIntensity: 0.5
+  m_ShadowVolumeIntensityEnabled: 0
+  m_ShadowVolumeIntensity: 0.75
+  m_LocalBounds:
+    m_Center: {x: 0, y: -0.00000011920929, z: 0}
+    m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
+  m_PointLightInnerAngle: 360
+  m_PointLightOuterAngle: 360
+  m_PointLightInnerRadius: 0
+  m_PointLightOuterRadius: 1
+  m_ShapeLightParametricSides: 5
+  m_ShapeLightParametricAngleOffset: 0
+  m_ShapeLightParametricRadius: 1
+  m_ShapeLightFalloffSize: 0.5
+  m_ShapeLightFalloffOffset: {x: 0, y: 0}
+  m_ShapePath:
+  - {x: -0.5, y: -0.5, z: 0}
+  - {x: 0.5, y: -0.5, z: 0}
+  - {x: 0.5, y: 0.5, z: 0}
+  - {x: -0.5, y: 0.5, z: 0}
+--- !u!4 &1999989260
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1999989258}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2079682232
 GameObject:
   m_ObjectHideFlags: 0
@@ -6943,6 +7027,7 @@ SceneRoots:
   - {fileID: 2097949158}
   - {fileID: 619394802}
   - {fileID: 1136161893}
+  - {fileID: 1999989260}
   - {fileID: 1459954394}
   - {fileID: 555159125}
   - {fileID: 2079682234}
