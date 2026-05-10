@@ -1,0 +1,73 @@
+OVDF v1.1
+Baker, Assembly-CSharp
+MetaGuid:7648eb2880b70c341afee9ad1b52d267
+
+# $WAokBqHzaJ5e4NDAHTyAri
+Position: $root:0
++ [Sirenix.OdinInspector.TitleGroupAttribute]
+	GroupName = "General Data"
+
+# $DpYuuhFkPCzV5KUQC2Y6gT
+Position: $root:8
++ [Sirenix.OdinInspector.TitleGroupAttribute]
+	GroupName = "Specific Data"
+
+# $57uVujLrVAbHNL4GnL4mBB
+Position: $root:9
++ [Sirenix.OdinInspector.ButtonGroupAttribute]
+	GroupName = "BAKE"
+	ButtonHeight = 0
+
+# _blankType
+Position: $WAokBqHzaJ5e4NDAHTyAri:0
+
+# _id
+Position: $WAokBqHzaJ5e4NDAHTyAri:1
+
+# _dataToEdit
+Position: $WAokBqHzaJ5e4NDAHTyAri:2
+
+# _avaliableSide
+Position: $DpYuuhFkPCzV5KUQC2Y6gT:0
+
+# _canBeFlippedVertically
+Position: $DpYuuhFkPCzV5KUQC2Y6gT:1
+
+# _branchAvaliableSide
+Position: $DpYuuhFkPCzV5KUQC2Y6gT:2
+
+# _shapeType
+Position: $DpYuuhFkPCzV5KUQC2Y6gT:3
+
+# _canBeFlippedHorizontally
+Position: $DpYuuhFkPCzV5KUQC2Y6gT:4
+
+# _islandCanBeXFlipped
+Position: $DpYuuhFkPCzV5KUQC2Y6gT:5
+
+# _islandAllowLeft
+Position: $DpYuuhFkPCzV5KUQC2Y6gT:6
+
+# _islandAllowRight
+Position: $DpYuuhFkPCzV5KUQC2Y6gT:7
+
+# _islandAllowMiddle
+Position: $DpYuuhFkPCzV5KUQC2Y6gT:8
+
+# BakeToScriptableObject()
+Position: $57uVujLrVAbHNL4GnL4mBB:0
+* [Sirenix.OdinInspector.ButtonAttribute]
+	Name = "BAKE"
+	Style = CompactBox
+	buttonHeight = 32
+	HasDefinedButtonHeight = True
+	buttonAlignment = 0
+	HasDefinedButtonAlignment = True
+	stretch = False
+	HasDefinedStretch = True
+	Expanded = False
+	Icon = BoxSeam
+	buttonIconAlignment = LeftOfText
+	HasDefinedButtonIconAlignment = True
+	DirtyOnClick = True
+	DisplayParameters = True

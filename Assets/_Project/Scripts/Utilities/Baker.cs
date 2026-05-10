@@ -1,32 +1,102 @@
+using Sirenix.OdinInspector;
 using UnityEngine;
 using System.Linq;
 
 public class Baker : MonoBehaviour
 {
-    [Header("General Data")]
+    // --- General Data ---
     [SerializeField] private BlanksLibrary.BlankType _blankType;
     [SerializeField] private string _id;
+    [InfoBox("@DataToEditWarningMessage()", InfoMessageType.Warning, nameof(ShouldShowDataToEditWarning))]
     [SerializeField] private ScriptableObject _dataToEdit;
 
     // --- Trunk Data ---
+    [ShowIf(nameof(_blankType), BlanksLibrary.BlankType.Trunk)]
     [SerializeField] private TrunkAvaliableSide _avaliableSide = TrunkAvaliableSide.Both;
+    [ShowIf(nameof(_blankType), BlanksLibrary.BlankType.Trunk)]
     [SerializeField] private bool _canBeFlippedVertically = true;
 
     // --- Branch Data ---
+    [ShowIf(nameof(_blankType), BlanksLibrary.BlankType.Branch)]
     [SerializeField] private BranchData.AvailableSide _branchAvaliableSide = BranchData.AvailableSide.Both;
 
     // --- Shape Data ---
+    [ShowIf(nameof(_blankType), BlanksLibrary.BlankType.Shape)]
     [SerializeField] private ShapeData.Type _shapeType = ShapeData.Type.Base;
+
+    [ShowIf(nameof(_blankType), BlanksLibrary.BlankType.Shape)]
     [SerializeField] private bool _canBeFlippedHorizontally = true;
 
     // --- Island Data ---
+    [ShowIf(nameof(_blankType), BlanksLibrary.BlankType.Island)]
     [SerializeField] private bool _islandCanBeXFlipped = true;
+
+    [ShowIf(nameof(_blankType), BlanksLibrary.BlankType.Island)]
     [SerializeField] private bool _islandAllowLeft = true;
+
+    [ShowIf(nameof(_blankType), BlanksLibrary.BlankType.Island)]
     [SerializeField] private bool _islandAllowRight = true;
+
+    [ShowIf(nameof(_blankType), BlanksLibrary.BlankType.Island)]
     [SerializeField] private bool _islandAllowMiddle = true;
 
     // --- Cached Component ---
     private IBakeable _bakeable;
+
+    private System.Type GetExpectedDataType()
+    {
+        return _blankType switch
+        {
+            BlanksLibrary.BlankType.Trunk => typeof(TrunkData),
+            BlanksLibrary.BlankType.Chunk => typeof(ChunkData),
+            BlanksLibrary.BlankType.Branch => typeof(BranchData),
+            BlanksLibrary.BlankType.Shape => typeof(ShapeData),
+            BlanksLibrary.BlankType.Island => typeof(IslandData),
+            _ => null
+        };
+    }
+
+    private bool ShouldShowDataToEditWarning()
+    {
+#if UNITY_EDITOR
+        return _dataToEdit == null || !IsDataToEditTypeValid();
+#else
+        return false;
+#endif
+    }
+
+    private bool IsDataToEditTypeValid()
+    {
+#if UNITY_EDITOR
+        var expectedType = GetExpectedDataType();
+        return _dataToEdit != null && expectedType != null && expectedType.IsInstanceOfType(_dataToEdit);
+#else
+        return true;
+#endif
+    }
+
+    private string DataToEditWarningMessage()
+    {
+#if UNITY_EDITOR
+        if (_dataToEdit == null)
+        {
+            return "Data To Edit is not assigned!";
+        }
+
+        var expectedType = GetExpectedDataType();
+        if (expectedType == null)
+        {
+            return $"Unknown Type: {_blankType}";
+        }
+
+        if (!expectedType.IsInstanceOfType(_dataToEdit))
+        {
+            return $"Data To Edit must be a {expectedType.Name} when Type is {_blankType}, but the assigned asset is {_dataToEdit.GetType().Name}";
+        }
+#endif
+
+        return string.Empty;
+    }
 
     /// <summary>
     /// Loads the <see cref="IBakeable"/> component from this GameObject
@@ -104,6 +174,7 @@ public class Baker : MonoBehaviour
     /// <summary>
     /// Bakes current baker field values to the assigned ScriptableObject based on <see cref="_blankType"/>
     /// </summary>
+    [Button(ButtonSizes.Medium)]
     public void BakeToScriptableObject()
     {
         // --- Preparations ---

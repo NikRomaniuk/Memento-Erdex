@@ -21,9 +21,6 @@ public class TrunkData : ScriptableObject, IData
     [Header("Main Configuration")]
     // Unique identifier (e.g. "stone_sharp_01", "mossy_rounded_02")
     public string id;
-    // Collider used for physics interactions
-    public Vector2 colliderSize;
-    public Vector2 colliderOffset;
     // Visual representation
     public Sprite sprite;
     // Sprite offset

@@ -1,17 +1,20 @@
 fileFormatVersion: 2
-guid: ad48169732e3ef64d995814d5829224f
+guid: 487a1d439c9b60c4fa7ffd3e872b4866
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7281492504436516793
-    second: Branches_Tip_0
+      213: -1773630849120776422
+    second: Branches_Base_NM_0
   - first:
-      213: 1866245587752334419
-    second: Branches_Tip_1
+      213: 4329498554250285869
+    second: Branches_Base_NM_1
+  - first:
+      213: 4231738493085160641
+    second: Branches_Base_NM_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
-    mipMapMode: 1
+    mipMapMode: 0
     enableMipMap: 0
     sRGBTexture: 1
     linearTexture: 0
@@ -31,7 +34,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
-  ignoreMipmapLimit: 1
+  ignoreMipmapLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -40,8 +43,8 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 2
-    aniso: 16
+    filterMode: 0
+    aniso: 1
     mipBias: 0
     wrapU: 1
     wrapV: 1
@@ -64,7 +67,7 @@ TextureImporter:
   textureShape: 1
   singleChannelComponent: 0
   flipbookRows: 1
-  flipbookColumns: 1
+  flipbookColumns: 3
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
@@ -155,7 +158,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Branches_Tip_0
+      name: Branches_Base_NM_0
       rect:
         serializedVersion: 2
         x: 0
@@ -170,14 +173,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 9b7ab919ade0d0560800000000000000
-      internalID: 7281492504436516793
+      spriteID: a1f4b7bc32cc267e0800000000000000
+      internalID: -1773630849120776422
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Branches_Tip_1
+      name: Branches_Base_NM_1
       rect:
         serializedVersion: 2
         x: 64
@@ -192,8 +195,30 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3543e99697c36e910800000000000000
-      internalID: 1866245587752334419
+      spriteID: d23d7a51ff7751c30800000000000000
+      internalID: 4329498554250285869
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Branches_Base_NM_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 8, y: 8, z: 8, w: 8}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1c410be1db72aba30800000000000000
+      internalID: 4231738493085160641
       vertices: []
       indices: 
       edges: []
@@ -202,22 +227,21 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: d07c03248dfb806468fd10688c51bca8
+    spriteID: 992fb22884486e040abad44006cabbba
     internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
-    secondaryTextures:
-    - texture: {fileID: 2800000, guid: 2413767e79b13164ea5e7b137cfd8291, type: 3}
-      name: _NormalMap
+    secondaryTextures: []
     spriteCustomMetadata:
       entries:
       - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":2.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":3.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      Branches_Tip_0: 7281492504436516793
-      Branches_Tip_1: 1866245587752334419
+      Branches_Base_NM_0: -1773630849120776422
+      Branches_Base_NM_1: 4329498554250285869
+      Branches_Base_NM_2: 4231738493085160641
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

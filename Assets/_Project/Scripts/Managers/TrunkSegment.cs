@@ -6,7 +6,6 @@ public class TrunkSegment : MonoBehaviour, IBakeable, IBuildable
     // --- References ---
     public SpriteRenderer _spriteRenderer;
     public SpriteRenderer _outlineRenderer;
-    public BoxCollider2D _boxCollider;
 
     [Header("Properties")]
     // --- Maths ---
@@ -22,11 +21,9 @@ public class TrunkSegment : MonoBehaviour, IBakeable, IBuildable
 
     private SpriteView _spriteView;
     private OutlineView _outlineView;
-    private EntityCollider _entityCollider;
 
     public SpriteView SpriteView => _spriteView;
     public OutlineView OutlineView => _outlineView;
-    public EntityCollider EntityCollider => _entityCollider;
 
     private void Awake()
     {
@@ -37,7 +34,6 @@ public class TrunkSegment : MonoBehaviour, IBakeable, IBuildable
     {
         _spriteView ??= new SpriteView(_spriteRenderer);
         _outlineView ??= new OutlineView(_outlineRenderer, _defaultOutlineColor);
-        _entityCollider ??= new EntityCollider(_boxCollider);
     }
 
     /// <summary>
@@ -70,10 +66,6 @@ public class TrunkSegment : MonoBehaviour, IBakeable, IBuildable
         trunkData.spriteOffset = _spriteRenderer.transform.localPosition;
         trunkData.defaultOutlineColor = _outlineView.DefaultColor;
 
-        // --- Bake Collider Data ---
-        trunkData.colliderSize = _boxCollider.size;
-        trunkData.colliderOffset = _boxCollider.offset;
-
         // --- Bake Points Data ---
         var points = GetPoints();
         trunkData.downNearPoint = points[0];
@@ -97,9 +89,6 @@ public class TrunkSegment : MonoBehaviour, IBakeable, IBuildable
         // --- Apply Visual Data ---
         _spriteView.SetData(data, side, isYFlipped);
         _outlineView.SetData(data, side, isYFlipped);
-
-        // --- Apply Collider Data ---
-        _entityCollider.SetData(data, side, isYFlipped);
 
         // --- Apply Points Data ---
         Vector2 downNearPoint = data.downNearPoint;
@@ -127,9 +116,6 @@ public class TrunkSegment : MonoBehaviour, IBakeable, IBuildable
         // --- Reset Visuals ---
         _spriteView.Clear();
         _outlineView.Clear();
-
-        // --- Reset Collider ---
-        _entityCollider.Clear();
 
         // --- Reset Points ---
         SetPoints(Vector2.zero, Vector2.zero, Vector2.zero, Vector2.zero);
