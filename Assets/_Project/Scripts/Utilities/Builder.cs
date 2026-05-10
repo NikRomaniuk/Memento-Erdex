@@ -117,6 +117,18 @@ public class Builder : MonoBehaviour
                 Debug.Log($"Island successfully built from <b>{islandData.name}</b> (ID: {islandData.id})");
                 break;
 
+            case BlanksLibrary.BlankType.Clutter:
+                var clutterData = _dataToBuild as ClutterData;
+                if (clutterData == null)
+                {
+                    Debug.LogError("_dataToBuild is not a ClutterData! Please assign a ClutterData ScriptableObject");
+                    return;
+                }
+                // Initialize ClutterManager with data & extra settings
+                Initialize(clutterData, _isXFlipped, _isYFlipped);
+                Debug.Log($"Clutter successfully built from <b>{clutterData.name}</b> (ID: {clutterData.id})");
+                break;
+
             default:
                 Debug.LogError($"Unknown BlankType: {_blankType}. Aborting BuildFromScriptableObject");
                 break;
@@ -253,6 +265,26 @@ public class Builder : MonoBehaviour
         }
 
         ((IslandManager)_buildable).SetData(data, isXFlipped);
+
+#if UNITY_EDITOR
+        UnityEditor.EditorUtility.SetDirty(gameObject);
+#endif
+    }
+
+    /// <summary>
+    /// Initialize ClutterManager with the given data
+    /// </summary>
+    public void Initialize(ClutterData data, bool isXFlipped, bool isYFlipped)
+    {
+        if (!PrepareToBuild()) return;
+
+        if (data == null)
+        {
+            Debug.LogWarning("Cannot initialize with null ClutterData");
+            return;
+        }
+
+        ((ClutterManager)_buildable).SetData(data, isXFlipped, isYFlipped);
 
 #if UNITY_EDITOR
         UnityEditor.EditorUtility.SetDirty(gameObject);

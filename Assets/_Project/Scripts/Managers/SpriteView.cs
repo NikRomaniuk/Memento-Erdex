@@ -16,6 +16,9 @@ public class SpriteView : IBuildable
             case TrunkData trunkData:
                 SetData(trunkData, Side.Right, false);
                 break;
+            case ClutterData clutterData:
+                SetData(clutterData, false, false);
+                break;
             case ShapeData shapeData:
                 SetData(shapeData, false, shapeData.spriteOffset);
                 break;
@@ -45,6 +48,16 @@ public class SpriteView : IBuildable
         _spriteRenderer.flipX = shouldFlipX;
         _spriteRenderer.flipY = false;
         _spriteRenderer.transform.localPosition = new Vector3(spriteLocalPosition.x, spriteLocalPosition.y, 0f);
+    }
+
+    public void SetData(ClutterData data, bool shouldFlipX, bool shouldFlipY)
+    {
+        if (_spriteRenderer == null || data == null) { return; }
+
+        _spriteRenderer.sprite = data.sprite;
+        _spriteRenderer.flipX = shouldFlipX;
+        _spriteRenderer.flipY = shouldFlipY;
+        _spriteRenderer.transform.localPosition = Vector3.zero;
     }
 
     public void SetData(IslandData data, bool shouldFlipX)

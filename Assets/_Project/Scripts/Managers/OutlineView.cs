@@ -22,6 +22,9 @@ public class OutlineView : IBuildable
             case TrunkData trunkData:
                 SetData(trunkData, Side.Right, false);
                 break;
+            case ClutterData clutterData:
+                SetData(clutterData, false, false);
+                break;
             case ShapeData shapeData:
                 SetData(shapeData, false);
                 break;
@@ -49,6 +52,16 @@ public class OutlineView : IBuildable
         _outlineRenderer.sprite = data.sprite;
         _outlineRenderer.flipX = shouldFlipX;
         _outlineRenderer.flipY = false;
+    }
+
+    public void SetData(ClutterData data, bool shouldFlipX, bool shouldFlipY)
+    {
+        if (_outlineRenderer == null || data == null) { return; }
+
+        SetDefaultColor(data.defaultOutlineColor);
+        _outlineRenderer.sprite = data.sprite;
+        _outlineRenderer.flipX = shouldFlipX;
+        _outlineRenderer.flipY = shouldFlipY;
     }
 
     public void SetData(IslandData data, bool shouldFlipX)

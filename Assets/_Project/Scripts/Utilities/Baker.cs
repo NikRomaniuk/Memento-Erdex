@@ -40,6 +40,16 @@ public class Baker : MonoBehaviour
     [ShowIf(nameof(_blankType), BlanksLibrary.BlankType.Island)]
     [SerializeField] private bool _islandAllowMiddle = true;
 
+    // --- Clutter Data ---
+    [ShowIf(nameof(_blankType), BlanksLibrary.BlankType.Clutter)]
+    [SerializeField] private bool _clutterCanBeXFlipped = true;
+
+    [ShowIf(nameof(_blankType), BlanksLibrary.BlankType.Clutter)]
+    [SerializeField] private bool _clutterCanBeYFlipped = true;
+
+    [ShowIf(nameof(_blankType), BlanksLibrary.BlankType.Clutter)]
+    [SerializeField] private Color _clutterDefaultOutlineColor = Color.black;
+
     // --- Cached Component ---
     private IBakeable _bakeable;
 
@@ -52,6 +62,7 @@ public class Baker : MonoBehaviour
             BlanksLibrary.BlankType.Branch => typeof(BranchData),
             BlanksLibrary.BlankType.Shape => typeof(ShapeData),
             BlanksLibrary.BlankType.Island => typeof(IslandData),
+            BlanksLibrary.BlankType.Clutter => typeof(ClutterData),
             _ => null
         };
     }
@@ -141,6 +152,9 @@ public class Baker : MonoBehaviour
 
             case BlanksLibrary.BlankType.Island:
                 return ValidateUniqueIdForType<IslandData>(_dataToEdit);
+
+            case BlanksLibrary.BlankType.Clutter:
+                return ValidateUniqueIdForType<ClutterData>(_dataToEdit);
         }
 #endif
 
@@ -306,6 +320,30 @@ public class Baker : MonoBehaviour
                 UnityEditor.AssetDatabase.SaveAssets();
 #endif
                 Debug.Log($"Data successfully baked to <b>{islandData.name}</b> (ID: {islandData.id})");
+                break;
+
+            case BlanksLibrary.BlankType.Clutter:
+                var clutterData = _dataToEdit as ClutterData;
+                if (clutterData == null)
+                {
+                    Debug.LogError("_dataToEdit is not a ClutterData! Please assign a ClutterData ScriptableObject");
+                    return;
+                }
+
+                // --- Bake Metadata ---
+                clutterData.id = _id;
+                clutterData.canBeXFlipped = _clutterCanBeXFlipped;
+                clutterData.canBeYFlipped = _clutterCanBeYFlipped;
+                clutterData.defaultOutlineColor = _clutterDefaultOutlineColor;
+
+                // --- Bake Component Data ---
+                _bakeable.GatherData(clutterData);
+
+#if UNITY_EDITOR
+                UnityEditor.EditorUtility.SetDirty(clutterData);
+                UnityEditor.AssetDatabase.SaveAssets();
+#endif
+                Debug.Log($"Data successfully baked to <b>{clutterData.name}</b> (ID: {clutterData.id})");
                 break;
 
             default:
