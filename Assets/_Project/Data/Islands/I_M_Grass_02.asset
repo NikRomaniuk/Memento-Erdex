@@ -15,9 +15,9 @@ MonoBehaviour:
   id: I_M_Grass_02
   colliderSize: {x: 2.4, y: 0.8}
   colliderOffset: {x: 0, y: 0}
-  sprite: {fileID: 5540840790202450994, guid: 20d8f6e54f0fb1a46bc7d58fb5661788, type: 3}
+  sprite: {fileID: 7781852985363273158, guid: b5f9b125dc461584fada9c4ffac57a5d, type: 3}
   spriteOffset: {x: 0, y: -0.4}
-  defaultOutlineColor: {r: 0, g: 0.3882353, b: 0.15294118, a: 1}
+  defaultOutlineColor: {r: 0.47058824, g: 0.84313726, b: 0.68235296, a: 1}
   canBeXFlipped: 1
   size: 2
   allowLeft: 1

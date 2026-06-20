@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e9409e52e9b05684e95a14bdf7bf12c2, type: 3}
-  m_Name: I_T_Grass_01
+  m_Name: I_T_Stone_01
   m_EditorClassIdentifier: Assembly-CSharp::IslandData
-  id: S_round_01
+  id: I_T_Stone_01
   colliderSize: {x: 0.8, y: 0.8}
   colliderOffset: {x: 0, y: 0}
-  sprite: {fileID: -1319553018321089923, guid: ac337ac24ba11ac4fbdf89bde7566a17, type: 3}
+  sprite: {fileID: 4587616333546711366, guid: ac337ac24ba11ac4fbdf89bde7566a17, type: 3}
   spriteOffset: {x: 0, y: -0.4}
-  defaultOutlineColor: {r: 0.47058824, g: 0.84313726, b: 0.68235296, a: 1}
+  defaultOutlineColor: {r: 0.89411765, g: 0.9098039, b: 0.9490196, a: 1}
   canBeXFlipped: 1
   size: 0
   allowLeft: 1
