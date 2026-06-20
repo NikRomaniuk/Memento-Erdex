@@ -13,22 +13,10 @@ public class EntityCollider : IBuildable
     {
         switch (data)
         {
-            case TrunkData trunkData:
-                SetData(trunkData, Side.Right, false);
-                break;
             case IslandData islandData:
                 SetData(islandData);
                 break;
         }
-    }
-
-    public void SetData(TrunkData data, Side side, bool isYFlipped)
-    {
-        if (_boxCollider == null || data == null) { return; }
-
-        int flipX = side == Side.Left ? -1 : 1;
-        _boxCollider.size = data.colliderSize;
-        _boxCollider.offset = new Vector2(data.colliderOffset.x * flipX, data.colliderOffset.y);
     }
 
     public void SetData(IslandData data)

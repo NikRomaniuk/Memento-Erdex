@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac2868292f07db7498209d4e43d56b5b, type: 3}
+  m_Name: TreeConstants
+  m_EditorClassIdentifier: Assembly-CSharp::TreeConstants
+  MaxTreeHeight: {fileID: 11400000, guid: c59e2681eafd90b4fa120310ff6b6e86, type: 2}
+  MinTreeHeight: {fileID: 11400000, guid: 187aa9e4087f7d94989f1ac9c543e89b, type: 2}

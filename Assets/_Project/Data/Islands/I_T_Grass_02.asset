@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: I_T_Grass_02
   m_EditorClassIdentifier: Assembly-CSharp::IslandData
   id: S_round_01
-  colliderSize: {x: 1.6, y: 0.8}
+  colliderSize: {x: 0.8, y: 0.8}
   colliderOffset: {x: 0, y: 0}
-  sprite: {fileID: -7382352470053354809, guid: 8c4babbc9c1b4464b819da982c9c6b7a, type: 3}
+  sprite: {fileID: -6359141623405569526, guid: ac337ac24ba11ac4fbdf89bde7566a17, type: 3}
   spriteOffset: {x: 0, y: -0.4}
-  defaultOutlineColor: {r: 0.09803922, g: 0.1882353, b: 0.13725491, a: 1}
+  defaultOutlineColor: {r: 0.47058824, g: 0.84313726, b: 0.68235296, a: 1}
   canBeXFlipped: 1
-  size: 1
+  size: 0
   allowLeft: 1
   allowRight: 1
   allowMiddle: 1

@@ -1,0 +1,105 @@
+OVDF v1.1
+SaveController, Assembly-CSharp
+MetaGuid:425802ea7de281a44aba8e9b9c1163d5
+
+# $3V1PMaCsAj12BuT37Gdkto
+Position: $R1LbT8rNhQAp9wrYoKuMgQ:0
++ [Sirenix.OdinInspector.TabGroupAttribute]
+	GroupName = "Data References"
+
+# $9h577tJWaejQMzLaoKJaQN
+Position: $3V1PMaCsAj12BuT37Gdkto:0
++ [Sirenix.OdinInspector.TabGroupAttribute+TabSubGroupAttribute]
+	GroupName = "Settings"
+	Name = "Settings"
+
+# $MQ3eRjeYpjdMBE3LV55Lm7
+Position: $3V1PMaCsAj12BuT37Gdkto:1
++ [Sirenix.OdinInspector.TabGroupAttribute+TabSubGroupAttribute]
+	GroupName = "Gameplay"
+	Name = "Gameplay"
+
+# $R1LbT8rNhQAp9wrYoKuMgQ
+Position: $root:0
++ [Sirenix.OdinInspector.TitleGroupAttribute]
+	GroupName = "Data References"
+
+# $BPfF39SvQVcyiDakcQTFGp
+Position: $2EVtix8z5hBD1P12GUSTEG:2
++ [Sirenix.OdinInspector.ShowIfGroupAttribute]
+	VisibleIf = "_autosaveEnabled"
+
+# $2EVtix8z5hBD1P12GUSTEG
+Position: $root:1
++ [Sirenix.OdinInspector.TitleGroupAttribute]
+	GroupName = "Configuration"
+
+# $37AXPDJrQnPfyXNFziwG3w
+Position: $root:2
++ [Sirenix.OdinInspector.TitleGroupAttribute]
+	GroupName = "Events"
+
+# $7wf5ppKEztmoS4sGvtRbtc
+Position: $root:3
++ [Sirenix.OdinInspector.TitleGroupAttribute]
+	GroupName = "Debug"
+
+# $VNMhFxpALH2y4x5SBdB8kk
+Position: $3V1PMaCsAj12BuT37Gdkto:2
++ [Sirenix.OdinInspector.TabGroupAttribute+TabSubGroupAttribute]
+	GroupName = "TreeGeneration"
+	Name = "Tree Generation"
+
+# _activeSettings
+Position: $9h577tJWaejQMzLaoKJaQN:0
++ [Sirenix.OdinInspector.LabelTextAttribute]
+	Text = "Active"
+
+# _defaultSettings
+Position: $9h577tJWaejQMzLaoKJaQN:1
++ [Sirenix.OdinInspector.LabelTextAttribute]
+	Text = "Default"
+
+# _saveDelaySeconds
+Position: $2EVtix8z5hBD1P12GUSTEG:0
++ [Sirenix.OdinInspector.UnitAttribute]
+	Base = Second
+	Display = Second
++ [Sirenix.OdinInspector.LabelTextAttribute]
+	Text = "Save Delay"
+
+# _autosaveEnabled
+Position: $2EVtix8z5hBD1P12GUSTEG:1
++ [Sirenix.OdinInspector.LabelTextAttribute]
+	Text = "Enable Autosave"
+
+# _autosaveIntervalSeconds
+Position: $BPfF39SvQVcyiDakcQTFGp:0
++ [Sirenix.OdinInspector.UnitAttribute]
+	Base = Second
+	Display = Second
++ [Sirenix.OdinInspector.LabelTextAttribute]
+	Text = "Interval"
+
+# _onSavesLoaded
+Position: $37AXPDJrQnPfyXNFziwG3w:0
+
+# _debug
+Position: $7wf5ppKEztmoS4sGvtRbtc:0
++ [Sirenix.OdinInspector.LabelTextAttribute]
+	Text = "Debug Messages"
+	Icon = BugFill
+	IconColor = "RGBA(0.970, 0.550, 0.020, 1.000)"
+	NicifyText = False
+
+# _activeGameplay
+Position: $MQ3eRjeYpjdMBE3LV55Lm7:0
+
+# _defaultGameplay
+Position: $MQ3eRjeYpjdMBE3LV55Lm7:1
+
+# _activeTreeGeneration
+Position: $VNMhFxpALH2y4x5SBdB8kk:0
+
+# _defaultTreeGeneration
+Position: $VNMhFxpALH2y4x5SBdB8kk:1

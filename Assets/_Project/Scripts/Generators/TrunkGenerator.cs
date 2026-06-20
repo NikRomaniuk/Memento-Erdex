@@ -13,6 +13,14 @@ public class TrunkGenerator : MonoBehaviour
     public Color OutlineColor => _outlineColor;
     public bool UseDefaultOutlineColor => _useDefaultOutlineColor;
 
+    // --- Components ---
+    private ClutterGenerator _clutterGenerator;
+
+    private void Awake()
+    {
+        _clutterGenerator = GetComponent<ClutterGenerator>();
+    }
+
     void Start()
     {
         
@@ -72,6 +80,15 @@ public class TrunkGenerator : MonoBehaviour
 
             // Create TrunkGen
             TrunkGen trunkGen = new TrunkGen(selectedTrunkData, side, isYFlipped, currentHeight, spriteOrder, _color, resolvedOutlineColor);
+
+            if (_clutterGenerator != null)
+            {
+                _clutterGenerator.GenerateTrunkClutter(random, trunkGen);
+            }
+            else
+            {
+                Debug.LogWarning("ClutterGenerator component not found! Trunk clutters will not be generated");
+            }
 
             // Find which ChunkGen this TrunkPart belongs to
             ChunkGen targetChunk = FindChunkAtHeight(treeGen, currentHeight);

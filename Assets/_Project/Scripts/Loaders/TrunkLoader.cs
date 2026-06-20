@@ -15,19 +15,28 @@ public static class TrunkLoader
 
         // --- Components ---
         Builder blankBuilder = blank.GetComponent<Builder>();
-        SpriteRenderer spriteRenderer = blank._spriteRenderer;
+        SpriteRenderer shapeRenderer = blank._shapeRenderer;
+        SpriteRenderer borderRenderer = blank._borderRenderer;
         OutlineView outlineView = blank.OutlineView;
 
-        // --- Load ---
+        // --- Load Itself ---
         // Initialize blank with data & extra settings
         blankBuilder.Initialize(trunkGen.TrunkData, trunkGen.Side, trunkGen.IsYFlipped);
+
+        // --- Load Clutter ---
+        foreach (ClutterGen clutter in trunkGen.ClutterList)
+        {
+            ClutterManager loadedClutter = ClutterLoader.Load(clutter);
+            blank.LoadedClutter.Add(loadedClutter);
+        }
 
         // Set position
         blank.transform.position = new Vector3(0, trunkGen.Height, 0);
         // Set sorting order
-        spriteRenderer.sortingOrder = trunkGen.SpriteOrder;
+        shapeRenderer.sortingOrder = trunkGen.SpriteOrder;
+        borderRenderer.sortingOrder = trunkGen.SpriteOrder;
         // Set sprite color
-        spriteRenderer.color = trunkGen.SpriteColor;
+        shapeRenderer.color = trunkGen.SpriteColor;
         // Set outline color
         outlineView?.ApplyColor(trunkGen.OutlineColor);
 
@@ -42,21 +51,28 @@ public static class TrunkLoader
     /// </summary>
     public static void Unload(TrunkSegment trunkPart)
     {
+        // --- Unload Clutter ---
+        foreach (ClutterManager clutter in trunkPart.LoadedClutter)
+            ClutterLoader.Unload(clutter);
+        trunkPart.LoadedClutter.Clear();
+
         // --- Components ---
         Builder blankBuilder = trunkPart.GetComponent<Builder>();
-        SpriteRenderer spriteRenderer = trunkPart._spriteRenderer;
+        SpriteRenderer shapeRenderer = trunkPart._shapeRenderer;
+        SpriteRenderer borderRenderer = trunkPart._borderRenderer;
         OutlineView outlineView = trunkPart.OutlineView;
 
-        // --- Unload ---
+        // --- Unload Itself ---
         // Clear all loaded data from the blank
         blankBuilder.Clear();
 
         // Reset position
         trunkPart.transform.position = Vector3.zero;
         // Reset sorting order
-        spriteRenderer.sortingOrder = 0;
+        shapeRenderer.sortingOrder = 0;
+        borderRenderer.sortingOrder = 0;
         // Reset sprite color
-        spriteRenderer.color = Color.white;
+        shapeRenderer.color = Color.white;
         // Reset outline color
         outlineView?.ResetColor();
 

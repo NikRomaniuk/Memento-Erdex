@@ -13,7 +13,7 @@ public class OutlineShaderHelper : MonoBehaviour
     private static readonly int _outlineWidthId = Shader.PropertyToID("_Outline_Width");
     private static readonly int _outlineColorId = Shader.PropertyToID("_Outline_Color");
 
-    private const float _horizontalBorderSumPixels = 16f;
+    [SerializeField] private float _horizontalBorderSumPixels = 16f;
 
     [Header("Properties")]
     [SerializeField] private float _outlineWidth = 1f;

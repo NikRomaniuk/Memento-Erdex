@@ -7,12 +7,6 @@ public static class TreeLoader
     public static TreeGen GenData; // Generated tree data
     public static BlanksLibrary BlanksLibrary; // Blanks of all kinds to build the Tree with!
 
-    // --- Settings ---
-    // How many chunks to load before and after the current one
-    // Example: If current chunk is [5] and LoadRadius is 3 then loaded:
-    // 2-3-4-[5]-6-7-8
-    public static int LoadRadius = 3;
-
     // --- State ---
     // Indices of currently loaded chunks
     public static List<int> LoadedChunks = new List<int>(); 
@@ -20,23 +14,40 @@ public static class TreeLoader
     public static Dictionary<int, ChunkManager> LoadedChunkObjects = new Dictionary<int, ChunkManager>();
 
     /// <summary>
-    /// Ensures the given Chunk and its neighbors within <see cref="LoadRadius"/> are loaded
-    /// Unloads chunks that are no longer in range
+    /// Binds the active <see cref="BlanksLibrary"/> for all Loaders
     /// </summary>
-    public static void KeepLoaded(int chunkIndex)
+    public static void SetBlanksLibrary(BlanksLibrary library)
     {
-        if (GenData == null || GenData.Chunks.Count == 0) return;
-        // Debug.Log($"LoadedChunks: '{LoadedChunks.Count}'");
+        BlanksLibrary = library;
 
-        // --- Compute range ---
-        int min = System.Math.Max(0, chunkIndex - LoadRadius);                          // Clamp to list start
-        int max = System.Math.Min(GenData.Chunks.Count - 1, chunkIndex + LoadRadius);   // Clamp to list end
+        // Keep Loaders in sync with the Blank Library
+        ChunkLoader.BlanksLibrary = library;
+        TrunkLoader.BlanksLibrary = library;
+        BranchLoader.BlanksLibrary = library;
+        ShapeLoader.BlanksLibrary = library;
+        IslandLoader.BlanksLibrary = library;
+        ClutterLoader.BlanksLibrary = library;
+    }
 
-        var desired = new HashSet<int>();
-        for (int i = min; i <= max; i++)
-            desired.Add(i);
+    /// <summary>
+    /// Clears runtime static data between Scene loads
+    /// </summary>
+    public static void ResetRuntimeState()
+    {
+        GenData = null;
+        LoadedChunks.Clear();
+        LoadedChunkObjects.Clear();
+    }
 
-        // --- Unload Chunks outside range ---
+    /// <summary>
+    /// Ensures the given set of Сhunk indices is loaded.
+    /// Loads missing Chunks and unloads Chunks outside the set
+    /// </summary>
+    public static void KeepLoaded(HashSet<int> desired)
+    {
+        if (BlanksLibrary == null || GenData == null || GenData.Chunks.Count == 0) return;
+
+        // --- Unload Chunks outside desired set ---
         for (int i = LoadedChunks.Count - 1; i >= 0; i--)
         {
             int idx = LoadedChunks[i];
@@ -47,7 +58,7 @@ public static class TreeLoader
             }
         }
 
-        // --- Load new Chunks inside range ---
+        // --- Load new Chunks inside desired set ---
         foreach (int idx in desired)
         {
             if (!LoadedChunks.Contains(idx))

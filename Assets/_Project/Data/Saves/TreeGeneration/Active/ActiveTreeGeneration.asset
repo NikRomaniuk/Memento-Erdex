@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41f9a8f608565494e8540c46c33c6c4e, type: 3}
+  m_Name: ActiveTreeGeneration
+  m_EditorClassIdentifier: Assembly-CSharp::TreeGenerationData
+  _useRandomSeed:
+    UseConstant: 0
+    ConstantValue: 0
+    _observable: {fileID: 11400000, guid: 26b4191259e58b04bb319614eeb7edba, type: 2}
+  _fixedSeed:
+    UseConstant: 0
+    ConstantValue: 0
+    _observable: {fileID: 11400000, guid: d9f059e8484526c4db1a65564c15b1e6, type: 2}
+  _treeHeight:
+    UseConstant: 0
+    ConstantValue: 0
+    _observable: {fileID: 11400000, guid: 6679e37b0588f894789b6992447344fa, type: 2}
+  _onDataChanged: {fileID: 11400000, guid: 4f586dfd521e7ee42bfedd02068ea07a, type: 2}

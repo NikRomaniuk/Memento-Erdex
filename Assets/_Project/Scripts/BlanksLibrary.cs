@@ -5,7 +5,7 @@ using UnityEngine;
 public class BlanksLibrary : MonoBehaviour
 {
     // Blank types
-    public enum BlankType { Trunk, Chunk, Branch, Shape, Island }
+    public enum BlankType { Trunk, Chunk, Branch, Shape, Island, Clutter }
 
     [Header("Reference Data")]
     // Prefabs to instantiate blanks from
@@ -14,7 +14,7 @@ public class BlanksLibrary : MonoBehaviour
     [SerializeField] private BranchManager _branchManagerPrefab; // For Branches
     [SerializeField] private ShapeManager _shapeManagerPrefab; // For Shapes
     [SerializeField] private IslandManager _islandManagerPrefab; // For Islands
-
+    [SerializeField] private ClutterManager _clutterManagerPrefab; // For Clutter
     [Header("Properties")]
     // Number of blanks to pre-generate
     [SerializeField] private int _trunkBlanksCount = 70; // For Trunk Parts
@@ -22,11 +22,13 @@ public class BlanksLibrary : MonoBehaviour
     [SerializeField] private int _branchBlanksCount = 50; // For Branches
     [SerializeField] private int _shapeBlanksCount = 200; // For Shapes
     [SerializeField] private int _islandBlanksCount = 100; // For Islands
+    [SerializeField] private int _clutterBlanksCount = 300; // For Clutter
     // Extra blanks generated when pool runs out
     [SerializeField] private int _emergencyBlanksCount = 10;  
 
     // --- State ---
     public bool IsReady { get; private set; }
+    public ClutterManager ClutterManagerPrefab => _clutterManagerPrefab;
 
     // --- Pool ---
     private ArrayList _trunkBlanks;                           // All instantiated Trunk blanks
@@ -44,12 +46,16 @@ public class BlanksLibrary : MonoBehaviour
     private ArrayList _islandBlanks;                          // All instantiated Island blanks
     private Stack<IslandManager> _availableIslandBlanks;      // Island blanks available for use
 
+    private ArrayList _clutterBlanks;                         // All instantiated Clutter blanks
+    private Stack<ClutterManager> _availableClutterBlanks;    // Clutter blanks available for use
+
     private void Awake()
     {
         GenerateBlanks();
 
-        // Give TreeLoader access to the BlanksLibrary
-        TreeLoader.BlanksLibrary = this;
+        // Ensure all Loaders point to the same Blank Library
+        TreeLoader.SetBlanksLibrary(this);
+        TreeLoader.ResetRuntimeState();
     }
 
     /// <summary>
@@ -87,6 +93,12 @@ public class BlanksLibrary : MonoBehaviour
             return;
         }
 
+        if (_clutterManagerPrefab == null)
+        {
+            Debug.LogError("ClutterManagerPrefab is not assigned!");
+            return;
+        }
+
         // --- Instantiate blanks ---
         // Trunk Parts
         _trunkBlanks = new ArrayList(_trunkBlanksCount);
@@ -118,6 +130,12 @@ public class BlanksLibrary : MonoBehaviour
         for (int i = 0; i < _islandBlanksCount; i++)
             CreateIslandBlank();
 
+        // Clutters
+        _clutterBlanks = new ArrayList(_clutterBlanksCount);
+        _availableClutterBlanks = new Stack<ClutterManager>(_clutterBlanksCount);
+        for (int i = 0; i < _clutterBlanksCount; i++)
+            CreateClutterBlank();
+
         // Blanks are ready to use!
         IsReady = true;
         Debug.Log($"Generated Trunks: '{_trunkBlanks.Count}'");
@@ -125,6 +143,7 @@ public class BlanksLibrary : MonoBehaviour
         Debug.Log($"Generated Branches: '{_branchBlanks.Count}'");
         Debug.Log($"Generated Shapes: '{_shapeBlanks.Count}'");
         Debug.Log($"Generated Islands: '{_islandBlanks.Count}'");
+        Debug.Log($"Generated Clutters: '{_clutterBlanks.Count}'");
     }
 
     /// <summary>
@@ -185,6 +204,16 @@ public class BlanksLibrary : MonoBehaviour
                 }
                 return _availableIslandBlanks.Pop();
 
+            case BlankType.Clutter:
+                // --- Emergency refill ---
+                if (_availableClutterBlanks.Count == 0)
+                {
+                    Debug.LogWarning($"No available ClutterBlanks! Generating {_emergencyBlanksCount} emergency blanks...");
+                    for (int i = 0; i < _emergencyBlanksCount; i++)
+                        CreateClutterBlank();
+                }
+                return _availableClutterBlanks.Pop();
+
             default:
                 Debug.LogWarning($"Unknown BlankType: {type}. Could not get blank from pool");
                 return null;
@@ -212,6 +241,9 @@ public class BlanksLibrary : MonoBehaviour
                 break;
             case BlankType.Island:
                 _availableIslandBlanks.Push((IslandManager)blank);
+                break;
+            case BlankType.Clutter:
+                _availableClutterBlanks.Push((ClutterManager)blank);
                 break;
             default:
                 Debug.LogWarning($"Unknown BlankType: {type}. Could not return blank to pool");
@@ -272,5 +304,16 @@ public class BlanksLibrary : MonoBehaviour
         blank.gameObject.SetActive(false); // Deactivate until needed
         _islandBlanks.Add(blank);
         _availableIslandBlanks.Push(blank);
+    }
+
+    /// <summary>
+    /// Instantiates a single Clutter blank and pushes it onto <see cref="_availableClutterBlanks"/>
+    /// </summary>
+    private void CreateClutterBlank()
+    {
+        ClutterManager blank = Instantiate(_clutterManagerPrefab);
+        blank.gameObject.SetActive(false); // Deactivate until needed
+        _clutterBlanks.Add(blank);
+        _availableClutterBlanks.Push(blank);
     }
 }

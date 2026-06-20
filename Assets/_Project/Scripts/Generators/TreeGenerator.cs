@@ -3,11 +3,19 @@ using UnityEngine;
 public class TreeGenerator : MonoBehaviour
 {
     // --- Settings ---
-    [SerializeField] private int _seed = 0;
-    [SerializeField] private float _treeHeight = 10f;
+    private float _treeHeight = 10f;
 
     // --- References ---
     [SerializeField] private BlanksLibrary _blanksLibrary; // Must complete GenerateBlanks before tree can generate
+    [SerializeField] private TreeConstants _treeConstants;
+    [SerializeField] private TreeGenerationData _activeTreeGeneration;
+    [SerializeField] private TreeGenerationData _defaultTreeGeneration;
+
+    // --- Events ---
+    [SerializeField] private GameEvent_Float _onTreeHeightDefined;
+
+    // --- Data ---
+    private int _seed = 0;
 
     // --- Getters ---
     public int Seed => _seed;
@@ -26,6 +34,24 @@ public class TreeGenerator : MonoBehaviour
 
     private void Start()
     {
+        // --- Setup ---
+        // Seed
+        _seed = Random.Range(0, 1000000000);
+
+        if (!_activeTreeGeneration.GetUseRandomSeed())
+        {
+            _seed = _activeTreeGeneration.GetFixedSeed();
+        }
+
+        // Tree Height
+        _treeHeight = _defaultTreeGeneration.GetTreeHeight();
+
+        if (_activeTreeGeneration.GetTreeHeight() >= _treeConstants.GetMinTreeHeight() &&
+            _activeTreeGeneration.GetTreeHeight() <= _treeConstants.GetMaxTreeHeight())
+        {
+            _treeHeight = _activeTreeGeneration.GetTreeHeight();
+        }
+
         GenerateTree(new System.Random(_seed));
     }
 
@@ -47,5 +73,8 @@ public class TreeGenerator : MonoBehaviour
 
         // --- Publish data (signals TreeManager that generation is complete) ---
         TreeLoader.GenData = _treeGen;
+
+        // --- Notify listeners that tree generation is fully complete ---
+        _onTreeHeightDefined?.Invoke(_chunkGenerator.GeneratedTreeHeight);
     }
 }

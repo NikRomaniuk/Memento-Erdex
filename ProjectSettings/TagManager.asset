@@ -35,24 +35,51 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
-  - 
+  - Camera Bounds
+  - Horizon Texture
+  - Horizon
   m_SortingLayers:
-  - name: Shape
+  - name: Horizon
+    uniqueID: 3685413049
+    locked: 0
+  - name: Middle
+    uniqueID: 2345819743
+    locked: 0
+  - name: Shape Shape
     uniqueID: 3752679987
     locked: 0
-  - name: Trunk
+  - name: Trunk Shape
     uniqueID: 3161167135
+    locked: 0
+  - name: Tree Outline
+    uniqueID: 2439940287
+    locked: 0
+  - name: Shape Clutter
+    uniqueID: 226409211
+    locked: 0
+  - name: Shape Border
+    uniqueID: 2468991157
+    locked: 0
+  - name: Trunk Clutter
+    uniqueID: 3900807407
+    locked: 0
+  - name: Trunk Border
+    uniqueID: 3707765483
     locked: 0
   - name: Island
     uniqueID: 3520445711
+    locked: 0
+  - name: Clutter
+    uniqueID: 663206007
     locked: 0
   - name: Character
     uniqueID: 1145894431
     locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: UI
+    uniqueID: 371699589
     locked: 0
   m_RenderingLayers:
   - Default

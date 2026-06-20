@@ -1,32 +1,115 @@
+using Sirenix.OdinInspector;
 using UnityEngine;
 using System.Linq;
 
 public class Baker : MonoBehaviour
 {
-    [Header("General Data")]
+    // --- General Data ---
     [SerializeField] private BlanksLibrary.BlankType _blankType;
     [SerializeField] private string _id;
+    [InfoBox("@DataToEditWarningMessage()", InfoMessageType.Warning, nameof(ShouldShowDataToEditWarning))]
     [SerializeField] private ScriptableObject _dataToEdit;
 
     // --- Trunk Data ---
+    [ShowIf(nameof(_blankType), BlanksLibrary.BlankType.Trunk)]
     [SerializeField] private TrunkAvaliableSide _avaliableSide = TrunkAvaliableSide.Both;
+    [ShowIf(nameof(_blankType), BlanksLibrary.BlankType.Trunk)]
     [SerializeField] private bool _canBeFlippedVertically = true;
+    [ShowIf("@_blankType == BlanksLibrary.BlankType.Trunk || _blankType == BlanksLibrary.BlankType.Shape")]
+    [SerializeField] private ClutterList _clutterList;
 
     // --- Branch Data ---
+    [ShowIf(nameof(_blankType), BlanksLibrary.BlankType.Branch)]
     [SerializeField] private BranchData.AvailableSide _branchAvaliableSide = BranchData.AvailableSide.Both;
 
     // --- Shape Data ---
+    [ShowIf(nameof(_blankType), BlanksLibrary.BlankType.Shape)]
     [SerializeField] private ShapeData.Type _shapeType = ShapeData.Type.Base;
+
+    [ShowIf(nameof(_blankType), BlanksLibrary.BlankType.Shape)]
     [SerializeField] private bool _canBeFlippedHorizontally = true;
 
     // --- Island Data ---
+    [ShowIf(nameof(_blankType), BlanksLibrary.BlankType.Island)]
     [SerializeField] private bool _islandCanBeXFlipped = true;
+
+    [ShowIf(nameof(_blankType), BlanksLibrary.BlankType.Island)]
     [SerializeField] private bool _islandAllowLeft = true;
+
+    [ShowIf(nameof(_blankType), BlanksLibrary.BlankType.Island)]
     [SerializeField] private bool _islandAllowRight = true;
+
+    [ShowIf(nameof(_blankType), BlanksLibrary.BlankType.Island)]
     [SerializeField] private bool _islandAllowMiddle = true;
+
+    // --- Clutter Data ---
+    [ShowIf(nameof(_blankType), BlanksLibrary.BlankType.Clutter)]
+    [SerializeField] private bool _clutterCanBeXFlipped = true;
+
+    [ShowIf(nameof(_blankType), BlanksLibrary.BlankType.Clutter)]
+    [SerializeField] private bool _clutterCanBeYFlipped = true;
+
+    [ShowIf(nameof(_blankType), BlanksLibrary.BlankType.Clutter)]
+    [SerializeField] private Color _clutterDefaultOutlineColor = Color.black;
 
     // --- Cached Component ---
     private IBakeable _bakeable;
+
+    private System.Type GetExpectedDataType()
+    {
+        return _blankType switch
+        {
+            BlanksLibrary.BlankType.Trunk => typeof(TrunkData),
+            BlanksLibrary.BlankType.Chunk => typeof(ChunkData),
+            BlanksLibrary.BlankType.Branch => typeof(BranchData),
+            BlanksLibrary.BlankType.Shape => typeof(ShapeData),
+            BlanksLibrary.BlankType.Island => typeof(IslandData),
+            BlanksLibrary.BlankType.Clutter => typeof(ClutterData),
+            _ => null
+        };
+    }
+
+    private bool ShouldShowDataToEditWarning()
+    {
+#if UNITY_EDITOR
+        return _dataToEdit == null || !IsDataToEditTypeValid();
+#else
+        return false;
+#endif
+    }
+
+    private bool IsDataToEditTypeValid()
+    {
+#if UNITY_EDITOR
+        var expectedType = GetExpectedDataType();
+        return _dataToEdit != null && expectedType != null && expectedType.IsInstanceOfType(_dataToEdit);
+#else
+        return true;
+#endif
+    }
+
+    private string DataToEditWarningMessage()
+    {
+#if UNITY_EDITOR
+        if (_dataToEdit == null)
+        {
+            return "Data To Edit is not assigned!";
+        }
+
+        var expectedType = GetExpectedDataType();
+        if (expectedType == null)
+        {
+            return $"Unknown Type: {_blankType}";
+        }
+
+        if (!expectedType.IsInstanceOfType(_dataToEdit))
+        {
+            return $"Data To Edit must be a {expectedType.Name} when Type is {_blankType}, but the assigned asset is {_dataToEdit.GetType().Name}";
+        }
+#endif
+
+        return string.Empty;
+    }
 
     /// <summary>
     /// Loads the <see cref="IBakeable"/> component from this GameObject
@@ -71,6 +154,9 @@ public class Baker : MonoBehaviour
 
             case BlanksLibrary.BlankType.Island:
                 return ValidateUniqueIdForType<IslandData>(_dataToEdit);
+
+            case BlanksLibrary.BlankType.Clutter:
+                return ValidateUniqueIdForType<ClutterData>(_dataToEdit);
         }
 #endif
 
@@ -104,6 +190,7 @@ public class Baker : MonoBehaviour
     /// <summary>
     /// Bakes current baker field values to the assigned ScriptableObject based on <see cref="_blankType"/>
     /// </summary>
+    [Button(ButtonSizes.Medium)]
     public void BakeToScriptableObject()
     {
         // --- Preparations ---
@@ -137,6 +224,15 @@ public class Baker : MonoBehaviour
 
                 // --- Bake Component Data ---
                 _bakeable.GatherData(trunkData);
+
+                if (_clutterList == null)
+                {
+                    Debug.LogWarning("ClutterList is not assigned. ClutterSlots not updated");
+                }
+                else
+                {
+                    trunkData.clutterSlots = _clutterList.GetClutterSlots();
+                }
 
 #if UNITY_EDITOR
                 UnityEditor.EditorUtility.SetDirty(trunkData);
@@ -205,6 +301,15 @@ public class Baker : MonoBehaviour
                 // --- Bake Component Data ---
                 _bakeable.GatherData(shapeData);
 
+                if (_clutterList == null)
+                {
+                    Debug.LogWarning("ClutterList is not assigned. ClutterSlots not updated");
+                }
+                else
+                {
+                    shapeData.clutterSlots = _clutterList.GetClutterSlots();
+                }
+
 #if UNITY_EDITOR
                 UnityEditor.EditorUtility.SetDirty(shapeData);
                 UnityEditor.AssetDatabase.SaveAssets();
@@ -235,6 +340,30 @@ public class Baker : MonoBehaviour
                 UnityEditor.AssetDatabase.SaveAssets();
 #endif
                 Debug.Log($"Data successfully baked to <b>{islandData.name}</b> (ID: {islandData.id})");
+                break;
+
+            case BlanksLibrary.BlankType.Clutter:
+                var clutterData = _dataToEdit as ClutterData;
+                if (clutterData == null)
+                {
+                    Debug.LogError("_dataToEdit is not a ClutterData! Please assign a ClutterData ScriptableObject");
+                    return;
+                }
+
+                // --- Bake Metadata ---
+                clutterData.id = _id;
+                clutterData.canBeXFlipped = _clutterCanBeXFlipped;
+                clutterData.canBeYFlipped = _clutterCanBeYFlipped;
+                clutterData.defaultOutlineColor = _clutterDefaultOutlineColor;
+
+                // --- Bake Component Data ---
+                _bakeable.GatherData(clutterData);
+
+#if UNITY_EDITOR
+                UnityEditor.EditorUtility.SetDirty(clutterData);
+                UnityEditor.AssetDatabase.SaveAssets();
+#endif
+                Debug.Log($"Data successfully baked to <b>{clutterData.name}</b> (ID: {clutterData.id})");
                 break;
 
             default:

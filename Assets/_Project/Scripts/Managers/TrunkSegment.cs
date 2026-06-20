@@ -1,15 +1,14 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class TrunkSegment : MonoBehaviour, IBakeable, IBuildable
 {
-    [Header("References")]
     // --- References ---
-    public SpriteRenderer _spriteRenderer;
+    public SpriteRenderer _shapeRenderer;
+    public SpriteRenderer _borderRenderer;
     public SpriteRenderer _outlineRenderer;
-    public BoxCollider2D _boxCollider;
 
-    [Header("Properties")]
-    // --- Maths ---
+    // --- References ---
     // Points
     [Step(0.05f)] [SerializeField] private Vector2 _downNearPoint;
     [Step(0.05f)] [SerializeField] private Vector2 _downFarPoint;
@@ -20,13 +19,15 @@ public class TrunkSegment : MonoBehaviour, IBakeable, IBuildable
     private float _topWidth;
     [SerializeField] private Color _defaultOutlineColor = Color.black;
 
-    private SpriteView _spriteView;
+    private SpriteView _shapeView;
+    private SpriteView _borderView;
     private OutlineView _outlineView;
-    private EntityCollider _entityCollider;
 
-    public SpriteView SpriteView => _spriteView;
+    public SpriteView ShapeView => _shapeView;
+    public SpriteView BorderView => _borderView;
     public OutlineView OutlineView => _outlineView;
-    public EntityCollider EntityCollider => _entityCollider;
+
+    [HideInInspector] public List<ClutterManager> LoadedClutter = new List<ClutterManager>(); // Active ClutterManagers loaded for this trunk
 
     private void Awake()
     {
@@ -35,9 +36,9 @@ public class TrunkSegment : MonoBehaviour, IBakeable, IBuildable
 
     private void EnsureViewsInitialized()
     {
-        _spriteView ??= new SpriteView(_spriteRenderer);
+        _shapeView ??= new SpriteView(_shapeRenderer);
+        _borderView ??= new SpriteView(_borderRenderer);
         _outlineView ??= new OutlineView(_outlineRenderer, _defaultOutlineColor);
-        _entityCollider ??= new EntityCollider(_boxCollider);
     }
 
     /// <summary>
@@ -66,13 +67,10 @@ public class TrunkSegment : MonoBehaviour, IBakeable, IBuildable
         EnsureViewsInitialized();
 
         // --- Bake Visual Data ---
-        trunkData.sprite = _spriteRenderer.sprite;
-        trunkData.spriteOffset = _spriteRenderer.transform.localPosition;
+        trunkData.shapeSprite = _shapeRenderer.sprite;
+        trunkData.borderSprite = _borderRenderer.sprite;
+        trunkData.spritesOffset = _shapeRenderer.transform.localPosition;
         trunkData.defaultOutlineColor = _outlineView.DefaultColor;
-
-        // --- Bake Collider Data ---
-        trunkData.colliderSize = _boxCollider.size;
-        trunkData.colliderOffset = _boxCollider.offset;
 
         // --- Bake Points Data ---
         var points = GetPoints();
@@ -95,11 +93,9 @@ public class TrunkSegment : MonoBehaviour, IBakeable, IBuildable
         int flipX = side == Side.Left ? -1 : 1;
 
         // --- Apply Visual Data ---
-        _spriteView.SetData(data, side, isYFlipped);
+        _shapeView.SetData(data, side, isYFlipped, true);
+        _borderView.SetData(data, side, isYFlipped, false);
         _outlineView.SetData(data, side, isYFlipped);
-
-        // --- Apply Collider Data ---
-        _entityCollider.SetData(data, side, isYFlipped);
 
         // --- Apply Points Data ---
         Vector2 downNearPoint = data.downNearPoint;
@@ -125,11 +121,9 @@ public class TrunkSegment : MonoBehaviour, IBakeable, IBuildable
         EnsureViewsInitialized();
 
         // --- Reset Visuals ---
-        _spriteView.Clear();
+        _shapeView.Clear();
+        _borderView.Clear();
         _outlineView.Clear();
-
-        // --- Reset Collider ---
-        _entityCollider.Clear();
 
         // --- Reset Points ---
         SetPoints(Vector2.zero, Vector2.zero, Vector2.zero, Vector2.zero);
