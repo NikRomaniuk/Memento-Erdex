@@ -1,102 +1,36 @@
-using System;
 using UnityEngine;
-using UnityEngine.Events;
+using Sirenix.OdinInspector;
 
 [DisallowMultipleComponent]
 public class GameEventListener : MonoBehaviour
 {
-    [Serializable]
-    public class Binding // Binding is one-to-many relationship between GameEvent and UnityEvents
-    {
-        [SerializeField] private GameEvent _event;
-        [SerializeField] private UnityEvent _responce;
-
-        public GameEvent Event => _event;
-        public UnityEvent Responce => _responce;
-    }
-
-    [Header("Properties")]
-    [SerializeField] private Binding[] _bindings = Array.Empty<Binding>();
+    [Header("Bindings")]
+    [SerializeReference]
+    [ListDrawerSettings(ShowIndexLabels = false)]
+    private BaseBinding[] _bindings = System.Array.Empty<BaseBinding>();
 
     [Header("Debug")]
     [SerializeField] private bool _debug = false;
     private string _lastDebug;
 
-    private void Awake()
-    {
-        RegisterAllBindings();
-    }
-
-    private void OnDestroy()
-    {
-        UnregisterAllBindings();
-    }
-
-    public void OnEventInvoked(GameEvent invokedEvent)
-    {
-        if (invokedEvent == null) { return; }
-
-        bool hasMatchingBinding = false;
-        bool hasAnyInvokedResponse = false;
-
-        for (int i = 0; i < _bindings.Length; i++)
-        {
-            Binding binding = _bindings[i];
-            if (binding == null || binding.Event != invokedEvent) // No match -> Skip
-            {
-                continue;
-            }
-
-            hasMatchingBinding = true;
-
-            UnityEvent response = binding.Responce;
-            if (response == null) // No Response -> Skip
-            {
-                continue;
-            }
-
-            response.Invoke();
-            hasAnyInvokedResponse = true;
-        }
-
-        if (hasMatchingBinding && !hasAnyInvokedResponse)
-        {
-            D($"Event '{invokedEvent.name}' matched, but no responses were invoked");
-            return;
-        }
-
-        if (!hasMatchingBinding)
-        {
-            D($"No bindings matched event '{invokedEvent.name}'");
-        }
-    }
-
-    private void RegisterAllBindings()
+    private void OnEnable()
     {
         for (int i = 0; i < _bindings.Length; i++)
         {
-            Binding binding = _bindings[i];
-            if (binding == null || binding.Event == null)
-            {
-                continue;
-            }
-
-            binding.Event.RegisterListener(this);
+            _bindings[i]?.Register();
         }
+
+        D($"Enabled — {_bindings.Length} binding(s) registered");
     }
 
-    private void UnregisterAllBindings()
+    private void OnDisable()
     {
         for (int i = 0; i < _bindings.Length; i++)
         {
-            Binding binding = _bindings[i];
-            if (binding == null || binding.Event == null)
-            {
-                continue;
-            }
-
-            binding.Event.UnregisterListener(this);
+            _bindings[i]?.Unregister();
         }
+
+        D($"Disabled — {_bindings.Length} binding(s) unregistered");
     }
 
     /// <summary>

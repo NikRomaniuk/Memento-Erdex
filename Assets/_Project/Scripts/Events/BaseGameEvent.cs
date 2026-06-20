@@ -1,15 +1,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewGameEvent", menuName = "Events/Game Event")]
-public class GameEvent : ScriptableObject
+/// <summary>
+/// Abstract base for parameterized GameEvents
+/// </summary>
+public abstract class BaseGameEvent<T> : ScriptableObject
 {
     [Header("Debug")]
     [SerializeField] private bool _debug = false;
     private string _lastDebug;
-    private readonly List<IGameEventListener_Void> _listeners = new List<IGameEventListener_Void>();
+    private readonly List<IGameEventListener<T>> _listeners = new List<IGameEventListener<T>>();
 
-    public void RegisterListener(IGameEventListener_Void listener)
+    public void RegisterListener(IGameEventListener<T> listener)
     {
         if (listener == null) { return; }
 
@@ -23,7 +25,7 @@ public class GameEvent : ScriptableObject
         D($"Registered listener. Total listeners: {_listeners.Count}");
     }
 
-    public void UnregisterListener(IGameEventListener_Void listener)
+    public void UnregisterListener(IGameEventListener<T> listener)
     {
         if (listener == null) { return; }
 
@@ -36,7 +38,7 @@ public class GameEvent : ScriptableObject
         D($"Unregistered listener. Total listeners: {_listeners.Count}");
     }
 
-    public void Invoke()
+    public void Invoke(T value)
     {
         if (_listeners.Count == 0)
         {
@@ -47,13 +49,13 @@ public class GameEvent : ScriptableObject
         D($"Invoking event for {_listeners.Count} listener(s)");
 
         // Snapshot protects iteration if listeners unsubscribe while handling this event
-        List<IGameEventListener_Void> listenersSnapshot = new List<IGameEventListener_Void>(_listeners);
+        List<IGameEventListener<T>> listenersSnapshot = new List<IGameEventListener<T>>(_listeners);
         for (int i = 0; i < listenersSnapshot.Count; i++)
         {
-            IGameEventListener_Void listener = listenersSnapshot[i];
+            IGameEventListener<T> listener = listenersSnapshot[i];
             if (listener == null) { continue; } // Unregistered during invocation -> Skip
 
-            listener.OnEventInvoked(); // Notify listener
+            listener.OnEventInvoked(value);
         }
     }
 
@@ -63,9 +65,9 @@ public class GameEvent : ScriptableObject
     private void D(string message)
     {
         if (!_debug) { return; }
-        if (_lastDebug == message) { return; } // Same message -> Skip (Used to avoid spamming)
+        if (_lastDebug == message) { return; }
 
         _lastDebug = message;
-        Debug.Log($"[GameEvent:{name}] {message}", this);
+        Debug.Log($"[{GetType().Name}:{name}] {message}", this);
     }
 }
