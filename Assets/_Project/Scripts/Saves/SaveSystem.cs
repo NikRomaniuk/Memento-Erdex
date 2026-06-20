@@ -5,6 +5,7 @@ public static class SaveSystem
 {
 	private static string SettingsSavePath => Path.Combine(Application.persistentDataPath, "Settings.json");
 	private static string GameplaySavePath => Path.Combine(Application.persistentDataPath, "Gameplay.json");
+	private static string TreeGenerationSavePath => Path.Combine(Application.persistentDataPath, "TreeGeneration.json");
 
     /// <summary>
     /// Loads Settings from a JSON file without check
@@ -40,6 +41,14 @@ public static class SaveSystem
 		return TryLoadFromFile(GameplaySavePath, "gameplay", out gameplay);
 	}
 
+	/// <summary>
+	/// Tries to load TreeGeneration from a JSON file
+	/// </summary>
+	public static bool TryLoadTreeGeneration(out TreeGenerationSave treeGeneration)
+	{
+		return TryLoadFromFile(TreeGenerationSavePath, "treeGeneration", out treeGeneration);
+	}
+
     /// <summary>
     /// Saves provided Settings to a JSON file
     /// </summary>
@@ -54,6 +63,14 @@ public static class SaveSystem
 	public static void SaveGameplay(GameplaySave gameplay)
 	{
 		SaveToFile(GameplaySavePath, gameplay, "Gameplay");
+	}
+
+	/// <summary>
+	/// Saves provided TreeGeneration to a JSON file
+	/// </summary>
+	public static void SaveTreeGeneration(TreeGenerationSave treeGeneration)
+	{
+		SaveToFile(TreeGenerationSavePath, treeGeneration, "TreeGeneration");
 	}
 
 	private static bool TryLoadFromFile<T>(string savePath, string saveLabel, out T saveData) where T : new()

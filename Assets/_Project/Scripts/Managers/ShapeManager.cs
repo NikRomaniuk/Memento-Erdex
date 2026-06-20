@@ -1,10 +1,12 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ShapeManager : MonoBehaviour, IBakeable, IBuildable
 {
     [Header("References")]
     // --- References ---
-    public SpriteRenderer _spriteRenderer;
+    public SpriteRenderer _shapeRenderer;
+    public SpriteRenderer _borderRenderer;
     public SpriteRenderer _outlineRenderer;
 
     [Header("Properties")]
@@ -20,10 +22,14 @@ public class ShapeManager : MonoBehaviour, IBakeable, IBuildable
     private float _rightHeight;
     [SerializeField] private Color _defaultOutlineColor = Color.black;
 
-    private SpriteView _spriteView;
+    private SpriteView _shapeView;
+    private SpriteView _borderView;
     private OutlineView _outlineView;
 
-    public SpriteView SpriteView => _spriteView;
+    [HideInInspector] public List<ClutterManager> LoadedClutter = new List<ClutterManager>();
+
+    public SpriteView ShapeView => _shapeView;
+    public SpriteView BorderView => _borderView;
     public OutlineView OutlineView => _outlineView;
 
     private void Awake()
@@ -33,7 +39,8 @@ public class ShapeManager : MonoBehaviour, IBakeable, IBuildable
 
     private void EnsureViewsInitialized()
     {
-        _spriteView ??= new SpriteView(_spriteRenderer);
+        _shapeView ??= new SpriteView(_shapeRenderer);
+        _borderView ??= new SpriteView(_borderRenderer);
         _outlineView ??= new OutlineView(_outlineRenderer, _defaultOutlineColor);
     }
 
@@ -78,8 +85,9 @@ public class ShapeManager : MonoBehaviour, IBakeable, IBuildable
         EnsureViewsInitialized();
 
         // --- Bake visual data ---
-        shapeData.sprite = _spriteRenderer.sprite;
-        shapeData.spriteOffset = _spriteRenderer.transform.localPosition;
+        shapeData.shapeSprite = _shapeRenderer.sprite;
+        shapeData.borderSprite = _borderRenderer.sprite;
+        shapeData.spritesOffset = _shapeRenderer.transform.localPosition;
         shapeData.defaultOutlineColor = _outlineView.DefaultColor;
 
         // --- Bake points data ---
@@ -101,22 +109,12 @@ public class ShapeManager : MonoBehaviour, IBakeable, IBuildable
     {
         EnsureViewsInitialized();
 
-        // Tip flip is auto-derived from side and overrides incoming flag
-        if (data.type == ShapeData.Type.Tip)
-        {
-            isXFlipped = side == Side.Left;
-        }
-
         bool shouldFlipX = isXFlipped;
-        Vector3 spriteLocalPosition = data.spriteOffset;
-        if (side == Side.Left)
-        {
-            spriteLocalPosition.x *= -1;
-        }
 
         // --- Apply Visual Data ---
-        _spriteView.SetData(data, shouldFlipX, spriteLocalPosition);
-        _outlineView.SetData(data, shouldFlipX);
+        _shapeView.SetData(data, side, shouldFlipX, true);
+        _borderView.SetData(data, side, shouldFlipX, false);
+        _outlineView.SetData(data, side, shouldFlipX);
 
         // --- Apply Points Data ---
         Vector2 topNearPoint = data.topNearPoint;
@@ -129,11 +127,6 @@ public class ShapeManager : MonoBehaviour, IBakeable, IBuildable
             // Left side mirrors far points only on X axis
             downFarPoint.x *= -1;
             topFarPoint.x *= -1;
-
-            // Left side rule: down points exchange Y coordinates
-            float tmpY = downNearPoint.y;
-            downNearPoint.y = downFarPoint.y;
-            downFarPoint.y = tmpY;
         }
 
         if (isXFlipped)
@@ -155,7 +148,8 @@ public class ShapeManager : MonoBehaviour, IBakeable, IBuildable
         EnsureViewsInitialized();
 
         // --- Reset Visuals ---
-        _spriteView.Clear();
+        _shapeView.Clear();
+        _borderView.Clear();
         _outlineView.Clear();
 
         // --- Reset Points ---

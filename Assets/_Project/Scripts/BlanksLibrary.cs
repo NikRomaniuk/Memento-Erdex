@@ -28,6 +28,7 @@ public class BlanksLibrary : MonoBehaviour
 
     // --- State ---
     public bool IsReady { get; private set; }
+    public ClutterManager ClutterManagerPrefab => _clutterManagerPrefab;
 
     // --- Pool ---
     private ArrayList _trunkBlanks;                           // All instantiated Trunk blanks

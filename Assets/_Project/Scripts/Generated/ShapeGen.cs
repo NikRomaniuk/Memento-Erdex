@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -20,6 +21,7 @@ public class ShapeGen
     public short SpriteOrder { get; private set; }
     public Color SpriteColor { get; private set; }
     public Color OutlineColor { get; private set; }
+    public List<ClutterGen> ClutterList { get; private set; }
 
     public ShapeGen(ShapeData shapeData, Side side, bool isXFlipped, Vector2 pos, short spriteOrder, Color spriteColor, Color outlineColor)
     {
@@ -30,5 +32,6 @@ public class ShapeGen
         SpriteOrder = spriteOrder;
         SpriteColor = spriteColor;
         OutlineColor = outlineColor;
+        ClutterList = new List<ClutterGen>();
     }
 }

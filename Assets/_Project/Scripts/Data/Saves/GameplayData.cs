@@ -1,63 +1,71 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "NewGameplay", menuName = "Saves/GameplayProfile")]
-public class GameplayData : ScriptableObject
+public class GameplayData : ScriptableObject, ISaveProfile<GameplaySave>
 {
 	[Header("Data")]
-	[SerializeField] private GameplaySave _gameplay = new GameplaySave();
+	[SerializeField] private Reference_Bool _isFreeCamMode = new Reference_Bool();
 
 	[Header("Events")]
 	[SerializeField] private GameEvent _onDataChanged;
+
+	public Reference_Bool IsFreeCamMode => _isFreeCamMode;
+
+	private bool _ignoreNotifications;
+
+	private void OnEnable()
+	{
+		_isFreeCamMode.SubscribeToSource(OnReferenceValueChanged);
+	}
+
+	private void OnReferenceValueChanged(bool _)
+	{
+		if (!_ignoreNotifications)
+			InvokeDataChanged();
+	}
 
 	// ================
 	// Getters & Setters
 	// ================
 
-	// --- Seed ---
-	public int GetSeed()
+	// --- Free Cam Mode ---
+	public bool GetFreeCamMode() => _isFreeCamMode.Value;
+	public void SetFreeCamMode(bool value)
 	{
-		EnsureGameplayCache();
-		return _gameplay.Seed;
-	}
+		if (_isFreeCamMode.Value == value) { return; }
 
-	public void SetSeed(int value)
-	{
-		EnsureGameplayCache();
-
-		if (_gameplay.Seed == value) { return; }
-
-		_gameplay.Seed = value;
-		InvokeDataChanged();
+		_isFreeCamMode.SetValue(value); // OnValueChanged → InvokeDataChanged
 	}
 
 	// ================
 	// Utility Functions
 	// ================
 
-	public GameplaySave GetGameplaySave()
+	public GameplaySave ExtractSaveData()
 	{
-		EnsureGameplayCache();
-
 		return new GameplaySave
 		{
-			Seed = _gameplay.Seed,
+			//IsFreeCamMode = _isFreeCamMode.Value,
 		};
 	}
 
-	public void CopyFrom(GameplaySave source, bool notifyChange = true)
+	public void ApplySaveData(GameplaySave source, bool notifyChange = true)
 	{
-		EnsureGameplayCache();
 		if (source == null) { return; }
 
 		bool hasChanges = false;
+		_ignoreNotifications = true; // Prevent OnValueChanged from firing during copying
 
-		// --- Per Property ---
-		if (_gameplay.Seed != source.Seed)
+		// --- Free Cam Mode ---
+		/*if (_isFreeCamMode.Value != source.IsFreeCamMode)
 		{
-			_gameplay.Seed = source.Seed;
+			_isFreeCamMode.SetValue(source.IsFreeCamMode);
 			hasChanges = true;
-		}
+		}*/
 
+		_ignoreNotifications = false;
+
+		// Notify change if ANY data was changed
 		if (hasChanges && notifyChange)
 		{
 			InvokeDataChanged();
@@ -67,12 +75,5 @@ public class GameplayData : ScriptableObject
 	private void InvokeDataChanged()
 	{
 		_onDataChanged?.Invoke();
-	}
-
-	// --- Checks ---
-
-	private void EnsureGameplayCache()
-	{
-		_gameplay ??= new GameplaySave();
 	}
 }

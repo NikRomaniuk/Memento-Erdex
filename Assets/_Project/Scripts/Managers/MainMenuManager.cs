@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 
 public class MainMenuManager : MonoBehaviour
@@ -11,19 +12,25 @@ public class MainMenuManager : MonoBehaviour
         CloseOptionsMenu();
     }
 
-    public void OpenOptionsMenu()
+    public void OpenOptionsMenu(float delay = 0f)
     {
         if (_optionsMenuPanel == null) { return; }
 
-        _optionsMenuPanel.SetActive(true);
-        _optionsMenuActive = true;
+        DOVirtual.DelayedCall(delay, () =>
+        {
+            _optionsMenuPanel.SetActive(true);
+            _optionsMenuActive = true;
+        });
     }
 
-    public void CloseOptionsMenu()
+    public void CloseOptionsMenu(float delay = 0f)
     {
         if (_optionsMenuPanel == null) { return; }
 
-        _optionsMenuPanel.SetActive(false);
-        _optionsMenuActive = false;
+        DOVirtual.DelayedCall(delay, () =>
+        {
+            _optionsMenuPanel.SetActive(false);
+            _optionsMenuActive = false;
+        });
     }
 }

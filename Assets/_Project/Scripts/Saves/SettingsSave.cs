@@ -4,5 +4,6 @@ using UnityEngine;
 public class SettingsSave
 {
     // Gameplay
-    public int Seed = 0;
+    public int SavedSeed = 0;
+    public int TreeHeight = 100;
 }

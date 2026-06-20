@@ -48,6 +48,7 @@ ExportedObj/
 *.mdb
 *.opendb
 *.VC.db
+*.lscache
 
 # Unity3D generated meta files
 *.pidb.meta
@@ -77,3 +78,6 @@ crashlytics-build.properties
 # Local agent instruction files
 /copilot-instructions.md
 /AGENTS.md
+
+# Auto recovery Scenes
+/[Aa]ssets/_Recovery/

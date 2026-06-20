@@ -10,9 +10,7 @@ public class GameFlowController : MonoBehaviour
     {
         Bootstrap,
         MainMenu,
-        Gameplay,
-        Paused,
-        GameOver
+        Gameplay
     }
 
     [Header("Scenes")]
@@ -96,17 +94,6 @@ public class GameFlowController : MonoBehaviour
         if (!CanLoadScene(GameState.Gameplay, _defaultGameplaySceneName)) { return; }
 
         RequestSceneTransition(_defaultGameplaySceneName, GameState.Gameplay);
-    }
-
-    public void EnterGameOver()
-    {
-        if (_currentState != GameState.Gameplay && _currentState != GameState.Paused)
-        {
-            D($"GameOver rejected. Current state: {_currentState}");
-            return;
-        }
-
-        SetState(GameState.GameOver);
     }
 
     public void RestartGameplay()

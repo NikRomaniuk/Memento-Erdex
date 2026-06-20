@@ -44,6 +44,12 @@ Position: $root:3
 + [Sirenix.OdinInspector.TitleGroupAttribute]
 	GroupName = "Debug"
 
+# $VNMhFxpALH2y4x5SBdB8kk
+Position: $3V1PMaCsAj12BuT37Gdkto:2
++ [Sirenix.OdinInspector.TabGroupAttribute+TabSubGroupAttribute]
+	GroupName = "TreeGeneration"
+	Name = "Tree Generation"
+
 # _activeSettings
 Position: $9h577tJWaejQMzLaoKJaQN:0
 + [Sirenix.OdinInspector.LabelTextAttribute]
@@ -91,3 +97,9 @@ Position: $MQ3eRjeYpjdMBE3LV55Lm7:0
 
 # _defaultGameplay
 Position: $MQ3eRjeYpjdMBE3LV55Lm7:1
+
+# _activeTreeGeneration
+Position: $VNMhFxpALH2y4x5SBdB8kk:0
+
+# _defaultTreeGeneration
+Position: $VNMhFxpALH2y4x5SBdB8kk:1

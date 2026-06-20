@@ -19,11 +19,6 @@ public class GameFlowActions : MonoBehaviour
         _gameFlowController.StartGameplay();
     }
 
-    public void EnterGameOver()
-    {
-        _gameFlowController.EnterGameOver();
-    }
-
     public void RestartGameplay()
     {
         _gameFlowController.RestartGameplay();

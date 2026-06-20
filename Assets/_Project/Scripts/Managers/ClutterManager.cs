@@ -8,12 +8,14 @@ public class ClutterManager : MonoBehaviour, IBakeable, IBuildable
 
     // --- Properties ---
     [SerializeField] private Size _size = Size.Tiny;
+    [SerializeField] private ClutterData _data;
 
     private SpriteView _spriteView;
     private OutlineView _outlineView;
 
     public SpriteView SpriteView => _spriteView;
     public OutlineView OutlineView => _outlineView;
+    public ClutterData Data => _data;
 
     private void Awake()
     {
@@ -32,6 +34,7 @@ public class ClutterManager : MonoBehaviour, IBakeable, IBuildable
         if (data is not ClutterData clutterData) return;
         EnsureViewsInitialized();
 
+        _data = clutterData;
         clutterData.sprite = _spriteRenderer.sprite;
         clutterData.size = _size;
     }
@@ -47,6 +50,7 @@ public class ClutterManager : MonoBehaviour, IBakeable, IBuildable
     {
         EnsureViewsInitialized();
 
+        _data = data;
         _spriteView.SetData(data, isXFlipped, isYFlipped);
         _outlineView.SetData(data, isXFlipped, isYFlipped);
 
@@ -61,6 +65,7 @@ public class ClutterManager : MonoBehaviour, IBakeable, IBuildable
         _outlineView.Clear();
 
         _size = Size.Tiny;
+        _data = null;
 
 #if UNITY_EDITOR
         UnityEditor.EditorUtility.SetDirty(this);

@@ -7,12 +7,6 @@ public static class TreeLoader
     public static TreeGen GenData; // Generated tree data
     public static BlanksLibrary BlanksLibrary; // Blanks of all kinds to build the Tree with!
 
-    // --- Settings ---
-    // How many chunks to load before and after the current one
-    // Example: If current chunk is [5] and LoadRadius is 3 then loaded:
-    // 2-3-4-[5]-6-7-8
-    public static int LoadRadius = 3;
-
     // --- State ---
     // Indices of currently loaded chunks
     public static List<int> LoadedChunks = new List<int>(); 
@@ -32,6 +26,7 @@ public static class TreeLoader
         BranchLoader.BlanksLibrary = library;
         ShapeLoader.BlanksLibrary = library;
         IslandLoader.BlanksLibrary = library;
+        ClutterLoader.BlanksLibrary = library;
     }
 
     /// <summary>
@@ -45,23 +40,14 @@ public static class TreeLoader
     }
 
     /// <summary>
-    /// Ensures the given Chunk and its neighbors within <see cref="LoadRadius"/> are loaded
-    /// Unloads chunks that are no longer in range
+    /// Ensures the given set of Сhunk indices is loaded.
+    /// Loads missing Chunks and unloads Chunks outside the set
     /// </summary>
-    public static void KeepLoaded(int chunkIndex)
+    public static void KeepLoaded(HashSet<int> desired)
     {
         if (BlanksLibrary == null || GenData == null || GenData.Chunks.Count == 0) return;
-        // Debug.Log($"LoadedChunks: '{LoadedChunks.Count}'");
 
-        // --- Compute range ---
-        int min = System.Math.Max(0, chunkIndex - LoadRadius);                          // Clamp to list start
-        int max = System.Math.Min(GenData.Chunks.Count - 1, chunkIndex + LoadRadius);   // Clamp to list end
-
-        var desired = new HashSet<int>();
-        for (int i = min; i <= max; i++)
-            desired.Add(i);
-
-        // --- Unload Chunks outside range ---
+        // --- Unload Chunks outside desired set ---
         for (int i = LoadedChunks.Count - 1; i >= 0; i--)
         {
             int idx = LoadedChunks[i];
@@ -72,7 +58,7 @@ public static class TreeLoader
             }
         }
 
-        // --- Load new Chunks inside range ---
+        // --- Load new Chunks inside desired set ---
         foreach (int idx in desired)
         {
             if (!LoadedChunks.Contains(idx))

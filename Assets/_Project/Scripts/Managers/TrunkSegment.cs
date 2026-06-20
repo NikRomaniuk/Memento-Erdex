@@ -1,14 +1,14 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class TrunkSegment : MonoBehaviour, IBakeable, IBuildable
 {
-    [Header("References")]
     // --- References ---
-    public SpriteRenderer _spriteRenderer;
+    public SpriteRenderer _shapeRenderer;
+    public SpriteRenderer _borderRenderer;
     public SpriteRenderer _outlineRenderer;
 
-    [Header("Properties")]
-    // --- Maths ---
+    // --- References ---
     // Points
     [Step(0.05f)] [SerializeField] private Vector2 _downNearPoint;
     [Step(0.05f)] [SerializeField] private Vector2 _downFarPoint;
@@ -19,11 +19,15 @@ public class TrunkSegment : MonoBehaviour, IBakeable, IBuildable
     private float _topWidth;
     [SerializeField] private Color _defaultOutlineColor = Color.black;
 
-    private SpriteView _spriteView;
+    private SpriteView _shapeView;
+    private SpriteView _borderView;
     private OutlineView _outlineView;
 
-    public SpriteView SpriteView => _spriteView;
+    public SpriteView ShapeView => _shapeView;
+    public SpriteView BorderView => _borderView;
     public OutlineView OutlineView => _outlineView;
+
+    [HideInInspector] public List<ClutterManager> LoadedClutter = new List<ClutterManager>(); // Active ClutterManagers loaded for this trunk
 
     private void Awake()
     {
@@ -32,7 +36,8 @@ public class TrunkSegment : MonoBehaviour, IBakeable, IBuildable
 
     private void EnsureViewsInitialized()
     {
-        _spriteView ??= new SpriteView(_spriteRenderer);
+        _shapeView ??= new SpriteView(_shapeRenderer);
+        _borderView ??= new SpriteView(_borderRenderer);
         _outlineView ??= new OutlineView(_outlineRenderer, _defaultOutlineColor);
     }
 
@@ -62,8 +67,9 @@ public class TrunkSegment : MonoBehaviour, IBakeable, IBuildable
         EnsureViewsInitialized();
 
         // --- Bake Visual Data ---
-        trunkData.sprite = _spriteRenderer.sprite;
-        trunkData.spriteOffset = _spriteRenderer.transform.localPosition;
+        trunkData.shapeSprite = _shapeRenderer.sprite;
+        trunkData.borderSprite = _borderRenderer.sprite;
+        trunkData.spritesOffset = _shapeRenderer.transform.localPosition;
         trunkData.defaultOutlineColor = _outlineView.DefaultColor;
 
         // --- Bake Points Data ---
@@ -87,7 +93,8 @@ public class TrunkSegment : MonoBehaviour, IBakeable, IBuildable
         int flipX = side == Side.Left ? -1 : 1;
 
         // --- Apply Visual Data ---
-        _spriteView.SetData(data, side, isYFlipped);
+        _shapeView.SetData(data, side, isYFlipped, true);
+        _borderView.SetData(data, side, isYFlipped, false);
         _outlineView.SetData(data, side, isYFlipped);
 
         // --- Apply Points Data ---
@@ -114,7 +121,8 @@ public class TrunkSegment : MonoBehaviour, IBakeable, IBuildable
         EnsureViewsInitialized();
 
         // --- Reset Visuals ---
-        _spriteView.Clear();
+        _shapeView.Clear();
+        _borderView.Clear();
         _outlineView.Clear();
 
         // --- Reset Points ---

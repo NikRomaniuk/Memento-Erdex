@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -6,6 +7,7 @@ using UnityEngine;
 /// <list>
 ///   <item> - TrunkData: The ScriptableObject containing STATIC Data </item>
 ///   <item> - Settings: Extra DYNAMIC Data needed for loading the <see cref="TrunkSegment"/> into Scene </item>
+///   <item> - ClutterList: List of <see cref="ClutterGen"/> </item>
 /// </list>
 /// </summary>
 public class TrunkGen
@@ -21,6 +23,9 @@ public class TrunkGen
     public Color SpriteColor { get; private set; }
     public Color OutlineColor { get; private set; }
 
+    // --- Childs ---
+    public List<ClutterGen> ClutterList { get; private set; }
+
     public TrunkGen(TrunkData trunkData, Side side, bool isYFlipped, float height, short spriteOrder, Color spriteColor, Color outlineColor)
     {
         TrunkData = trunkData;
@@ -30,5 +35,6 @@ public class TrunkGen
         SpriteOrder = spriteOrder;
         SpriteColor = spriteColor;
         OutlineColor = outlineColor;
+        ClutterList = new List<ClutterGen>();
     }
 }

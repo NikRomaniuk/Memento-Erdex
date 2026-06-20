@@ -12,6 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c76ddb9d0650dda49a525f30e869cead, type: 3}
   m_Name: SceneCache
   m_EditorClassIdentifier: SleepySceneTool::Sleepy.SceneTool.SceneCache
-  EditingScenesPathsCache:
-  - Assets/_Project/Scenes/TreeFootStage.unity
+  EditingScenesPathsCache: []
   EntranceScenePath: Assets/_Project/Scenes/Bootstrap.unity

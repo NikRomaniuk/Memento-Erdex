@@ -9,6 +9,8 @@ public class SaveController : MonoBehaviour
     [SerializeField] private SettingsData _defaultSettings;
     [SerializeField] private GameplayData _activeGameplay;
     [SerializeField] private GameplayData _defaultGameplay;
+    [SerializeField] private TreeGenerationData _activeTreeGeneration;
+    [SerializeField] private TreeGenerationData _defaultTreeGeneration;
 
     // --- Config ---
     [SerializeField, Min(0f)] private float _saveDelaySeconds = 2f;
@@ -41,54 +43,26 @@ public class SaveController : MonoBehaviour
     // Main Functions
     // =============
 
-    // TODO: Make Generic
     public void Load()
     {
-        bool hasLoadedAnySave = false;
+        bool anyLoaded = false;
 
-        if (SaveSystem.TryLoadSettings(out SettingsSave loadedSettings))
-        {
-            if (HasActiveSettings())
-            {
-                _activeSettings.CopyFrom(loadedSettings, false);
-                hasLoadedAnySave = true;
-            }
+        if (TryLoadProfile(_activeSettings, _defaultSettings,
+            () => SaveSystem.TryLoadSettings(out var s) ? s : null,
+            "Settings"))
+            anyLoaded = true;
 
-            D("Settings loaded");
-        }
-        else if (HasDefaultSettings())
-        {
-            if (HasActiveSettings())
-            {
-                _activeSettings.CopyFrom(_defaultSettings.GetSettingsSave(), false);
-                hasLoadedAnySave = true;
-            }
+        if (TryLoadProfile(_activeGameplay, _defaultGameplay,
+            () => SaveSystem.TryLoadGameplay(out var g) ? g : null,
+            "Gameplay"))
+            anyLoaded = true;
 
-            D("Settings fallback loaded");
-        }
+        if (TryLoadProfile(_activeTreeGeneration, _defaultTreeGeneration,
+            () => SaveSystem.TryLoadTreeGeneration(out var t) ? t : null,
+            "TreeGeneration"))
+            anyLoaded = true;
 
-        if (SaveSystem.TryLoadGameplay(out GameplaySave loadedGameplay))
-        {
-            if (HasActiveGameplay())
-            {
-                _activeGameplay.CopyFrom(loadedGameplay, false);
-                hasLoadedAnySave = true;
-            }
-
-            D("Gameplay loaded");
-        }
-        else if (HasDefaultGameplay())
-        {
-            if (HasActiveGameplay())
-            {
-                _activeGameplay.CopyFrom(_defaultGameplay.GetGameplaySave(), false);
-                hasLoadedAnySave = true;
-            }
-
-            D("Gameplay fallback loaded");
-        }
-
-        if (!hasLoadedAnySave) { return; }
+        if (!anyLoaded) { return; }
 
         SaveNow();
         _onSavesLoaded?.Invoke();
@@ -102,23 +76,18 @@ public class SaveController : MonoBehaviour
 
     public void SaveNow()
     {
-        bool hasSavedAny = false;
+        bool anySaved = false;
 
-        if (HasActiveSettings())
-        {
-            SaveSystem.SaveSettings(_activeSettings.GetSettingsSave());
-            hasSavedAny = true;
-            D("Settings saved");
-        }
+        if (SaveProfile(_activeSettings, s => SaveSystem.SaveSettings(s), "Settings"))
+            anySaved = true;
 
-        if (HasActiveGameplay())
-        {
-            SaveSystem.SaveGameplay(_activeGameplay.GetGameplaySave());
-            hasSavedAny = true;
-            D("Gameplay saved");
-        }
+        if (SaveProfile(_activeGameplay, g => SaveSystem.SaveGameplay(g), "Gameplay"))
+            anySaved = true;
 
-        if (!hasSavedAny) { return; }
+        if (SaveProfile(_activeTreeGeneration, t => SaveSystem.SaveTreeGeneration(t), "TreeGeneration"))
+            anySaved = true;
+
+        if (!anySaved) { return; }
 
         ClearDirtyState();
     }
@@ -174,37 +143,53 @@ public class SaveController : MonoBehaviour
         _autosaveTimer = 0f;
     }
 
-    // --- Checks ---
-    private bool HasActiveSettings()
-    {
-        if (_activeSettings != null) { return true; }
+    // --- Generic Load / Save Helpers ---
 
-        D("Active Settings is missing");
+    private bool TryLoadProfile<TSave>(
+        ISaveProfile<TSave> active,
+        ISaveProfile<TSave> defaultProfile,
+        System.Func<TSave> tryLoad,
+        string label) where TSave : class, new()
+    {
+        if (active == null)
+        {
+            D($"Active {label} is missing");
+            return false;
+        }
+
+        TSave loaded = tryLoad();
+        if (loaded != null)
+        {
+            active.ApplySaveData(loaded, false);
+            D($"{label} loaded");
+            return true;
+        }
+
+        if (defaultProfile != null)
+        {
+            active.ApplySaveData(defaultProfile.ExtractSaveData(), false);
+            D($"{label} fallback loaded");
+            return true;
+        }
+
+        D($"Default {label} Profile is missing");
         return false;
     }
 
-    private bool HasDefaultSettings()
+    private bool SaveProfile<TSave>(
+        ISaveProfile<TSave> active,
+        System.Action<TSave> saveFunc,
+        string label) where TSave : new()
     {
-        if (_defaultSettings != null) { return true; }
+        if (active == null)
+        {
+            D($"Active {label} is missing");
+            return false;
+        }
 
-        D("Default Settings Profile is missing");
-        return false;
-    }
-
-    private bool HasActiveGameplay()
-    {
-        if (_activeGameplay != null) { return true; }
-
-        D("Active Gameplay is missing");
-        return false;
-    }
-
-    private bool HasDefaultGameplay()
-    {
-        if (_defaultGameplay != null) { return true; }
-
-        D("Default Gameplay Profile is missing");
-        return false;
+        saveFunc(active.ExtractSaveData());
+        D($"{label} saved");
+        return true;
     }
 
     // ====

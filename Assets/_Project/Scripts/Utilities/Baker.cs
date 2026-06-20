@@ -15,6 +15,8 @@ public class Baker : MonoBehaviour
     [SerializeField] private TrunkAvaliableSide _avaliableSide = TrunkAvaliableSide.Both;
     [ShowIf(nameof(_blankType), BlanksLibrary.BlankType.Trunk)]
     [SerializeField] private bool _canBeFlippedVertically = true;
+    [ShowIf("@_blankType == BlanksLibrary.BlankType.Trunk || _blankType == BlanksLibrary.BlankType.Shape")]
+    [SerializeField] private ClutterList _clutterList;
 
     // --- Branch Data ---
     [ShowIf(nameof(_blankType), BlanksLibrary.BlankType.Branch)]
@@ -223,6 +225,15 @@ public class Baker : MonoBehaviour
                 // --- Bake Component Data ---
                 _bakeable.GatherData(trunkData);
 
+                if (_clutterList == null)
+                {
+                    Debug.LogWarning("ClutterList is not assigned. ClutterSlots not updated");
+                }
+                else
+                {
+                    trunkData.clutterSlots = _clutterList.GetClutterSlots();
+                }
+
 #if UNITY_EDITOR
                 UnityEditor.EditorUtility.SetDirty(trunkData);
                 UnityEditor.AssetDatabase.SaveAssets();
@@ -289,6 +300,15 @@ public class Baker : MonoBehaviour
 
                 // --- Bake Component Data ---
                 _bakeable.GatherData(shapeData);
+
+                if (_clutterList == null)
+                {
+                    Debug.LogWarning("ClutterList is not assigned. ClutterSlots not updated");
+                }
+                else
+                {
+                    shapeData.clutterSlots = _clutterList.GetClutterSlots();
+                }
 
 #if UNITY_EDITOR
                 UnityEditor.EditorUtility.SetDirty(shapeData);

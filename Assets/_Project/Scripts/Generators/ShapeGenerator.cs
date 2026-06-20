@@ -24,10 +24,13 @@ public class ShapeGenerator : MonoBehaviour
     private readonly List<ShapeData> _basePool = new List<ShapeData>();
     private readonly List<ShapeData> _tipPool = new List<ShapeData>();
 
+    private ClutterGenerator _clutterGenerator;
+
     private void Awake()
     {
         // --- Preparations ---
         SplitPool();
+        _clutterGenerator = GetComponent<ClutterGenerator>();
     }
 
     private void SplitPool()
@@ -108,12 +111,16 @@ public class ShapeGenerator : MonoBehaviour
             {
                 isXFlipped = random.Next(0, 2) == 1;
             }
+            short spriteOrder = ComputeSpriteOrder(currentPos.x, currentPos.y);
             Color resolvedOutlineColor = _useDefaultOutlineColor
                 ? selectedShapeData.defaultOutlineColor
                 : _outlineColor;
 
-            ShapeGen shapeGen = new ShapeGen(selectedShapeData, shapeSide, isXFlipped, currentPos, 100, _color, resolvedOutlineColor);
+            ShapeGen shapeGen = new ShapeGen(selectedShapeData, shapeSide, isXFlipped, currentPos, spriteOrder, _color, resolvedOutlineColor);
             branchGen.Shapes.Add(shapeGen);
+
+            // Generate Clutter for this Shape
+            _clutterGenerator.GenerateShapeClutter(random, shapeGen);
 
             // Left branches extend towards negative X, right branches towards positive X
             float nextXDelta = selectedShapeData.Length;
@@ -198,5 +205,13 @@ public class ShapeGenerator : MonoBehaviour
                 side = Side.Right;
                 return false;
         }
+    }
+
+    private short ComputeSpriteOrder(float xPos, float yPos)
+    {
+        int yPart = Mathf.Abs(Mathf.RoundToInt(yPos * 20)) % 100;
+        int xPart = Mathf.Abs(Mathf.RoundToInt(xPos * 20)) % 100;
+        int order = (yPart * 100) + xPart;
+        return (short)order;
     }
 }

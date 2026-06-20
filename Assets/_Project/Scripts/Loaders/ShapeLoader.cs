@@ -15,19 +15,31 @@ public static class ShapeLoader
 
         // --- Components ---
         Builder blankBuilder = blank.GetComponent<Builder>();
-        SpriteRenderer spriteRenderer = blank._spriteRenderer;
+        SpriteRenderer shapeRenderer = blank._shapeRenderer;
+        SpriteRenderer borderRenderer = blank._borderRenderer;
 
         // --- Load ---
         // Initialize blank with data & extra settings
         blankBuilder.Initialize(shape.ShapeData, shape.Side, shape.IsXFlipped);
 
+        // --- Load Clutter ---
+        if (shape.ClutterList != null)
+        {
+            foreach (ClutterGen clutter in shape.ClutterList)
+            {
+                ClutterManager loadedClutter = ClutterLoader.Load(clutter);
+                blank.LoadedClutter.Add(loadedClutter);
+            }
+        }
+
         // Set position
         blank.transform.position = new Vector3(shape.Pos.x, shape.Pos.y, blank.transform.position.z);
 
         // Set sorting order
-        spriteRenderer.sortingOrder = shape.SpriteOrder;
+        shapeRenderer.sortingOrder = shape.SpriteOrder;
+        borderRenderer.sortingOrder = shape.SpriteOrder;
         // Set sprite color
-        spriteRenderer.color = shape.SpriteColor;
+        shapeRenderer.color = shape.SpriteColor;
         // Set outline color
         blank.OutlineView?.ApplyColor(shape.OutlineColor);
 
@@ -42,17 +54,23 @@ public static class ShapeLoader
     /// </summary>
     public static void Unload(ShapeManager shape)
     {
+        // --- Unload Clutter ---
+        foreach (ClutterManager clutter in shape.LoadedClutter)
+            ClutterLoader.Unload(clutter);
+        shape.LoadedClutter.Clear();
+
         // --- Components ---
         Builder blankBuilder = shape.GetComponent<Builder>();
-        SpriteRenderer spriteRenderer = shape._spriteRenderer;
-
+        SpriteRenderer shapeRenderer = shape._shapeRenderer;
+        SpriteRenderer borderRenderer = shape._borderRenderer;
         // --- Unload ---
         // Clear all loaded data from the blank
         blankBuilder.Clear();
         shape.transform.position = Vector3.zero; // Reset position
         shape.gameObject.SetActive(false); // Deactivate
-        spriteRenderer.sortingOrder = 0; // Reset sorting order
-        spriteRenderer.color = Color.white; // Reset sprite color
+        shapeRenderer.sortingOrder = 0; // Reset sorting order
+        borderRenderer.sortingOrder = 0; // Reset sorting order
+        shapeRenderer.color = Color.white; // Reset sprite color
         shape.OutlineView?.ResetColor(); // Reset outline color
 
         // --- Return to Library ---

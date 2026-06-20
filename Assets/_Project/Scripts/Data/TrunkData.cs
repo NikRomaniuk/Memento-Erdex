@@ -7,6 +7,28 @@ public enum TrunkAvaliableSide
     Right
 }
 
+[System.Serializable]
+public struct ClutterSlot
+{
+    public bool isStatic;
+    // Local position of Clutter Slot center along Trunk
+    [Step(0.05f)] public Vector2 pos;
+
+    // Used when isStatic == True
+    public ClutterData staticClutterData;
+
+    // Used when isStatic == False
+    public Size size;
+
+    public ClutterSlot(bool isStatic, Vector2 pos, ClutterData staticClutterData, Size size)
+    {
+        this.isStatic = isStatic;
+        this.pos = pos;
+        this.staticClutterData = staticClutterData;
+        this.size = size;
+    }
+}
+
 [CreateAssetMenu(fileName = "NewTrunkData", menuName = "Entries/TrunkData")]
 public class TrunkData : ScriptableObject, IData
 {
@@ -18,29 +40,24 @@ public class TrunkData : ScriptableObject, IData
     // ====================================
     // GOOD EXAMPLE -> everything below lol
 
-    [Header("Main Configuration")]
-    // Unique identifier (e.g. "stone_sharp_01", "mossy_rounded_02")
-    public string id;
-    // Visual representation
-    public Sprite sprite;
-    // Sprite offset
-    [Step(0.05f)] public Vector2 spriteOffset;
-    // Default outline color
-    public Color defaultOutlineColor = Color.black;
-    // On which side this trunk can be on
-    public TrunkAvaliableSide avaliableSide = TrunkAvaliableSide.Both;
-    // Can sprite be flipped vertically
-    public bool canBeYFlipped = true;
+    // --- Main ---
+    public string id; // Unique identifier (e.g. "stone_sharp_01", "mossy_rounded_02")
+    public Sprite shapeSprite;
+    public Sprite borderSprite;
+    [Step(0.05f)] public Vector2 spritesOffset;
+    public Color defaultOutlineColor = Color.black; // Default outline color
+    public TrunkAvaliableSide avaliableSide = TrunkAvaliableSide.Both; // On which side this trunk can be on
+    public bool canBeYFlipped = true; // Can sprite be flipped vertically
     
-    [Header("Points Configuration")]
-    [Step(0.05f)] public Vector2 downNearPoint; // heart
+    // --- Points ---
+    [Step(0.05f)] public Vector2 downNearPoint; // heart (anchor)
     [Step(0.05f)] public Vector2 downFarPoint;
     [Step(0.05f)] public Vector2 topNearPoint;
     [Step(0.05f)] public Vector2 topFarPoint;
 
+    // --- Clutter Slots ---
+    public ClutterSlot[] clutterSlots;
+
     // Height calculated as distance from downNearPoint to topNearPoint
     public float Height => Vector2.Distance(downNearPoint, topNearPoint);
-
-
-    //[Header("Gameplay Configuration")]
 }

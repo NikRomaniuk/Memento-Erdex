@@ -19,8 +19,16 @@ public class ClutterGen
     public bool IsYFlipped { get; private set; }
     public short SpriteOrder { get; private set; }
     public Color OutlineColor { get; private set; }
+    public int SortingLayerId { get; private set; }
 
-    public ClutterGen(ClutterData clutterData, Vector2 pos, bool isXFlipped, bool isYFlipped, short spriteOrder, Color outlineColor)
+    public ClutterGen(
+        ClutterData clutterData,
+        Vector2 pos,
+        bool isXFlipped,
+        bool isYFlipped,
+        short spriteOrder,
+        Color outlineColor,
+        int sortingLayerId)
     {
         ClutterData = clutterData;
         Pos = pos;
@@ -28,5 +36,6 @@ public class ClutterGen
         IsYFlipped = isYFlipped;
         SpriteOrder = spriteOrder;
         OutlineColor = outlineColor;
+        SortingLayerId = sortingLayerId;
     }
 }

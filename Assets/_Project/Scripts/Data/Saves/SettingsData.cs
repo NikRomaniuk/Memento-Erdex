@@ -1,63 +1,90 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "NewSettings", menuName = "Saves/SettingsProfile")]
-public class SettingsData : ScriptableObject
+public class SettingsData : ScriptableObject, ISaveProfile<SettingsSave>
 {
 	[Header("Data")]
-	[SerializeField] private SettingsSave _settings = new SettingsSave();
+	[SerializeField] private Reference_Int _savedSeed = new Reference_Int();
+	[SerializeField] private Reference_Int _treeHeight = new Reference_Int();
 
 	[Header("Events")]
 	[SerializeField] private GameEvent _onDataChanged;
 
-    // ================
-    // Getters & Setters
-    // ================
+	public Reference_Int SavedSeed => _savedSeed;
+	public Reference_Int TreeHeight => _treeHeight;
 
-    // --- Seed ---
-	public int GetSeed()
+	private bool _ignoreNotifications;
+
+	private void OnEnable()
 	{
-		EnsureSettingsCache();
-		return _settings.Seed;
+		_savedSeed.SubscribeToSource(OnReferenceValueChanged);
+		_treeHeight.SubscribeToSource(OnReferenceValueChanged);
 	}
 
+	private void OnReferenceValueChanged(int _)
+	{
+		if (!_ignoreNotifications)
+			InvokeDataChanged();
+	}
+
+	// ================
+	// Getters & Setters
+	// ================
+
+	// --- Seed ---
+	public int GetSeed() => _savedSeed.Value;
 	public void SetSeed(int value)
 	{
-		EnsureSettingsCache();
+		if (_savedSeed.Value == value) { return; }
 
-		if (_settings.Seed == value) { return; }
-
-		_settings.Seed = value;
-		InvokeDataChanged();
+		_savedSeed.SetValue(value); // OnValueChanged -> InvokeDataChanged
 	}
 
-    // ================
-    // Utility Functions
-    // ================
-
-	public SettingsSave GetSettingsSave()
+	// --- Tree Height ---
+	public int GetTreeHeight() => _treeHeight.Value;
+	public void SetTreeHeight(int value)
 	{
-		EnsureSettingsCache();
+		if (_treeHeight.Value == value) { return; }
 
+		_treeHeight.SetValue(value);
+	}
+
+	// ================
+	// Utility Functions
+	// ================
+
+	public SettingsSave ExtractSaveData()
+	{
 		return new SettingsSave
 		{
-			Seed = _settings.Seed,
+			SavedSeed = _savedSeed.Value,
+			TreeHeight = _treeHeight.Value,
 		};
 	}
 
-	public void CopyFrom(SettingsSave source, bool notifyChange = true)
+	public void ApplySaveData(SettingsSave source, bool notifyChange = true)
 	{
-        EnsureSettingsCache();
 		if (source == null) { return; }
 
 		bool hasChanges = false;
+		_ignoreNotifications = true; // Prevent OnValueChanged from firing during copying
 
-        // --- Per Property ---
-		if (_settings.Seed != source.Seed)
+		// --- Seed ---
+		if (_savedSeed.Value != source.SavedSeed)
 		{
-			_settings.Seed = source.Seed;
+			_savedSeed.SetValue(source.SavedSeed);
+			hasChanges = true;
+		}
+		// --- Tree Height ---
+		if (_treeHeight.Value != source.TreeHeight)
+		{
+			_treeHeight.SetValue(source.TreeHeight);
 			hasChanges = true;
 		}
 
+		_ignoreNotifications = false;
+		
+		// Notify change if ANY data was changed
 		if (hasChanges && notifyChange)
 		{
 			InvokeDataChanged();
@@ -67,12 +94,5 @@ public class SettingsData : ScriptableObject
 	private void InvokeDataChanged()
 	{
 		_onDataChanged?.Invoke();
-	}
-
-    // --- Checks ---
-
-	private void EnsureSettingsCache()
-	{
-		_settings ??= new SettingsSave();
 	}
 }

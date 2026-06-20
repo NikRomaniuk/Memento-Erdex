@@ -7,7 +7,7 @@ public class ChunkGenerator : MonoBehaviour
     public class StaticChunkEntry
     {
         public ChunkData ChunkData;
-        [Step(0.05f)] public float Height;
+        public Reference_Int Height;
     }
 
     [Header("Chunk Pool")]
