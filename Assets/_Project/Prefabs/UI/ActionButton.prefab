@@ -552,14 +552,14 @@ MonoBehaviour:
     scale: 3
     offset: {x: 0, y: 0}
     fadeDuration: 0.1
-  sfxSource: 2
+  sfxSource: 1
   stylerPreset: {fileID: 11400000, guid: 62d3d5000dc484241a42d255128f3aa7, type: 2}
   highlightedSFX:
     stylerID: Hover SFX
-    audioClip: {fileID: 0}
+    audioClip: {fileID: 8300000, guid: 974c9fe5579bfea4392e8c75307d0a55, type: 3}
   pressedSFX:
     stylerID: Click SFX
-    audioClip: {fileID: 0}
+    audioClip: {fileID: 8300000, guid: 3111237006f05aa4d95991e9417d00c2, type: 3}
   selectedSFX:
     stylerID: 
     audioClip: {fileID: 0}
