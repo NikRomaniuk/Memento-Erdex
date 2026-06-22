@@ -465,6 +465,7 @@ GameObject:
   - component: {fileID: 718025536494840907}
   - component: {fileID: 6622882523241707163}
   - component: {fileID: 341495144007816622}
+  - component: {fileID: 1063732853649494466}
   - component: {fileID: 4414839803972665972}
   - component: {fileID: 4095458735227576445}
   m_Layer: 5
@@ -552,7 +553,7 @@ MonoBehaviour:
     scale: 3
     offset: {x: 0, y: 0}
     fadeDuration: 0.1
-  sfxSource: 1
+  sfxSource: 0
   stylerPreset: {fileID: 11400000, guid: 62d3d5000dc484241a42d255128f3aa7, type: 2}
   highlightedSFX:
     stylerID: Hover SFX
@@ -576,6 +577,18 @@ MonoBehaviour:
   onClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 1063732853649494466}
+        m_TargetAssemblyTypeName: UIAudioPlayer, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: 62cecbc12fec6104bb9edee0bfcca344, type: 2}
+          m_ObjectArgumentAssemblyTypeName: SoundData, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 4414839803972665972}
         m_TargetAssemblyTypeName: GameEventSender, Assembly-CSharp
         m_MethodName: InvokeGameEvent
@@ -599,7 +612,19 @@ MonoBehaviour:
       m_Calls: []
   onPointerEnter:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1063732853649494466}
+        m_TargetAssemblyTypeName: UIAudioPlayer, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: ff73bc9553b19a6438a99dda55be9248, type: 2}
+          m_ObjectArgumentAssemblyTypeName: SoundData, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onPointerExit:
     m_PersistentCalls:
       m_Calls: []
@@ -1136,6 +1161,20 @@ MonoBehaviour:
   referencesFoldout: 0
   settingsFoldout: 1
   eventsFoldout: 0
+--- !u!114 &1063732853649494466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5504008889337488472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f0a99bdc969c344a919102fc81916b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIAudioPlayer
+  _eventChannel: {fileID: 11400000, guid: 5d33c1d61bb5ead4eb65cfe829440050, type: 2}
+  _debug: 0
 --- !u!114 &4414839803972665972
 MonoBehaviour:
   m_ObjectHideFlags: 0

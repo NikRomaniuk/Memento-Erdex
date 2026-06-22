@@ -315,6 +315,57 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef7f648930766b54d87873b9700540df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameEventSender
+--- !u!1 &631319025
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 631319026}
+  - component: {fileID: 631319027}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &631319026
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 631319025}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &631319027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 631319025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9dad6f2e7a3aa2a4a8d6f9bf61a856fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioManager
+  _sfxEventChannel: {fileID: 11400000, guid: 3600bb57d486dec4c8309f51b67058a8, type: 2}
+  _uiEventChannel: {fileID: 11400000, guid: 5d33c1d61bb5ead4eb65cfe829440050, type: 2}
+  _audioSourcePrefab: {fileID: 2179419405424103932, guid: 857713c727eca434baa0c5654275aae0, type: 3}
+  _defaultCapacity: 30
+  _maxPoolSize: 50
+  _poolContainer: {fileID: 0}
+  _debug: 1
 --- !u!1 &755403240
 GameObject:
   m_ObjectHideFlags: 0
@@ -611,4 +662,5 @@ SceneRoots:
   m_Roots:
   - {fileID: 427205425}
   - {fileID: 1470409230}
+  - {fileID: 631319026}
   - {fileID: 755403243}
