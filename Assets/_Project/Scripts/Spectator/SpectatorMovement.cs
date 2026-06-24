@@ -7,7 +7,6 @@ public class SpectatorMovement : MonoBehaviour
     [SerializeField] private SpectatorManager _spectatorManager;
 
     // --- Debug ---
-    [SerializeField] private bool _drawDebug = true;
     [SerializeField] private bool _debug = false;
 
     // --- Cache ---
