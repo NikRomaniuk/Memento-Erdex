@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.cysharp.unitask": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",
     "com.hangekinobaka.sleepy-scene-tool": "https://github.com/hangekinobaka/sleepy-scene-tool.git?path=SleepyScene_Unity/Assets/Plugins/SleepySceneTool",
     "com.unity.2d.animation": "13.0.4",
     "com.unity.2d.aseprite": "3.0.1",
