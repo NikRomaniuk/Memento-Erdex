@@ -1,9 +1,13 @@
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 //[DefaultExecutionOrder(-900)]
 [DisallowMultipleComponent]
 public class SaveController : MonoBehaviour
 {
+    // --- Singleton ---
+    public static SaveController Instance { get; private set; }
+
     // --- Data References ---
     [SerializeField] private SettingsData _activeSettings;
     [SerializeField] private SettingsData _defaultSettings;
@@ -28,9 +32,28 @@ public class SaveController : MonoBehaviour
     private float _saveDelayTimer;
     private float _autosaveTimer;
 
+    // ========
+    // LIFECYCLE
+    // ========
+
     private void Awake()
     {
+        // Force Singleton
+        if (Instance != null && Instance != this)
+        {
+            Debug.LogWarning("[SaveController] Duplicate instance destroyed.", this);
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
         DontDestroyOnLoad(gameObject);
+    }
+
+    private void OnDestroy()
+    {
+        if (Instance == this)
+            Instance = null;
     }
 
     private void Update()
@@ -39,10 +62,14 @@ public class SaveController : MonoBehaviour
         TickAutosave();
     }
 
-    // =============
-    // Main Functions
-    // =============
+    // =========
+    // PUBLIC API
+    // =========
 
+    /// <summary>
+    /// Synchronous load (backward compatibility).
+    /// Prefer <see cref="LoadAsync"/> for new code
+    /// </summary>
     public void Load()
     {
         bool anyLoaded = false;
@@ -68,12 +95,42 @@ public class SaveController : MonoBehaviour
         _onSavesLoaded?.Invoke();
     }
 
+    /// <summary>
+    /// Asynchronously loads all save profiles from disk, applies them,
+    /// saves a fresh copy, and invokes the SavesLoaded event
+    /// </summary>
+    public async UniTask LoadAsync()
+    {
+        bool anyLoaded = false;
+
+        var (settingsOk, settingsData) = await SaveSystem.TryLoadSettingsAsync();
+        if (TryApplyLoadedData(_activeSettings, _defaultSettings, settingsData, settingsOk, "Settings"))
+            anyLoaded = true;
+
+        var (gameplayOk, gameplayData) = await SaveSystem.TryLoadGameplayAsync();
+        if (TryApplyLoadedData(_activeGameplay, _defaultGameplay, gameplayData, gameplayOk, "Gameplay"))
+            anyLoaded = true;
+
+        var (treeOk, treeData) = await SaveSystem.TryLoadTreeGenerationAsync();
+        if (TryApplyLoadedData(_activeTreeGeneration, _defaultTreeGeneration, treeData, treeOk, "TreeGeneration"))
+            anyLoaded = true;
+
+        if (!anyLoaded) { return; }
+
+        await SaveNowAsync();
+        _onSavesLoaded?.Invoke();
+    }
+
     public void Save()
     {
         MarkDirty();
         D("Save marked Dirty");
     }
 
+    /// <summary>
+    /// Synchronous immediate save (backward compatibility).
+    /// Prefer <see cref="SaveNowAsync"/> for new code
+    /// </summary>
     public void SaveNow()
     {
         bool anySaved = false;
@@ -86,6 +143,51 @@ public class SaveController : MonoBehaviour
 
         if (SaveProfile(_activeTreeGeneration, t => SaveSystem.SaveTreeGeneration(t), "TreeGeneration"))
             anySaved = true;
+
+        if (!anySaved) { return; }
+
+        ClearDirtyState();
+    }
+
+    /// <summary>
+    /// Asynchronously saves all active profiles to disk immediately
+    /// </summary>
+    public async UniTask SaveNowAsync()
+    {
+        bool anySaved = false;
+
+        if (_activeSettings != null)
+        {
+            await SaveSystem.SaveSettingsAsync(_activeSettings.ExtractSaveData());
+            anySaved = true;
+            D("Settings saved (async)");
+        }
+        else
+        {
+            D("Active Settings is missing");
+        }
+
+        if (_activeGameplay != null)
+        {
+            await SaveSystem.SaveGameplayAsync(_activeGameplay.ExtractSaveData());
+            anySaved = true;
+            D("Gameplay saved (async)");
+        }
+        else
+        {
+            D("Active Gameplay is missing");
+        }
+
+        if (_activeTreeGeneration != null)
+        {
+            await SaveSystem.SaveTreeGenerationAsync(_activeTreeGeneration.ExtractSaveData());
+            anySaved = true;
+            D("TreeGeneration saved (async)");
+        }
+        else
+        {
+            D("Active TreeGeneration is missing");
+        }
 
         if (!anySaved) { return; }
 
@@ -105,7 +207,7 @@ public class SaveController : MonoBehaviour
         if (_saveDelayTimer > 0f) { return; }
 
         D("Dirty Save delay elapsed");
-        SaveNow();
+        SaveNowAsync().Forget();
     }
 
     private void TickAutosave()
@@ -124,7 +226,7 @@ public class SaveController : MonoBehaviour
 
         _autosaveTimer = 0f;
         D("Autosave interval elapsed");
-        SaveNow();
+        SaveNowAsync().Forget();
     }
 
     // --- Dirty State ---
@@ -169,6 +271,40 @@ public class SaveController : MonoBehaviour
         {
             active.ApplySaveData(defaultProfile.ExtractSaveData(), false);
             D($"{label} fallback loaded");
+            return true;
+        }
+
+        D($"Default {label} Profile is missing");
+        return false;
+    }
+
+    /// <summary>
+    /// Applies loaded async data or falls back to defaults
+    /// </summary>
+    private bool TryApplyLoadedData<TSave>(
+        ISaveProfile<TSave> active,
+        ISaveProfile<TSave> defaultProfile,
+        TSave loadedData,
+        bool loadSuccess,
+        string label) where TSave : class, new()
+    {
+        if (active == null)
+        {
+            D($"Active {label} is missing");
+            return false;
+        }
+
+        if (loadSuccess)
+        {
+            active.ApplySaveData(loadedData, false);
+            D($"{label} loaded (async)");
+            return true;
+        }
+
+        if (defaultProfile != null)
+        {
+            active.ApplySaveData(defaultProfile.ExtractSaveData(), false);
+            D($"{label} fallback loaded (async)");
             return true;
         }
 

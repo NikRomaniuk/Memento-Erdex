@@ -1,4 +1,5 @@
 using System;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -191,7 +192,9 @@ public class GameFlowController : MonoBehaviour
 
     private void RequestSceneTransition(string sceneName, GameState targetState)
     {
-        if (_isSceneTransitionInProgress)
+        SceneTransitionManager stm = SceneTransitionManager.Instance;
+
+        if (stm != null && stm.IsTransitionInProgress)
         {
             D($"Scene transition ignored. Already loading another scene. Target: {sceneName}");
             return;
@@ -202,6 +205,18 @@ public class GameFlowController : MonoBehaviour
 
         D($"Loading scene '{sceneName}' for target state '{targetState}'");
 
+        if (stm == null)
+        {
+            Debug.LogError("[GameFlowController] SceneTransitionManager.Instance is null. Fallback to sync load");
+            FallbackLoadScene(sceneName);
+            return;
+        }
+
+        stm.TransitionToAsync(sceneName).Forget();
+    }
+
+    private void FallbackLoadScene(string sceneName)
+    {
         try
         {
             SceneManager.LoadScene(sceneName, LoadSceneMode.Single);

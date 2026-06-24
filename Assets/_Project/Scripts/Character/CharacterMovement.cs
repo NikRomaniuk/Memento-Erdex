@@ -8,7 +8,6 @@ public class CharacterMovement : MonoBehaviour
     [SerializeField] private CharacterManager _characterManager;
 
     // --- Debug ---
-    [SerializeField] private bool _drawDebug = true;
     [SerializeField] private bool _debug = false;
 
     // --- Cache ---
