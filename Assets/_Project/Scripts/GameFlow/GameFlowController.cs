@@ -3,7 +3,6 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-//[DefaultExecutionOrder(-1000)]
 [DisallowMultipleComponent]
 public class GameFlowController : MonoBehaviour
 {
@@ -19,11 +18,7 @@ public class GameFlowController : MonoBehaviour
     [SerializeField] private string _mainMenuSceneName = "MainMenu";
     [SerializeField] private string _defaultGameplaySceneName = "TreeFootStage";
 
-    [Header("Bootstrap")]
-    [SerializeField, Min(0f)] private float _bootstrapRetryIntervalSeconds = 0.5f;
-
     // --- Events ---
-    [SerializeField] private GameEvent _onGameBootstrap;
     [SerializeField] private GameEvent _onMenuEntered;
 
     [Header("Debug")]
@@ -32,10 +27,8 @@ public class GameFlowController : MonoBehaviour
 
     private GameState _currentState = GameState.Bootstrap;
 
-    private bool _isSavesLoaded = false;
     private bool _isSceneTransitionInProgress;
     private GameState? _stateAfterSceneLoad;
-    private float _bootstrapRetryTimer;
 
     public GameState CurrentState => _currentState;
 
@@ -43,37 +36,17 @@ public class GameFlowController : MonoBehaviour
     {
         DontDestroyOnLoad(gameObject);
 
-        // Reset Flags
-        _isSavesLoaded = false;
-
         SetState(GameState.Bootstrap); // Set inital State
-
-        //_onGameBootstrap?.Invoke(); // Invoke Bootstrap Event
-    }
-
-    private void Start()
-    {
-        _onGameBootstrap?.Invoke(); // Invoke Bootstrap Event
     }
 
     private void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
-
-        if (_currentState == GameState.Bootstrap)
-        {
-            HandleBootstrapEntered();
-        }
     }
 
     private void OnDisable()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
-
-    private void Update()
-    {
-        TickBootstrapRetry();
     }
 
     public void GoToBootstrap()
@@ -104,12 +77,6 @@ public class GameFlowController : MonoBehaviour
         RequestSceneTransition(_defaultGameplaySceneName, GameState.Gameplay);
     }
 
-    public void FlagSavesLoaded(bool loaded)
-    {
-        _isSavesLoaded = loaded;
-        D($"Saves Loaded: {loaded}");
-    }
-
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         _isSceneTransitionInProgress = false;
@@ -128,11 +95,6 @@ public class GameFlowController : MonoBehaviour
     {
         switch (targetState)
         {
-            case GameState.Bootstrap:
-                SetState(GameState.Bootstrap);
-                HandleBootstrapEntered();
-                return;
-
             case GameState.MainMenu:
                 SetState(GameState.MainMenu);
                 _onMenuEntered?.Invoke();
@@ -147,47 +109,6 @@ public class GameFlowController : MonoBehaviour
                 SetState(targetState);
                 return;
         }
-    }
-
-    private void HandleBootstrapEntered()
-    {
-        if (!_isSavesLoaded)
-        {
-            D("Bootstrap waiting for Saves to load...");
-            _bootstrapRetryTimer = _bootstrapRetryIntervalSeconds;
-            return;
-        }
-
-        if (string.IsNullOrWhiteSpace(_mainMenuSceneName))
-        {
-            Debug.LogError("[GameFlowController] MainMenu scene name is empty. Cannot continue from Bootstrap.");
-            return;
-        }
-
-        GoToMainMenu();
-    }
-
-    private void TickBootstrapRetry()
-    {
-        if (_currentState != GameState.Bootstrap || _isSceneTransitionInProgress)
-        {
-            return;
-        }
-
-        if (_bootstrapRetryIntervalSeconds <= 0f)
-        {
-            HandleBootstrapEntered();
-            return;
-        }
-
-        _bootstrapRetryTimer -= Time.unscaledDeltaTime;
-        if (_bootstrapRetryTimer > 0f)
-        {
-            return;
-        }
-
-        _bootstrapRetryTimer = _bootstrapRetryIntervalSeconds;
-        HandleBootstrapEntered();
     }
 
     private void RequestSceneTransition(string sceneName, GameState targetState)
