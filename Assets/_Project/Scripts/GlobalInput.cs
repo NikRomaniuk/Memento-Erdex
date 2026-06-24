@@ -6,7 +6,7 @@ using Sirenix.OdinInspector;
 using UnityEngine.Events;
 
 /// <summary>
-/// A single Input Block. Holds InputActionProperty and
+/// A single Input Block. Holds InputActionReference and
 /// fires certain UnityEvents
 /// on specific input phases (Pressed, Released, Held)
 /// </summary>
@@ -24,7 +24,7 @@ public class GlobalInputBlock
 
     [FoldoutGroup("Data")]
     [Tooltip("Input Action to listen to")]
-    public InputActionProperty InputAction;
+    public InputActionReference InputAction;
 
     [FoldoutGroup("Events")]
     [Tooltip("Fired once when input is pressed this frame")]
@@ -78,7 +78,7 @@ public class GlobalInput : MonoBehaviour
         for (int i = 0; i < _blocks.Count; i++)
         {
             GlobalInputBlock block = _blocks[i];
-            if (block?.InputAction.action == null) continue;
+            if (block?.InputAction?.action == null) continue;
 
             block.InputAction.action.Enable();
         }
@@ -89,7 +89,7 @@ public class GlobalInput : MonoBehaviour
         for (int i = 0; i < _blocks.Count; i++)
         {
             GlobalInputBlock block = _blocks[i];
-            if (block?.InputAction.action == null) continue;
+            if (block?.InputAction?.action == null) continue;
 
             block.InputAction.action.Disable();
         }
@@ -101,7 +101,7 @@ public class GlobalInput : MonoBehaviour
         {
             GlobalInputBlock block = _blocks[i];
             if (block == null) continue;
-            if (block.InputAction.action == null) continue;
+            if (block.InputAction?.action == null) continue;
             if (_blockedIds.Contains(block.Id)) continue;
 
             ProcessBlock(block, i);
@@ -162,7 +162,7 @@ public class GlobalInput : MonoBehaviour
 
     private static void ProcessBlock(GlobalInputBlock block, int index)
     {
-        InputAction action = block.InputAction.action;
+        InputAction action = block.InputAction?.action;
 
         // Read all phases in one frame
 

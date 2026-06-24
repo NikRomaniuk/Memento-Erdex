@@ -152,7 +152,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameEventListener
   _bindings:
-  - rid: 8264567487348342875
   - rid: 8264567487348342877
   - rid: 8264567487348342883
   - rid: 8264567487348342876
@@ -161,25 +160,6 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 8264567487348342875
-      type: {class: Binding_Void, ns: , asm: Assembly-CSharp}
-      data:
-        _event: {fileID: 11400000, guid: 221598cbb89f3714491855297b96ec0c, type: 2}
-        _response:
-          m_PersistentCalls:
-            m_Calls:
-            - m_Target: {fileID: 427205423}
-              m_TargetAssemblyTypeName: GameFlowActions, Assembly-CSharp
-              m_MethodName: GoToMainMenu
-              m_Mode: 1
-              m_Arguments:
-                m_ObjectArgument: {fileID: 0}
-                m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-                m_IntArgument: 0
-                m_FloatArgument: 0
-                m_StringArgument: 
-                m_BoolArgument: 0
-              m_CallState: 2
     - rid: 8264567487348342876
       type: {class: Binding_Void, ns: , asm: Assembly-CSharp}
       data:
@@ -284,8 +264,6 @@ MonoBehaviour:
   _bootstrapSceneName: Bootstrap
   _mainMenuSceneName: MainMenu
   _defaultGameplaySceneName: TreeFootStage
-  _bootstrapRetryIntervalSeconds: 0.5
-  _onGameBootstrap: {fileID: 11400000, guid: 9b18c4ece1e6a844a99a09d049b8121c, type: 2}
   _onMenuEntered: {fileID: 11400000, guid: 561b7ac105e7dc141b4b0ba20415f466, type: 2}
   _debug: 1
 --- !u!4 &427205425
@@ -366,6 +344,52 @@ MonoBehaviour:
   _maxPoolSize: 50
   _poolContainer: {fileID: 0}
   _debug: 0
+--- !u!1 &708304007
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 708304009}
+  - component: {fileID: 708304008}
+  m_Layer: 0
+  m_Name: '[Bootstrap Initializer]'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &708304008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 708304007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3fb41e634c974d4898ac4bb8e4222f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BootstrapInitializer
+  _mainMenuSceneName: MainMenu
+  _inputActions: {fileID: -944628639613478452, guid: 946615e3c95313a458256bfd246d6af3, type: 3}
+--- !u!4 &708304009
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 708304007}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &755403240
 GameObject:
   m_ObjectHideFlags: 0
@@ -647,6 +671,7 @@ MonoBehaviour:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 708304009}
   - {fileID: 427205425}
   - {fileID: 1470409230}
   - {fileID: 631319026}

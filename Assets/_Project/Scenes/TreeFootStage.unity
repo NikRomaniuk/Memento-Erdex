@@ -10135,27 +10135,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GlobalInput
   _blocks:
   - Id: 0
-    BlockName: OnEscape
-    InputAction:
-      m_UseReference: 0
-      m_Action:
-        m_Name: Input
-        m_Type: 1
-        m_ExpectedControlType: Button
-        m_Id: 42509f2e-765f-40bf-b331-5c74b17220e6
-        m_Processors: 
-        m_Interactions: 
-        m_SingletonActionBindings:
-        - m_Name: 
-          m_Id: 0f356322-45e7-48f9-b2e1-c7f38dab00bf
-          m_Path: <Keyboard>/escape
-          m_Interactions: 
-          m_Processors: 
-          m_Groups: 
-          m_Action: Input
-          m_Flags: 0
-        m_Flags: 0
-      m_Reference: {fileID: 0}
+    BlockName: OnMenu
+    InputAction: {fileID: -2832656431530432715, guid: 946615e3c95313a458256bfd246d6af3, type: 3}
     OnPressed:
       m_PersistentCalls:
         m_Calls:
