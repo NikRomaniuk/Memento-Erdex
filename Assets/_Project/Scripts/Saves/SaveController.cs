@@ -17,19 +17,21 @@ public class SaveController : MonoBehaviour
     [SerializeField] private TreeGenerationData _defaultTreeGeneration;
 
     // --- Config ---
-    [SerializeField, Min(0f)] private float _saveDelaySeconds = 2f;
     [SerializeField] private bool _autosaveEnabled = false;
     [SerializeField, Min(0f)] private float _autosaveIntervalSeconds = 180f;
 
     // --- Events ---
     [SerializeField] private GameEvent _onSavesLoaded;
+    [SerializeField] private GameEvent _onDataChanged;
+    [SerializeField] private GameEvent _onSaveTriggered;
+    private bool _isDataChanged;
+    private IGameEventListener_Void _dataChangedHandler;
+    private IGameEventListener_Void _saveTriggeredHandler;
 
     // --- Debug ---
     [SerializeField] private bool _debug = false;
     private string _lastDebug;
 
-    private bool _isDirty;
-    private float _saveDelayTimer;
     private float _autosaveTimer;
 
     // ========
@@ -48,17 +50,28 @@ public class SaveController : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        // Subscribe to GameEvents
+        _dataChangedHandler = new GameEventCallback(() => _isDataChanged = true);
+        _saveTriggeredHandler = new GameEventCallback(OnSaveTriggered);
+        _onDataChanged?.RegisterListener(_dataChangedHandler);
+        _onSaveTriggered?.RegisterListener(_saveTriggeredHandler);
     }
 
     private void OnDestroy()
     {
+        // Unsubscribe from GameEvents
+        if (_onDataChanged != null && _dataChangedHandler != null)
+            _onDataChanged.UnregisterListener(_dataChangedHandler);
+        if (_onSaveTriggered != null && _saveTriggeredHandler != null)
+            _onSaveTriggered.UnregisterListener(_saveTriggeredHandler);
+
         if (Instance == this)
             Instance = null;
     }
 
     private void Update()
     {
-        TickDirtySave();
         TickAutosave();
     }
 
@@ -91,7 +104,7 @@ public class SaveController : MonoBehaviour
 
         if (!anyLoaded) { return; }
 
-        SaveNow();
+        Save();
         _onSavesLoaded?.Invoke();
     }
 
@@ -117,21 +130,11 @@ public class SaveController : MonoBehaviour
 
         if (!anyLoaded) { return; }
 
-        await SaveNowAsync();
+        await SaveAsync();
         _onSavesLoaded?.Invoke();
     }
 
     public void Save()
-    {
-        MarkDirty();
-        D("Save marked Dirty");
-    }
-
-    /// <summary>
-    /// Synchronous immediate save (backward compatibility).
-    /// Prefer <see cref="SaveNowAsync"/> for new code
-    /// </summary>
-    public void SaveNow()
     {
         bool anySaved = false;
 
@@ -146,13 +149,13 @@ public class SaveController : MonoBehaviour
 
         if (!anySaved) { return; }
 
-        ClearDirtyState();
+        D("All profiles saved");
     }
 
     /// <summary>
     /// Asynchronously saves all active profiles to disk immediately
     /// </summary>
-    public async UniTask SaveNowAsync()
+    public async UniTask SaveAsync()
     {
         bool anySaved = false;
 
@@ -191,7 +194,7 @@ public class SaveController : MonoBehaviour
 
         if (!anySaved) { return; }
 
-        ClearDirtyState();
+        D("All profiles saved (async)");
     }
 
     // ================
@@ -199,20 +202,10 @@ public class SaveController : MonoBehaviour
     // ================
 
     // --- Ticking ---
-    private void TickDirtySave()
-    {
-        if (!_isDirty) { return; }
-
-        _saveDelayTimer -= Time.unscaledDeltaTime;
-        if (_saveDelayTimer > 0f) { return; }
-
-        D("Dirty Save delay elapsed");
-        SaveNowAsync().Forget();
-    }
 
     private void TickAutosave()
     {
-        if (!_autosaveEnabled || !_isDirty) 
+        if (!_autosaveEnabled)
         {
             _autosaveTimer = 0f;
             return;
@@ -226,23 +219,7 @@ public class SaveController : MonoBehaviour
 
         _autosaveTimer = 0f;
         D("Autosave interval elapsed");
-        SaveNowAsync().Forget();
-    }
-
-    // --- Dirty State ---
-
-    private void MarkDirty()
-    {
-        _isDirty = true;
-        _saveDelayTimer = _saveDelaySeconds;
-        _autosaveTimer = 0f;
-    }
-
-    private void ClearDirtyState()
-    {
-        _isDirty = false;
-        _saveDelayTimer = 0f;
-        _autosaveTimer = 0f;
+        SaveAsync().Forget();
     }
 
     // --- Generic Load / Save Helpers ---
@@ -326,6 +303,29 @@ public class SaveController : MonoBehaviour
         saveFunc(active.ExtractSaveData());
         D($"{label} saved");
         return true;
+    }
+
+    // ========
+    // CALLBACKS
+    // ========
+
+    private void OnSaveTriggered()
+    {
+        if (!_isDataChanged) { return; }
+
+        Save();
+        _isDataChanged = false;
+        D("Save triggered via GameEvent");
+    }
+
+    /// <summary>
+    /// Wrapper to subscribe <see cref="System.Action"/> to <see cref="GameEvent"/>
+    /// </summary>
+    private sealed class GameEventCallback : IGameEventListener_Void
+    {
+        private readonly System.Action _action;
+        public GameEventCallback(System.Action action) => _action = action;
+        public void OnEventInvoked() => _action?.Invoke();
     }
 
     // ====

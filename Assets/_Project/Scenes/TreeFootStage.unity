@@ -3115,7 +3115,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpectatorMovement
   _spectatorManager: {fileID: 218080975}
-  _drawDebug: 1
   _debug: 0
 --- !u!114 &218080974
 MonoBehaviour:
@@ -8927,11 +8926,19 @@ PrefabInstance:
     m_TransformParent: {fileID: 1318653022}
     m_Modifications:
     - target: {fileID: 241325513174058769, guid: 80b70b3f78c32b14988bbe5786f4bbde, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 241325513174058769, guid: 80b70b3f78c32b14988bbe5786f4bbde, type: 3}
       propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 241325513174058769, guid: 80b70b3f78c32b14988bbe5786f4bbde, type: 3}
       propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 241325513174058769, guid: 80b70b3f78c32b14988bbe5786f4bbde, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 241325513174058769, guid: 80b70b3f78c32b14988bbe5786f4bbde, type: 3}
@@ -8941,13 +8948,25 @@ PrefabInstance:
     - target: {fileID: 241325513174058769, guid: 80b70b3f78c32b14988bbe5786f4bbde, type: 3}
       propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
+      objectReference: {fileID: 11400000, guid: cb6f32bde3b754b4281c3c003a4ea0d8, type: 2}
+    - target: {fileID: 241325513174058769, guid: 80b70b3f78c32b14988bbe5786f4bbde, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
       objectReference: {fileID: 169545931}
+    - target: {fileID: 241325513174058769, guid: 80b70b3f78c32b14988bbe5786f4bbde, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 241325513174058769, guid: 80b70b3f78c32b14988bbe5786f4bbde, type: 3}
       propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: Play
       objectReference: {fileID: 0}
     - target: {fileID: 241325513174058769, guid: 80b70b3f78c32b14988bbe5786f4bbde, type: 3}
       propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: Invoke
+      objectReference: {fileID: 0}
+    - target: {fileID: 241325513174058769, guid: 80b70b3f78c32b14988bbe5786f4bbde, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
       value: PlayAnimationGroup
       objectReference: {fileID: 0}
     - target: {fileID: 241325513174058769, guid: 80b70b3f78c32b14988bbe5786f4bbde, type: 3}
@@ -8956,6 +8975,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 241325513174058769, guid: 80b70b3f78c32b14988bbe5786f4bbde, type: 3}
       propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: GameEvent, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 241325513174058769, guid: 80b70b3f78c32b14988bbe5786f4bbde, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
       value: Evo.UI.UIAnimator, Evo.UI
       objectReference: {fileID: 0}
     - target: {fileID: 241325513174058769, guid: 80b70b3f78c32b14988bbe5786f4bbde, type: 3}
@@ -8964,6 +8987,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 241325513174058769, guid: 80b70b3f78c32b14988bbe5786f4bbde, type: 3}
       propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_FloatArgument
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 241325513174058769, guid: 80b70b3f78c32b14988bbe5786f4bbde, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_FloatArgument
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 241325513174058769, guid: 80b70b3f78c32b14988bbe5786f4bbde, type: 3}
@@ -8980,6 +9007,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 241325513174058769, guid: 80b70b3f78c32b14988bbe5786f4bbde, type: 3}
       propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 241325513174058769, guid: 80b70b3f78c32b14988bbe5786f4bbde, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_StringArgument
       value: Options Disable
       objectReference: {fileID: 0}
     - target: {fileID: 241325513174058769, guid: 80b70b3f78c32b14988bbe5786f4bbde, type: 3}
@@ -8988,6 +9019,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 241325513174058769, guid: 80b70b3f78c32b14988bbe5786f4bbde, type: 3}
       propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 241325513174058769, guid: 80b70b3f78c32b14988bbe5786f4bbde, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 978049093084461094, guid: 80b70b3f78c32b14988bbe5786f4bbde, type: 3}
@@ -11157,7 +11192,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterMovement
   _characterManager: {fileID: 1460255975}
-  _drawDebug: 1
   _debug: 1
 --- !u!114 &1460255980
 MonoBehaviour:

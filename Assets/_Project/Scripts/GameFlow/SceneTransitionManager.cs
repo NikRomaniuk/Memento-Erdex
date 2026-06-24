@@ -228,7 +228,7 @@ public class SceneTransitionManager : MonoBehaviour
             return;
         }
 
-        await SaveController.Instance.SaveNowAsync();
+        await SaveController.Instance.SaveAsync();
     }
 
     /// <summary>

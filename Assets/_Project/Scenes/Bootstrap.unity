@@ -600,10 +600,11 @@ MonoBehaviour:
   _defaultGameplay: {fileID: 11400000, guid: dd22e1ed51a94de4aab91ebf3e16f46a, type: 2}
   _activeTreeGeneration: {fileID: 11400000, guid: 02a373b6bb4e11f4e95b049af6c08f38, type: 2}
   _defaultTreeGeneration: {fileID: 11400000, guid: 0489110e387c7344f95d7a5b78778fd3, type: 2}
-  _saveDelaySeconds: 2
   _autosaveEnabled: 0
   _autosaveIntervalSeconds: 180
   _onSavesLoaded: {fileID: 11400000, guid: 221598cbb89f3714491855297b96ec0c, type: 2}
+  _onDataChanged: {fileID: 11400000, guid: 61b4ce904eba1c2419b54e2de2ba7228, type: 2}
+  _onSaveTriggered: {fileID: 11400000, guid: cb6f32bde3b754b4281c3c003a4ea0d8, type: 2}
   _debug: 1
 --- !u!114 &1470409232
 MonoBehaviour:
@@ -619,9 +620,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameEventListener
   _bindings:
   - rid: 8264567487348342879
-  - rid: 8264567487348342880
-  - rid: 8264567487348342881
-  - rid: 8264567487348342882
   _debug: 1
   references:
     version: 2
@@ -636,63 +634,6 @@ MonoBehaviour:
             - m_Target: {fileID: 1470409231}
               m_TargetAssemblyTypeName: SaveController, Assembly-CSharp
               m_MethodName: Load
-              m_Mode: 1
-              m_Arguments:
-                m_ObjectArgument: {fileID: 0}
-                m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-                m_IntArgument: 0
-                m_FloatArgument: 0
-                m_StringArgument: 
-                m_BoolArgument: 0
-              m_CallState: 2
-    - rid: 8264567487348342880
-      type: {class: Binding_Void, ns: , asm: Assembly-CSharp}
-      data:
-        _event: {fileID: 11400000, guid: 038bbeb4d3167ae47937de3aa6f7da33, type: 2}
-        _response:
-          m_PersistentCalls:
-            m_Calls:
-            - m_Target: {fileID: 1470409231}
-              m_TargetAssemblyTypeName: SaveController, Assembly-CSharp
-              m_MethodName: Save
-              m_Mode: 1
-              m_Arguments:
-                m_ObjectArgument: {fileID: 0}
-                m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-                m_IntArgument: 0
-                m_FloatArgument: 0
-                m_StringArgument: 
-                m_BoolArgument: 0
-              m_CallState: 2
-    - rid: 8264567487348342881
-      type: {class: Binding_Void, ns: , asm: Assembly-CSharp}
-      data:
-        _event: {fileID: 11400000, guid: 5ef9c0f2ab7c295498890a39221b51a9, type: 2}
-        _response:
-          m_PersistentCalls:
-            m_Calls:
-            - m_Target: {fileID: 1470409231}
-              m_TargetAssemblyTypeName: SaveController, Assembly-CSharp
-              m_MethodName: Save
-              m_Mode: 1
-              m_Arguments:
-                m_ObjectArgument: {fileID: 0}
-                m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-                m_IntArgument: 0
-                m_FloatArgument: 0
-                m_StringArgument: 
-                m_BoolArgument: 0
-              m_CallState: 2
-    - rid: 8264567487348342882
-      type: {class: Binding_Void, ns: , asm: Assembly-CSharp}
-      data:
-        _event: {fileID: 11400000, guid: 4f586dfd521e7ee42bfedd02068ea07a, type: 2}
-        _response:
-          m_PersistentCalls:
-            m_Calls:
-            - m_Target: {fileID: 1470409231}
-              m_TargetAssemblyTypeName: SaveController, Assembly-CSharp
-              m_MethodName: Save
               m_Mode: 1
               m_Arguments:
                 m_ObjectArgument: {fileID: 0}

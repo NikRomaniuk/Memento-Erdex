@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94a5323327296e54f8459f3bb84b5e8c, type: 3}
   m_Name: DefaultGameplay
   m_EditorClassIdentifier: Assembly-CSharp::GameplayData
-  _isSeedRandom:
+  _isFreeCamMode:
     UseConstant: 1
-    ConstantValue: 1
-    _variable: {fileID: 0}
-  _onDataChanged: {fileID: 11400000, guid: 5ef9c0f2ab7c295498890a39221b51a9, type: 2}
+    ConstantValue: 0
+    _observable: {fileID: 0}
+  _onDataChanged: {fileID: 11400000, guid: 61b4ce904eba1c2419b54e2de2ba7228, type: 2}
