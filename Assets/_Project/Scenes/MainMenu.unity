@@ -323,6 +323,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Exit_Btn
       objectReference: {fileID: 0}
+    - target: {fileID: 6622882523241707163, guid: 80b70b3f78c32b14988bbe5786f4bbde, type: 3}
+      propertyPath: groupFoldout
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6622882523241707163, guid: 80b70b3f78c32b14988bbe5786f4bbde, type: 3}
+      propertyPath: animationGroups.Array.data[1].isExpanded
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6622882523241707163, guid: 80b70b3f78c32b14988bbe5786f4bbde, type: 3}
+      propertyPath: animationGroups.Array.data[1].eventsExpanded
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7765145197162341054, guid: 80b70b3f78c32b14988bbe5786f4bbde, type: 3}
       propertyPath: m_text
       value: Exit
@@ -631,7 +643,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "1\u200B"
+  m_text: "27\u200B"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f32070c94dca5cf4ea99f8d6aefa9008, type: 2}
   m_sharedMaterial: {fileID: -287801036915439855, guid: f32070c94dca5cf4ea99f8d6aefa9008, type: 2}
@@ -902,7 +914,7 @@ MonoBehaviour:
   m_CaretColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_CustomCaretColor: 0
   m_SelectionColor: {r: 1, g: 1, b: 1, a: 0.09803922}
-  m_Text: 1
+  m_Text: 27
   m_CaretBlinkRate: 0.85
   m_CaretWidth: 1
   m_ReadOnly: 0
@@ -2138,7 +2150,7 @@ MonoBehaviour:
     scale: 4
     offset: {x: 0, y: 0}
     fadeDuration: 0.1
-  sfxSource: 2
+  sfxSource: 0
   stylerPreset: {fileID: 11400000, guid: 62d3d5000dc484241a42d255128f3aa7, type: 2}
   highlightedSFX:
     stylerID: Hover SFX
@@ -2262,7 +2274,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -200, y: 0}
+  m_SizeDelta: {x: -150, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &687083166
 GameObject:
@@ -2902,8 +2914,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 853212837}
-  - component: {fileID: 853212838}
-  - component: {fileID: 853212839}
+  - component: {fileID: 853212840}
+  - component: {fileID: 853212841}
   m_Layer: 5
   m_Name: Selector
   m_TagString: Untagged
@@ -2931,9 +2943,9 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 410, y: 70}
+  m_SizeDelta: {x: 360, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &853212838
+--- !u!114 &853212840
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2942,12 +2954,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 853212836}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d904696ffb3f2f47b1afef887ba8701, type: 3}
+  m_Script: {fileID: 11500000, guid: 651a9186afb212e429096662ffe917d4, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
-  startQuantity: 1
-  minQuantity: 1
-  maxQuantity: 100000
+  m_EditorClassIdentifier: Assembly-CSharp::ALW.UI.QuantitySelector
+  _minQuantity:
+    UseConstant: 0
+    ConstantValue: 0
+    _observable: {fileID: 11400000, guid: 187aa9e4087f7d94989f1ac9c543e89b, type: 2}
+  _maxQuantity:
+    UseConstant: 0
+    ConstantValue: 20
+    _observable: {fileID: 11400000, guid: c59e2681eafd90b4fa120310ff6b6e86, type: 2}
+  _startQuantity:
+    UseConstant: 0
+    ConstantValue: 20
+    _observable: {fileID: 11400000, guid: 6679e37b0588f894789b6992447344fa, type: 2}
+  _currentQuantity:
+    UseConstant: 0
+    ConstantValue: 0
+    _observable: {fileID: 11400000, guid: 6679e37b0588f894789b6992447344fa, type: 2}
   slideOffset: 40
   animationDuration: 0.2
   animationCurve:
@@ -2980,11 +3005,68 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls: []
+  onIncrease:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 853212841}
+        m_TargetAssemblyTypeName: UIAudioPlayer, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: 2228ba96d800612409b7a64ea7142662, type: 2}
+          m_ObjectArgumentAssemblyTypeName: SoundData, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1488357650}
+        m_TargetAssemblyTypeName: Evo.UI.UIAnimator, Evo.UI
+        m_MethodName: PlayAnimationGroup
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Iterate
+          m_BoolArgument: 0
+        m_CallState: 2
+  onDecrease:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 853212841}
+        m_TargetAssemblyTypeName: UIAudioPlayer, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: 2228ba96d800612409b7a64ea7142662, type: 2}
+          m_ObjectArgumentAssemblyTypeName: SoundData, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1939676977}
+        m_TargetAssemblyTypeName: Evo.UI.UIAnimator, Evo.UI
+        m_MethodName: PlayAnimationGroup
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Iterate
+          m_BoolArgument: 0
+        m_CallState: 2
+  onFalseIterate:
+    m_PersistentCalls:
+      m_Calls: []
   objectFoldout: 1
   settingsFoldout: 0
-  referencesFoldout: 1
-  eventsFoldout: 1
---- !u!114 &853212839
+  referencesFoldout: 0
+  eventsFoldout: 0
+--- !u!114 &853212841
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2993,25 +3075,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 853212836}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10dbcefbb6581454f87d0f4049f6977e, type: 3}
+  m_Script: {fileID: 11500000, guid: 9f0a99bdc969c344a919102fc81916b3, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CustomQuantitySelector
-  _quantitySelector: {fileID: 853212838}
-  _quantityInputField: {fileID: 140372010}
-  _minQuantity:
-    UseConstant: 0
-    ConstantValue: 0
-    _observable: {fileID: 11400000, guid: 187aa9e4087f7d94989f1ac9c543e89b, type: 2}
-  _maxQuantity:
-    UseConstant: 0
-    ConstantValue: 0
-    _observable: {fileID: 11400000, guid: c59e2681eafd90b4fa120310ff6b6e86, type: 2}
-  _startQuantity:
-    UseConstant: 0
-    ConstantValue: 0
-    _observable: {fileID: 11400000, guid: 6679e37b0588f894789b6992447344fa, type: 2}
-  _quantityObservable: {fileID: 11400000, guid: 6679e37b0588f894789b6992447344fa, type: 2}
-  _debug: 1
+  m_EditorClassIdentifier: Assembly-CSharp::UIAudioPlayer
+  _eventChannel: {fileID: 11400000, guid: 5d33c1d61bb5ead4eb65cfe829440050, type: 2}
+  _debug: 0
 --- !u!1 &901372945
 GameObject:
   m_ObjectHideFlags: 0
@@ -5616,9 +5684,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1488357646}
+  - component: {fileID: 1488357647}
+  - component: {fileID: 1488357650}
   - component: {fileID: 1488357649}
   - component: {fileID: 1488357648}
-  - component: {fileID: 1488357647}
   m_Layer: 5
   m_Name: RightArrow_Btn
   m_TagString: Untagged
@@ -5643,8 +5712,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -50.04001, y: 0}
-  m_SizeDelta: {x: 100, y: 0}
+  m_AnchoredPosition: {x: -37.5, y: 0}
+  m_SizeDelta: {x: 75, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1488357647
 MonoBehaviour:
@@ -5755,7 +5824,7 @@ MonoBehaviour:
   styleFoldout: 0
   navigationFoldout: 0
   referencesFoldout: 0
-  eventsFoldout: 1
+  eventsFoldout: 0
   enableIcon: 1
   icon: {fileID: 0}
   iconSize: 30
@@ -5812,6 +5881,67 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &1488357650
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1488357645}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fa7af513dc2ead449991695979b47a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Evo.UI::Evo.UI.UIAnimator
+  animationGroups:
+  - label: Iterate
+    trigger: 6
+    animations:
+    - type: 2
+      enabled: 1
+      duration: 0.1
+      delay: 0
+      easeType: 5
+      loop: 0
+      yoyo: 1
+      animateFromCurrentValue: 0
+      isExpanded: 1
+      fadeFrom: 0
+      fadeTo: 1
+      scaleFrom: {x: 0, y: 0, z: 0}
+      scaleTo: {x: 1, y: 1, z: 1}
+      slideFrom: {x: 0, y: 0, z: 0}
+      slideTo: {x: 25, y: 0, z: 0}
+      rotateFrom: 0
+      rotateTo: 360
+      punchIntensity: 0.2
+      shakeIntensity: 10
+      bounceHeight: 30
+      colorFrom: {r: 1, g: 1, b: 1, a: 1}
+      colorTo: {r: 1, g: 1, b: 1, a: 1}
+    onGroupStart:
+      m_PersistentCalls:
+        m_Calls: []
+    onGroupEnd:
+      m_PersistentCalls:
+        m_Calls: []
+    isExpanded: 1
+    eventsExpanded: 0
+  rectTransform: {fileID: 695592513}
+  canvasGroup: {fileID: 1488357648}
+  image: {fileID: 0}
+  text: {fileID: 0}
+  useUnscaledTime: 0
+  onAnimationStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onAnimationEnd:
+    m_PersistentCalls:
+      m_Calls: []
+  groupFoldout: 1
+  referencesFoldout: 1
+  settingsFoldout: 0
+  eventsFoldout: 0
 --- !u!1 &1490979700
 GameObject:
   m_ObjectHideFlags: 0
@@ -7123,6 +7253,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1939676973}
   - component: {fileID: 1939676976}
+  - component: {fileID: 1939676977}
   - component: {fileID: 1939676975}
   - component: {fileID: 1939676974}
   m_Layer: 5
@@ -7149,8 +7280,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 50.039978, y: 0}
-  m_SizeDelta: {x: 100, y: 0}
+  m_AnchoredPosition: {x: 37.5, y: 0}
+  m_SizeDelta: {x: 75, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!225 &1939676974
 CanvasGroup:
@@ -7293,7 +7424,7 @@ MonoBehaviour:
   styleFoldout: 0
   navigationFoldout: 0
   referencesFoldout: 0
-  eventsFoldout: 1
+  eventsFoldout: 0
   enableIcon: 1
   icon: {fileID: 0}
   iconSize: 30
@@ -7318,6 +7449,67 @@ MonoBehaviour:
   contentFitter: {fileID: 0}
   contentLayout: {fileID: 0}
   objectFoldout: 1
+--- !u!114 &1939676977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1939676972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fa7af513dc2ead449991695979b47a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Evo.UI::Evo.UI.UIAnimator
+  animationGroups:
+  - label: Iterate
+    trigger: 6
+    animations:
+    - type: 2
+      enabled: 1
+      duration: 0.1
+      delay: 0
+      easeType: 5
+      loop: 0
+      yoyo: 1
+      animateFromCurrentValue: 0
+      isExpanded: 1
+      fadeFrom: 0
+      fadeTo: 1
+      scaleFrom: {x: 0, y: 0, z: 0}
+      scaleTo: {x: 1, y: 1, z: 1}
+      slideFrom: {x: 0, y: 0, z: 0}
+      slideTo: {x: -25, y: 0, z: 0}
+      rotateFrom: 0
+      rotateTo: 360
+      punchIntensity: 0.2
+      shakeIntensity: 10
+      bounceHeight: 30
+      colorFrom: {r: 1, g: 1, b: 1, a: 1}
+      colorTo: {r: 1, g: 1, b: 1, a: 1}
+    onGroupStart:
+      m_PersistentCalls:
+        m_Calls: []
+    onGroupEnd:
+      m_PersistentCalls:
+        m_Calls: []
+    isExpanded: 1
+    eventsExpanded: 0
+  rectTransform: {fileID: 820605752}
+  canvasGroup: {fileID: 1939676974}
+  image: {fileID: 0}
+  text: {fileID: 0}
+  useUnscaledTime: 0
+  onAnimationStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onAnimationEnd:
+    m_PersistentCalls:
+      m_Calls: []
+  groupFoldout: 1
+  referencesFoldout: 0
+  settingsFoldout: 0
+  eventsFoldout: 0
 --- !u!1 &1947121481
 GameObject:
   m_ObjectHideFlags: 0
