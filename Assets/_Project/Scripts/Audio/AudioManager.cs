@@ -385,7 +385,7 @@ public class AudioManager : MonoBehaviour
     /// </summary>
     private IEnumerator ReturnToPoolRoutine(AudioSource source, SoundData data, float duration, bool hadParent, System.Action<SoundData> onComplete)
     {
-        yield return new WaitForSecondsRealtime(duration);
+        yield return new WaitForSecondsRealtime(duration + 0.1f); // Extra buffer to ensure playback is complete
 
         // AudioSource was destroyed externally (e.g. with its parent)
         if (source == null)
